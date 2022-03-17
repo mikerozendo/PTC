@@ -1,0 +1,55 @@
+﻿<h3>Nova Marca</h3>
+<br />
+<hr />
+<form action="/" method="post">
+    <div class="modal-content" style="padding: 15px; border-radius:15px">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Nome</label>
+                    <input class="form-control" id="nome" type="text" name="marca" value="" />
+                </div>
+                <div class="col-6">
+                    <label>Situação</label>
+                    <select id="slctSituacao" class="form-control">
+                        <option value="0">Ativo</option>
+                        <option value="1">Inativo</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="text-align: right;padding-top: 15px;">
+            <a class="btn btn-danger btnApp" href="/home/index">Cancelar</a>
+            &nbsp;|&nbsp;
+            <button type="submit" class="btn btn-success btnApp">Salvar</button>
+        </div>
+    </div>
+</form>
+
+
+@section scripts {
+    <script>
+        function AdicionarMarca() {
+            let marca = {
+                nome: $("#nome").val(),
+                situacao: $("#slctSituacao").val()
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: @Url.Action("Incluir","Marcas"),
+                dataType: "application/json",
+                data: JSON.stringify(marca),
+                success: function (json) {
+
+                },
+                error: function () {
+
+                }
+            });
+        }
+    </script>
+}

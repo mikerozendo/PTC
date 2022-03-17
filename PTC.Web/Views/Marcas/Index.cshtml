@@ -1,0 +1,60 @@
+﻿<div class="row">
+    <div class="col-12" style="text-align: right;margin-top: 20px;margin-bottom: 5px">
+        <a href="/Marcas/Adicionar" class="btn btn-success btnApp">Novo</a>
+    </div>
+</div>
+<table id="tblMarcas" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Marca</th>
+            <th>Detalhes</th>
+        </tr>
+    </thead>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Marcas/Incluir",
+                type: "GET",
+                success: function (json) {
+                    $("#tblMarcas").DataTable({
+                        destroy: true,
+                        "aaData": $.parseJSON(json),
+                        "aoColumns": [
+                            { "mDataProp": "marca", "sClass": "align-middle", orderable: false, render: function (data, type, full, meta) { if (type === "sort" || type === "type") { return data; } return '<a onclick="fechamento(\'' + full.agrupadorSacado + '\', \'' + data.replace(/"/g, "") + '\', \'' + full.enderecoSacado + '\')">+</a>' } },
+                            { "mDataProp": "id", "sClass": "align-middle", "orderable": false, render: function (data, type, full, meta) { if (type === "sort" || type === "type") { return data; } return '<a class="btn btn-success" href="/Marcas/Detalhes?id='+data+'">Ver Detalhes<a>' } }
+                        ],                         
+                        scrollY: "500px",
+                        autoWidth: false,
+                        scrollCollapse: true,
+                        pageLength: 3,
+                        order: [],
+                        processing: true,
+                        dom: '<"H"lfr>t<"F"ip>',
+                        language: {
+                            emptyTable: "Nenhum registro encontrado",
+                            info: "Total: _TOTAL_ registros",
+                            infoEmpty: "Total: _TOTAL_ registros",
+                            infoFiltered: "de _MAX_ filtrados",
+                            infoPostFix: "",
+                            thousands: ".",
+                            lengthMenu: "_MENU_ resultados por página",
+                            loadingRecords: "Carregando...",
+                            processing: "Processando...",
+                            zeroRecords: "Nenhum registro encontrado",
+                            search: "Pesquisar",
+                            aria: {
+                                sortAscending: ": Ordenar colunas de forma ascendente",
+                                sortDescending: ": Ordenar colunas de forma descendente"
+                            },
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+
+
+}

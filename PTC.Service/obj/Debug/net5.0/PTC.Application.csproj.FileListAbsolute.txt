@@ -1,0 +1,17 @@
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.csprojAssemblyReference.cache
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.AssemblyInfoInputs.cache
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.AssemblyInfo.cs
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.csproj.CoreCompileInputs.cache
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Application.deps.json
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Application.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\ref\PTC.Application.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Application.pdb
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Domain.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Infrastructure.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Domain.pdb
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\bin\Debug\net5.0\PTC.Infrastructure.pdb
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.csproj.CopyComplete
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\ref\PTC.Application.dll
+C:\Users\junior\Documents\Projetos\PTC\PTC.Service\obj\Debug\net5.0\PTC.Application.pdb

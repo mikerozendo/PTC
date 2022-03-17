@@ -1,0 +1,165 @@
+﻿<div class="row">
+    <div class="col-12" style="text-align: right; margin-top: 20px;">
+        <h3>Novo Proprietario</h3>
+        <i class="fa fa-user" aria-hidden="true"></i>
+    </div>
+</div>
+<br />
+<form action="/Proprietario/Incluir" method="post">
+    <div class="modal-content" style="padding: 15px; border-radius:15px">
+        <div class="form-group">
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-4">
+                    <label for="Nome">Nome</label>
+                    <input id="Nome" type="text" name="Nome" value="" class="form-control" />
+                </div>
+                <div class="col-4">
+                    <label for="tipoDocumento">Tipo Documento</label>
+                    <select id="tipoDocumento" class="form-control">
+                        <option value="none">Selecione</option>
+                        <option value="0">CPF</option>
+                        <option value="1">CNPJ</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <label for="documento">Documento</label>
+                    <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly />
+                </div>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-2">
+                    <label for="Cep">CEP</label>
+                    <input id="Cep" type="text" name="Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" />
+                </div>
+                <div class="col-3">
+                    <label for="Bairro">Bairro</label>
+                    <input id="Bairro" type="text" name="Bairro" value="" class="form-control" readonly />
+                </div>
+                <div class="col-2">
+                    <label for="Uf">Estado</label>
+                    <input id="Uf" type="text" name="Uf" value="" class="form-control" readonly />
+                </div>
+                <div class="col-3">
+                    <label for="Cidade">Cidade</label>
+                    <input id="Cidade" type="text" name="Cidade" value="" class="form-control" readonly />
+                </div>
+                <div class="col-2">
+                    <label for="Numero">Numero</label>
+                    <input id="Numero" type="text" name="Numero" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="row" style="padding-bottom:20px">
+                <div class="col-6">
+                    <label for="Logradouro">Logradouro</label>
+                    <input id="Logradouro" type="text" name="Logradouro" value="" class="form-control" readonly />
+                </div>
+                <div class="col-6">
+                    <label for="pontoReferencia">Ponto de referência</label>
+                    <input id="pontoReferencia" type="text" name="pontoReferencia" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label for="Email">E-mail</label>
+                    <input id="Email" type="text" name="Email" value="" class="form-control" />
+                </div>
+                <div class="col-6">
+                    <label for="WhatsApp">WhatsApp</label>
+                    <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="text-align: right;padding-top: 15px;">
+            <a class="btn btn-danger btnApp" href="/home/index">Cancelar</a>
+            &nbsp;|&nbsp;
+            <button type="button" onclick="IncluirProprietario()" class="btn btn-success btnApp">Salvar</button>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script>
+        $('#Cep').keyup(function () {
+            if ($(this).val().length == 0) {
+                $('#mdlEnrecoRetornoContent').hide();
+            }
+            if ($(this).val().length == 9) {
+                var value = $(this).val().replace('-', '');
+                ConsultarCep(value);
+            }
+        });
+
+        function ConsultarCep(obj) {
+            $.ajax({
+                url: "https://viacep.com.br/ws/" + obj + "/json/",
+                type: "GET",
+                success: function (json) {
+                    if (json != null) {
+                        if (json.erro != true) {
+                            $('#Logradouro').val(json.logradouro);
+                            $('#Bairro').val(json.bairro);
+                            $('#Cidade').val(json.localidade);
+                            $('#Uf').val(json.uf);
+                        }
+                    }
+                },
+            });
+        }
+
+        $("#tipoDocumento").on('change', function (e) {
+            e.stopImmediatePropagation();
+            $("#documento").removeAttr("placeholder").removeAttr("readonly");
+            $("#documento").val("");
+
+            if ($("#tipoDocumento").val() == 0) {
+                $("#documento").attr("placeholder", "000.000.000-00");
+            }
+            else if ($("#tipoDocumento").val() == 1) {
+                $("#documento").attr("placeholder", "99.999.999/9999-99");
+            }
+            else {
+                $("#documento").attr("readonly", true);
+                $("#documento").attr("placeholder", "Selecione um tipo de documento");
+            }
+        });
+
+        $("#documento").on("keyup", function (e) {
+            e.stopImmediatePropagation();
+
+            if ($(this).val().length == 11 && $("#tipoDocumento").val() == 0) {
+                $(this).mask('999.999.999-99');
+            }
+            else if ($(this).val().length == 14 && $("#tipoDocumento").val() == 1) {
+                $(this).mask("99.999.999/9999-99");
+            }
+        });
+
+        function IncluirProprietario() {
+            $.ajax({
+                url: '@Url.Action("Incluir", "Proprietario")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({
+                    nome: $("#Nome").val(),
+                    documento: $("#documento").val(),
+                    email: $("#Email").val(),
+                    whatsApp: $("#WhatsApp").val(),
+                    endereco: {
+                        logradouro: $("#Logradouro").val(),
+                        numero: $("#Numero").val(),
+                        bairro: $("#Bairro").val(),
+                        cep: $("#Cep").val(),
+                        uf: $("#Uf").val()
+                    }
+                }),
+                success: function (json) {
+                    console.log("ok");
+                }
+            });
+        }
+    </script>
+
+} 
