@@ -12,7 +12,7 @@ Camada de Dados (PTC.Repository) => Recebe paramêtros passados pela camada de s
 
 DTO'S => Não presentes na estrutura do projeto p/ evitar custos de processamento e tempo de implementação;
 
-
+ 
 Técnologias utilizadas{
   C# / .NET 5,
   Html,
