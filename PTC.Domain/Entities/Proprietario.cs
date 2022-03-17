@@ -13,10 +13,10 @@ namespace PTC.Domain.Entities
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
 
-        public Proprietario()
-        {
-            EnumTipoPessoa = Documento.Length == 14 ? EnumTipoPessoa.PessoaFisica : EnumTipoPessoa.PessoaJuridica;
-        }
+        //public Proprietario()
+        //{
+        //    EnumTipoPessoa = Documento.Length == 14 ? EnumTipoPessoa.PessoaFisica : EnumTipoPessoa.PessoaJuridica;
+        //}
 
         public void FormatarValoresEnvioDb()
         {
