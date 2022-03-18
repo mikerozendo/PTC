@@ -13,11 +13,6 @@ namespace PTC.Domain.Entities
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
 
-        //public Proprietario()
-        //{
-        //    EnumTipoPessoa = Documento.Length == 14 ? EnumTipoPessoa.PessoaFisica : EnumTipoPessoa.PessoaJuridica;
-        //}
-
         public void FormatarValoresEnvioDb()
         {
             WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
@@ -38,6 +33,11 @@ namespace PTC.Domain.Entities
                 Documento = $"{array[0]}{array[1]}{array[2]}.{array[3]}{array[4]}{array[5]}.{array[6]}{array[6]}{array[8]}-{array[9]}{array[10]}";
             else
                 Documento = $"{array[0]}{array[1]}.{array[2]}{array[3]}{array[4]}.{array[5]}{array[6]}{array[7]}/{array[8]}{array[9]}{array[10]}{array[11]}-{array[12]}{array[13]}";
+        }
+
+        public void ValidaTipoPessoa()
+        {
+            EnumTipoPessoa = Documento.Length == 11 ? EnumTipoPessoa.PessoaFisica : EnumTipoPessoa.PessoaJuridica;
         }
     }
 }
