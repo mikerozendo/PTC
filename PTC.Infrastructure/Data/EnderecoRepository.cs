@@ -9,14 +9,15 @@ namespace PTC.Infrastructure.Data
     {
         public int Incluir(Endereco obj)
         {
-            AddParametro("@Logradouro", SqlDbType.VarChar, obj.Logradouro);
-            AddParametro("@Numero", SqlDbType.VarChar, obj.Numero);
-            AddParametro("@Bairro", SqlDbType.VarChar, obj.Bairro);
-            AddParametro("@Cep", SqlDbType.VarChar, obj.Cep);
-            AddParametro("@Uf", SqlDbType.VarChar, obj.Uf);
+            AddParametro("Logradouro", SqlDbType.VarChar, obj.Logradouro);
+            AddParametro("Numero", SqlDbType.VarChar, obj.Numero);
+            AddParametro("Bairro", SqlDbType.VarChar, obj.Bairro);
+            AddParametro("Cep", SqlDbType.VarChar, obj.Cep);
+            AddParametro("Uf", SqlDbType.VarChar, obj.Uf);
+            AddParametro("PontoRefencia", SqlDbType.VarChar, obj.Numero);
 
             var tabela = ExecutarProcedure("P_ENDERECO_INCLUIR");
-            return Convert.ToInt32(tabela.Rows[0]);
+            return tabela.Rows[0]["Id"] is DBNull ? 0 : Convert.ToInt32(tabela.Rows[0]["Id"]);
         }
 
         public int ExcluirPorId(int id)
