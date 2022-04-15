@@ -25,6 +25,7 @@ namespace PTC.Application.Services
             {
                 if (ValidarDocumento(obj.Documento))
                 {
+                    obj.ValidaTipoPessoa();
                     int enderecoId = _enderecoService.Incluir(obj.Endereco);
                     if (enderecoId > 0)
                     {

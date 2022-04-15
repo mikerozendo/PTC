@@ -11,11 +11,11 @@
             <div class="row" style="padding-bottom:20px">
                 <div class="col-4">
                     <label for="Nome">Nome</label>
-                    <input id="Nome" type="text" name="Nome" value="" class="form-control" />
+                    <input id="Nome" type="text" name="Nome" value="" class="form-control" required/>
                 </div>
                 <div class="col-4">
                     <label for="tipoDocumento">Tipo Documento</label>
-                    <select id="tipoDocumento" class="form-control">
+                    <select id="tipoDocumento" class="form-control" required> 
                         <option value="none">Selecione</option>
                         <option value="0">CPF</option>
                         <option value="1">CNPJ</option>
@@ -23,49 +23,49 @@
                 </div>
                 <div class="col-4">
                     <label for="documento">Documento</label>
-                    <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly />
+                    <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
                 </div>
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-2">
                     <label for="Cep">CEP</label>
-                    <input id="Cep" type="text" name="Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" />
+                    <input id="Cep" type="text" name="Endereco.Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required/>
                 </div>
                 <div class="col-3">
                     <label for="Bairro">Bairro</label>
-                    <input id="Bairro" type="text" name="Bairro" value="" class="form-control" readonly />
+                    <input id="Bairro" type="text" name="Endereco.Bairro" value="" class="form-control" readonly />
                 </div>
                 <div class="col-2">
                     <label for="Uf">Estado</label>
-                    <input id="Uf" type="text" name="Uf" value="" class="form-control" readonly />
+                    <input id="Uf" type="text" name="Endereco.Uf" value="" class="form-control" readonly />
                 </div>
                 <div class="col-3">
                     <label for="Cidade">Cidade</label>
-                    <input id="Cidade" type="text" name="Cidade" value="" class="form-control" readonly />
+                    <input id="Cidade" type="text" name="Endereco.Cidade" value="" class="form-control" readonly />
                 </div>
                 <div class="col-2">
                     <label for="Numero">Numero</label>
-                    <input id="Numero" type="text" name="Numero" value="" class="form-control" />
+                    <input id="Numero" type="text" name="Endereco.Numero" value="" class="form-control" required/>
                 </div>
             </div>
             <div class="row" style="padding-bottom:20px">
                 <div class="col-6">
                     <label for="Logradouro">Logradouro</label>
-                    <input id="Logradouro" type="text" name="Logradouro" value="" class="form-control" readonly />
+                    <input id="Logradouro" type="text" name="Endereco.Logradouro" value="" class="form-control" readonly />
                 </div>
                 <div class="col-6">
                     <label for="pontoReferencia">Ponto de referência</label>
-                    <input id="pontoReferencia" type="text" name="pontoReferencia" value="" class="form-control" />
+                    <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="" class="form-control" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <label for="Email">E-mail</label>
-                    <input id="Email" type="text" name="Email" value="" class="form-control" />
+                    <input id="Email" type="text" name="Email" value="" class="form-control" required/>
                 </div>
                 <div class="col-6">
                     <label for="WhatsApp">WhatsApp</label>
-                    <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" />
+                    <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required/>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="col-12" style="text-align: right;padding-top: 15px;">
             <a class="btn btn-danger btnApp" href="/home/index">Cancelar</a>
             &nbsp;|&nbsp;
-            <button type="button" onclick="IncluirProprietario()" class="btn btn-success btnApp">Salvar</button>
+            <button type="submit" class="btn btn-success btnApp">Salvar</button>
         </div>
     </div>
 </form>
@@ -136,30 +136,7 @@
             }
         });
         //teste
-        function IncluirProprietario() {
-            $.ajax({
-                url: '@Url.Action("Incluir", "Proprietario")',
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({
-                    nome: $("#Nome").val(),
-                    documento: $("#documento").val(),
-                    email: $("#Email").val(),
-                    whatsApp: $("#WhatsApp").val(),
-                    endereco: {
-                        logradouro: $("#Logradouro").val(),
-                        numero: $("#Numero").val(),
-                        bairro: $("#Bairro").val(),
-                        cep: $("#Cep").val(),
-                        uf: $("#Uf").val()
-                    }
-                }),
-                success: function (json) {
-                    console.log("ok");
-                }
-            });
-        }
+
     </script>
 
 } 
