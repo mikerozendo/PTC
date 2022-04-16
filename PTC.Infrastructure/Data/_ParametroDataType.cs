@@ -8,14 +8,10 @@ namespace PTC.Infrastructure.Data
         {
             Nome = nome;
             //Tipo = tipo;
-            if(typeof(TDataType) == typeof(string))
-            {
+            if (typeof(TDataType) == typeof(string))
                 Valor = valor == null ? string.Empty : valor.ToString().Trim();
-            }
             else
-            {
                 Valor = valor;
-            }
         }
     }
 }

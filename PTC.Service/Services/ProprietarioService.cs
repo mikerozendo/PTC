@@ -23,6 +23,7 @@ namespace PTC.Application.Services
         {
             if (!Existe(obj))
             {
+                obj.FormatarValoresEscritaDb();
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
                     obj.Endereco.Id = _enderecoService.Incluir(obj.Endereco);
@@ -30,7 +31,6 @@ namespace PTC.Application.Services
                     {
                         try
                         {
-                            obj.FormatarValoresEscritaDb();
                             _proprietarioRepository.Incluir(obj);
                         }
                         catch (Exception)
