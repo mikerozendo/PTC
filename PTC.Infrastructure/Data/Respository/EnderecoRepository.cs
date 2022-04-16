@@ -1,9 +1,10 @@
 ﻿using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
+using PTC.Infrastructure.Data.Base;
 using System;
 using System.Data;
 
-namespace PTC.Infrastructure.Data
+namespace PTC.Infrastructure.Data.Respository
 {
     public class EnderecoRepository : BaseRepository, IEnderecoRepository
     {

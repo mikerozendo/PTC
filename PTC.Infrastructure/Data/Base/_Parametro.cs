@@ -1,4 +1,4 @@
-﻿namespace PTC.Infrastructure.Data
+﻿namespace PTC.Infrastructure.Data.Base
 {
     public abstract class Parametro
     {

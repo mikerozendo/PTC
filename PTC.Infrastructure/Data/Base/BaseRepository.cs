@@ -2,7 +2,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace PTC.Infrastructure.Data
+namespace PTC.Infrastructure.Data.Base
 {
     public abstract class BaseRepository
     {
