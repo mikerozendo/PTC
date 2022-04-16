@@ -9,26 +9,27 @@ namespace PTC.Infrastructure.Data
     {
         public int Incluir(Endereco obj)
         {
-            AddParametro("@Logradouro", SqlDbType.VarChar, obj.Logradouro);
-            AddParametro("@Numero", SqlDbType.VarChar, obj.Numero);
-            AddParametro("@Bairro", SqlDbType.VarChar, obj.Bairro);
-            AddParametro("@Cep", SqlDbType.VarChar, obj.Cep);
-            AddParametro("@Uf", SqlDbType.VarChar, obj.Uf);
+            AddParametro("@Logradouro", obj.Logradouro);
+            AddParametro("@Numero",  obj.Numero);
+            AddParametro("@Bairro",obj.Bairro);
+            AddParametro("@Cep",obj.Cep);
+            AddParametro("@Uf",  obj.Uf);
+            AddParametro("@PontoRefencia",obj.Numero);
 
             var tabela = ExecutarProcedure("P_ENDERECO_INCLUIR");
-            return Convert.ToInt32(tabela.Rows[0]);
+            return tabela.Rows[0]["Id"] is DBNull ? 0 : Convert.ToInt32(tabela.Rows[0]["Id"]);
         }
 
         public int ExcluirPorId(int id)
         {
-            AddParametro("@Id", SqlDbType.VarChar, id);
+            AddParametro("@Id", id);
             ExecutarProcedure("P_ENDERECO_EXCLUIR_POR_ID");
             return id;
         }
 
-        public Endereco ObterPorIdProprietario(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public Endereco ObterPorIdProprietario(int id)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }

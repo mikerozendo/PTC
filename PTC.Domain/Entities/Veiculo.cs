@@ -3,9 +3,8 @@ using System;
 
 namespace PTC.Domain.Entities
 {
-    public class Veiculo
+    public class Veiculo : Base
     {
-        public int Id { get; set; }
         public Proprietario Proprietario { get; set; }
         public string Renavam { get; set; }
         public Marca MarcaVeiculo { get; set; }

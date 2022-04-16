@@ -1,6 +1,7 @@
 ﻿using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using System;
 
 namespace PTC.Application.Services
 {
@@ -13,11 +14,6 @@ namespace PTC.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public int ExcluirPorId(int id)
-        {
-            return _enderecoRepository.ExcluirPorId(id);
-        }
-
         public int Incluir(Endereco obj)
         {
             return _enderecoRepository.Incluir(obj);
@@ -25,7 +21,8 @@ namespace PTC.Application.Services
 
         public Endereco ObterPorIdProprietario(int id)
         {
-            return _enderecoRepository.ObterPorIdProprietario(id);
+            throw new NotImplementedException();
+            //return _enderecoRepository.ObterPorIdProprietario(id);
         }
     }
 }

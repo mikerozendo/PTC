@@ -98,6 +98,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.28, )"
+            },
             "SimpleInjector": {
               "target": "Package",
               "version": "[5.3.3, )"

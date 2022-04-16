@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace PTC.Infrastructure.Data
 {
@@ -11,42 +11,47 @@ namespace PTC.Infrastructure.Data
 
         protected BaseRepository()
         {
-            _connectionString = "";
+            _connectionString = "Server=127.0.0.1; Database=ptc; User=root; Password=@M1ke98!;";
             _parametros = new List<Parametro>();
         }
 
         protected DataTable ExecutarProcedure(string procedure)
         {
-            using (var con = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand(procedure, con))
+            try
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = 300;
-                string sqlquery = procedure;
-                foreach (var parametro in _parametros)
+
+                using (var conn = new MySqlConnection(_connectionString))
+                using (var cmd = new MySqlCommand(procedure, conn)
                 {
-                    cmd.Parameters.Add(parametro.Nome, parametro.Tipo).Value = parametro.Valor;
-                    sqlquery += "" + parametro.Nome + " = " + $@"'{parametro.Valor}', ";
-                }
-
-                 _parametros.Clear();
-
-                con.Open();
-
-                using (var dataReader = cmd.ExecuteReader())
+                    CommandType = CommandType.StoredProcedure,
+                    CommandTimeout = 300
+                })
                 {
-                    var tabela = new DataTable();
-                    tabela.Load(dataReader);
+                    foreach (var parametro in _parametros)
+                        cmd.Parameters.AddWithValue($@"{parametro.Nome}", parametro.Valor).Direction = ParameterDirection.Input;
 
-                    return tabela;
+                    _parametros.Clear();
+                    conn.Open();
+
+                    using (var dataReader = cmd.ExecuteReader())
+                    {
+                        var tabela = new DataTable();
+                        tabela.Load(dataReader);
+                        return tabela;
+                    }
                 }
             }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
         }
-   
-        protected void AddParametro<TDataType>(string nome, SqlDbType tipo, TDataType valor)
+
+        protected void AddParametro<TDataType>(string nome, TDataType valor)
         {
-            _parametros.Add(new Parametro<TDataType>(nome, tipo, valor));
+            _parametros.Add(new Parametro<TDataType>(nome, valor));
         }
+
         protected void ClearParametros()
         {
             _parametros.Clear();
