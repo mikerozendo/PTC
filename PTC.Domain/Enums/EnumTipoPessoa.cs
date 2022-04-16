@@ -5,12 +5,12 @@ namespace PTC.Domain.Enums
     public enum EnumTipoPessoa
     {
         [Description("Pessoa Juridica")]
-        PessoaJuridica = 0,
+        PessoaJuridica = 1,
 
         [Description("Pessoa Fisica")]
-        PessoaFisica = 1,
+        PessoaFisica = 2,
 
         [Description("Não informado")]
-        NaoIdentificado = 2
+        NaoIdentificado = 3
     }
 }

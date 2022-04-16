@@ -21,13 +21,14 @@ namespace PTC.Application.Services
         public string Incluir(Proprietario obj)
         {
             obj.FormatarValoresEnvioDb();
+            obj.Endereco.FormataCep();
             if (!Existe(obj))
             {
                 if (ValidarDocumento(obj.Documento))
                 {
                     obj.ValidaTipoPessoa();
-                    int enderecoId = _enderecoService.Incluir(obj.Endereco);
-                    if (enderecoId > 0)
+                    obj.Endereco.Id = _enderecoService.Incluir(obj.Endereco);
+                    if (obj.Endereco.Id > 0)
                     {
                         try
                         {                    
@@ -35,7 +36,7 @@ namespace PTC.Application.Services
                         }
                         catch (Exception)
                         {
-                            _enderecoService.ExcluirPorId(enderecoId);
+                            _enderecoService.ExcluirPorId(obj.Endereco.Id);
                             return "Erro na importação! tente novamente mais tarde";
                         }
                     }
