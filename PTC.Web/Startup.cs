@@ -26,6 +26,7 @@ namespace PTC.Web
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
+            services.AddScoped<IDocumentoService, DocumentoService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

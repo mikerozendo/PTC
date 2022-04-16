@@ -8,10 +8,5 @@
         public string Cep { get; set; }
         public string Uf { get; set; }
         public string PontoReferencia { get; set; }
-
-        public void FormataCep()
-        {
-            Cep.Replace("-", string.Empty);
-        }
     }
 }
