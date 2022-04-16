@@ -22,7 +22,6 @@ namespace PTC.Application.Services
 
         public string Incluir(Proprietario obj)
         {
-            obj.FormatarValoresEnvioDb();
             if (!Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
@@ -31,7 +30,8 @@ namespace PTC.Application.Services
                     if (obj.Endereco.Id > 0)
                     {
                         try
-                        {                    
+                        {
+                            obj.FormatarValoresEscritaDb();
                             _proprietarioRepository.Incluir(obj);
                         }
                         catch (Exception)
@@ -56,7 +56,7 @@ namespace PTC.Application.Services
         {
             var proprietarios = _proprietarioRepository.ObterTodos();
             foreach (Proprietario obj in proprietarios)
-                obj.FormatarValoresRetornoDb();
+                obj.FormatarValoresLeituraDb();
 
             return proprietarios;
         }
