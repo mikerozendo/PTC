@@ -14,12 +14,6 @@ namespace PTC.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public int ExcluirPorId(int id)
-        {
-            throw new NotImplementedException();
-            //return _enderecoRepository.ExcluirPorId(id);
-        }
-
         public int Incluir(Endereco obj)
         {
             return _enderecoRepository.Incluir(obj);

@@ -20,12 +20,12 @@ namespace PTC.Infrastructure.Data
             return tabela.Rows[0]["Id"] is DBNull ? 0 : Convert.ToInt32(tabela.Rows[0]["Id"]);
         }
 
-        //public int ExcluirPorId(int id)
-        //{
-        //    AddParametro("@Id", SqlDbType.VarChar, id);
-        //    ExecutarProcedure("P_ENDERECO_EXCLUIR_POR_ID");
-        //    return id;
-        //}
+        public int ExcluirPorId(int id)
+        {
+            AddParametro("@Id", id);
+            ExecutarProcedure("P_ENDERECO_EXCLUIR_POR_ID");
+            return id;
+        }
 
         //public Endereco ObterPorIdProprietario(int id)
         //{

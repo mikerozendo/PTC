@@ -1,10 +1,7 @@
 ﻿using PTC.Domain.Entities;
-using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
-using PTC.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace PTC.Infrastructure.Data
 {
@@ -12,23 +9,19 @@ namespace PTC.Infrastructure.Data
     {
         public bool Existe(Proprietario obj)
         {
-            throw new NotImplementedException();
-
-            //AddParametro("@Nome", SqlDbType.VarChar, obj.Nome);
-            //AddParametro("@Documento", SqlDbType.VarChar, obj.Documento);
-            //return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
+            AddParametro("Nome", obj.Nome);
+            AddParametro("Documento", obj.Documento);
+            return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
         }
 
         public void Incluir(Proprietario obj)
         {
-            throw new NotImplementedException();
-
-            //AddParametro("Nome", SqlDbType.VarChar, obj.Nome);
-            //AddParametro("Documento", SqlDbType.VarChar, obj.Documento);
-            //AddParametro("Email", SqlDbType.VarChar, obj.Email);
-            //AddParametro("IdEndereco", SqlDbType.Int, obj.Endereco.Id);
-            //AddParametro("WhatsApp", SqlDbType.VarChar, obj.WhatsApp);
-            //ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
+            AddParametro("Nome", obj.Nome);
+            AddParametro("Documento", obj.Documento);
+            AddParametro("Email", obj.Email);
+            AddParametro("IdEndereco", obj.Endereco.Id);
+            AddParametro("WhatsApp", obj.WhatsApp);
+            ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
         }
 
         public IEnumerable<Proprietario> ObterTodos()

@@ -21,9 +21,9 @@ namespace PTC.Application.Services
 
         public string Incluir(Proprietario obj)
         {
+            obj.FormatarValoresEscritaDb();
             if (!Existe(obj))
             {
-                obj.FormatarValoresEscritaDb();
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
                     obj.Endereco.Id = _enderecoService.Incluir(obj.Endereco);
@@ -33,10 +33,9 @@ namespace PTC.Application.Services
                         {
                             _proprietarioRepository.Incluir(obj);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            _enderecoService.ExcluirPorId(obj.Endereco.Id);
-                            return "Erro na importação! tente novamente mais tarde";
+                            return "Erro cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
                     return "Proprietário cadastrado com sucesso!";
