@@ -7,7 +7,6 @@ namespace PTC.Application.Services
 {
     public class DocumentoService : IDocumentoService
     {
-
         public bool ValidarDocumento(string documento)
         {
             if (documento.Length == 11)
@@ -64,12 +63,11 @@ namespace PTC.Application.Services
 
                     return segundoDV.ToString() == cnpjCarcteres[13].ToString();
                 }
-                else
-                    return false;
+                else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                return false;
             }
         }
 
@@ -114,19 +112,15 @@ namespace PTC.Application.Services
                     }
                     segundoDV = 11 - (somaDv % 11);
 
-                    if (segundoDV.ToString() == cpfBase[10].ToString() ||
-                    (segundoDV == 0 && cpfBase[10] == '0') ||
-                    (segundoDV == 1 && cpfBase[10] == '0'))
-                        return true;
-                    else
-                        return false;
+                    return segundoDV.ToString() == cpfBase[10].ToString() ||
+                    segundoDV == 0 && cpfBase[10] == '0' ||
+                    segundoDV == 1 && cpfBase[10] == '0';
                 }
-                else
-                    return false;
+                else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                return false;
             }
         }
     }
