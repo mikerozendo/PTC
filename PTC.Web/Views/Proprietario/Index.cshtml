@@ -27,15 +27,24 @@
             <td>@obj.Nome</td>
             <td>
                 <a onclick="AbrirWhatsAppWeb(this)" class="btn-link" data-id="@obj.WhatsApp">
-                <i class="fa fa-whatsapp" aria-hidden="true" style="color: green; font-weight: bold;"></i></a> @obj.WhatsApp
+                    <i class="fa fa-whatsapp" aria-hidden="true" style="color: green; font-weight: bold;"></i>
+                </a> @obj.WhatsApp
             </td>
             <td>@obj.Cadastro</td>
             <td>@obj.Exclusao</td>
             <td>@obj.Documento</td>
-            <td><button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Endereco.Cep" font-style:oblique">Maps</button></td>
             <td>
-                <button class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> |
-                <button class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Endereco.Cep" font-style:oblique">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-warning">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button> |
+                <button class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
             </td>
         </tr>
         }
