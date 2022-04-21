@@ -5,34 +5,46 @@
         <a href="@Url.Action("Adicionar","Proprietario")" class="btn btn-success btnApp">Novo</a>
     </div>
 </div>
-<table id="tblMarcas" class="table table-striped table-hover">
+<div class="i">
+
+</div>
+<table id="tblMarcas" class="table table-striped table-hover table-bordered">
     <thead>
         <tr>
             <th>Nome</th>
-            <th>Telefone</th>
-            <th>E-mail</th>
+            <th style="width: 15%;">Telefone</th>
             <th>Cadastro</th>
             <th>Exclusão</th>
-            <th>Tipo</th>
             <th>Documento</th>
             <th>Endereco</th>
-            <th>Situação</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (PTC.Domain.Entities.Proprietario obj in Model)
         {
-            <tr>
-                <td>@obj.Nome</td>
-                <td>@obj.WhatsApp</td>
-                <td>@obj.Email</td>
-                <td>@obj.Cadastro</td>
-                <td>@obj.Exclusao</td>
-                <td>@obj.EnumTipoPessoa</td>
-                <td>@obj.Documento</td>
-                <td>@obj.Endereco.ToString()</td>
-                <td>@obj.EnumSituacaoProprietario.ToString()</td>
-            </tr>
+        <tr>
+            <td>@obj.Nome</td>
+            <td>@obj.WhatsApp</td>
+            <td>@obj.Cadastro</td>
+            <td>@obj.Exclusao</td>
+            <td>@obj.Documento</td>
+            <td><button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Endereco.Cep" font-style:oblique">Maps</button></td>
+            <td>
+                <button class="btn btn-group-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> |
+                <button class="btn btn-group-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script>
+        function AbrirGoogleMaps(obj) {
+            let link = $(obj).attr("data-endereco");
+            window.open(link,"_blank");
+        }
+    </script>
+
+} 
