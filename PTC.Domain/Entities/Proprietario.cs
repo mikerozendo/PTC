@@ -13,6 +13,8 @@ namespace PTC.Domain.Entities
         public Endereco Endereco { get; set; } = new();
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
+        public DateTime? Cadastro { get; set; } = null;
+        public DateTime? Exclusao { get; set; } = null;
 
         public void FormatarEscritaDb()
         {
@@ -29,28 +31,28 @@ namespace PTC.Domain.Entities
             if (!string.IsNullOrEmpty(WhatsApp))
             {
                 var array = WhatsApp.AsSpan();
-                WhatsApp = $"({array.Slice(0, 1).ToString()}) {array[2]} {array.Slice(3, 6).ToString()}-{array.Slice(7, 10).ToString()}";
+                WhatsApp = $"({array.Slice(0, 2).ToString()}) {array[2]} {array.Slice(3, 4).ToString()}-{array.Slice(5, 4).ToString()}";
             }
             if (!string.IsNullOrEmpty(Documento))
             {
                 var array = Documento.AsSpan();
 
-                if (Documento.Length == 10)
+                if (Documento.Length == 11)
                 {
                     Documento =
-                    $"{array.Slice(0, 2).ToString()}." +
-                    $"{array.Slice(3, 5).ToString()}." +
-                    $"{array.Slice(6, 8).ToString()}-" +
-                    $"{array.Slice(9, 10).ToString()}";
+                    $"{array.Slice(0, 3).ToString()}." +
+                    $"{array.Slice(3, 3).ToString()}." +
+                    $"{array.Slice(6, 3).ToString()}-" +
+                    $"{array.Slice(9, 2).ToString()}";
                 }
                 else
                 {
                     Documento =
-                        $"{array.Slice(0, 1).ToString()}." +
-                        $"{array.Slice(2, 4).ToString()}." +
-                        $"{array.Slice(5, 7).ToString()}/" +
-                        $"{array.Slice(8, 11).ToString()}-" +
-                        $"{array.Slice(12, 13).ToString()}";
+                        $"{array.Slice(0, 2).ToString()}." +
+                        $"{array.Slice(2, 3).ToString()}." +
+                        $"{array.Slice(5, 3).ToString()}/" +
+                        $"{array.Slice(8, 4).ToString()}-" +
+                        $"{array.Slice(12, 2).ToString()}";
                 }
             }
         }
