@@ -1,8 +1,8 @@
-﻿using PTC.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Infrastructure.Data.Base;
-using System;
-using System.Collections.Generic;
 
 namespace PTC.Infrastructure.Data.Respository
 {
@@ -15,7 +15,7 @@ namespace PTC.Infrastructure.Data.Respository
             return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
         }
 
-        public void Incluir(Proprietario obj)
+        public string Inserir(Proprietario obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
@@ -23,6 +23,26 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("IdEndereco", obj.Endereco.Id);
             AddParametro("WhatsApp", obj.WhatsApp);
             ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
+            return string.Empty;
+        }
+        public void Alterar(Proprietario obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Deletar(Proprietario obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Proprietario ObterPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Proprietario> ObterPorPeriodoCadastro(DateTime inicio, DateTime termino)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Proprietario> ObterTodos()

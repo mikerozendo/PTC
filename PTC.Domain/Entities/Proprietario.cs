@@ -1,6 +1,6 @@
-﻿using PTC.Domain.Enums;
+﻿using System;
+using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Entities;
-using System;
 
 namespace PTC.Domain.Entities
 {
@@ -14,7 +14,7 @@ namespace PTC.Domain.Entities
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
 
-        public void FormatarValoresEscritaDb()
+        public void FormatarEscritaDb()
         {
             if (!string.IsNullOrEmpty(WhatsApp))
                 WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
@@ -24,12 +24,12 @@ namespace PTC.Domain.Entities
                 Documento = Documento.Replace("/", string.Empty);
         }
 
-        public void FormatarValoresLeituraDb()
+        public void FormatarLeituraDb()
         {
             if (!string.IsNullOrEmpty(WhatsApp))
             {
                 var array = WhatsApp.AsSpan();
-                WhatsApp = $"({array.Slice(0,1).ToString()}) {array[2]} {array.Slice(3,6).ToString()}-{array.Slice(7, 10).ToString()}";
+                WhatsApp = $"({array.Slice(0, 1).ToString()}) {array[2]} {array.Slice(3, 6).ToString()}-{array.Slice(7, 10).ToString()}";
             }
             if (!string.IsNullOrEmpty(Documento))
             {

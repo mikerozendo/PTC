@@ -2,7 +2,7 @@
 {
     public interface IFormato
     {
-        void FormatarValoresEscritaDb();
-        void FormatarValoresLeituraDb();
+        void FormatarEscritaDb();
+        void FormatarLeituraDb();
     }
 }

@@ -2,6 +2,6 @@
 {
     public abstract class Base
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
     }
 }

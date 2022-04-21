@@ -1,7 +1,7 @@
-﻿using PTC.Domain.Entities;
+﻿using System;
+using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
-using System;
 
 namespace PTC.Application.Services
 {
@@ -14,9 +14,14 @@ namespace PTC.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public int Incluir(Endereco obj)
+        public void Deletar(Endereco obj)
         {
-            return _enderecoRepository.Incluir(obj);
+            _enderecoRepository.Deletar(obj);
+        }
+
+        public int Inserir(Endereco obj)
+        {
+            return _enderecoRepository.Inserir(obj);
         }
 
         public Endereco ObterPorIdProprietario(int id)
