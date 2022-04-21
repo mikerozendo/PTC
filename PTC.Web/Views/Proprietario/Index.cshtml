@@ -25,14 +25,17 @@
         {
         <tr>
             <td>@obj.Nome</td>
-            <td>@obj.WhatsApp</td>
+            <td>
+                <a onclick="AbrirWhatsAppWeb(this)" class="btn-link" data-id="@obj.WhatsApp">
+                <i class="fa fa-whatsapp" aria-hidden="true" style="color: green; font-weight: bold;"></i></a> @obj.WhatsApp
+            </td>
             <td>@obj.Cadastro</td>
             <td>@obj.Exclusao</td>
             <td>@obj.Documento</td>
             <td><button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Endereco.Cep" font-style:oblique">Maps</button></td>
             <td>
-                <button class="btn btn-group-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> |
-                <button class="btn btn-group-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button> |
+                <button class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
             </td>
         </tr>
         }
@@ -44,6 +47,13 @@
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link,"_blank");
+        }
+
+        function AbrirWhatsAppWeb(obj) {
+            let object = $(obj).attr("data-id");
+            let link = "https://wa.me/55";
+            link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
+            window.open(link, "_blank");
         }
     </script>
 
