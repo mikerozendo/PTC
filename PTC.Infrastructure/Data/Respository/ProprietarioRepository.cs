@@ -15,7 +15,7 @@ namespace PTC.Infrastructure.Data.Respository
             return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
         }
 
-        public string Inserir(Proprietario obj)
+        public dynamic Inserir(Proprietario obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
@@ -23,8 +23,9 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("IdEndereco", obj.Endereco.Id);
             AddParametro("WhatsApp", obj.WhatsApp);
             ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
-            return string.Empty;
+            return "Proprietário Cadastrado com sucesso!";
         }
+
         public void Alterar(Proprietario obj)
         {
             throw new NotImplementedException();

@@ -2,6 +2,7 @@ C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\bin\Debug\net5.0\PTC.Domain.de
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\bin\Debug\net5.0\PTC.Domain.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\bin\Debug\net5.0\ref\PTC.Domain.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\bin\Debug\net5.0\PTC.Domain.pdb
+C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.csprojAssemblyReference.cache
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.AssemblyInfoInputs.cache
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.AssemblyInfo.cs

@@ -26,7 +26,7 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public JsonResult Incluir(Proprietario proprietario)
         {
-            return Json(_proprietarioService.Incluir(proprietario));
+            return Json(_proprietarioService.Inserir(proprietario));
         }
     }
 }
