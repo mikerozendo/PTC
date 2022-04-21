@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
+
+<div class="row">
     <div class="col-12" style="text-align: right; margin-top: 20px; margin-bottom:5px">
         <a href="@Url.Action("Adicionar","Proprietario")" class="btn btn-success btnApp">Novo</a>
     </div>
@@ -7,11 +9,30 @@
     <thead>
         <tr>
             <th>Nome</th>
-            <th>Tipo Documento</th>
-            <th>Documento</th>
+            <th>Telefone</th>
             <th>E-mail</th>
+            <th>Cadastro</th>
+            <th>Exclusão</th>
+            <th>Tipo</th>
+            <th>Documento</th>
             <th>Endereco</th>
             <th>Situação</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach (PTC.Domain.Entities.Proprietario obj in Model)
+        {
+            <tr>
+                <td>@obj.Nome</td>
+                <td>@obj.WhatsApp</td>
+                <td>@obj.Email</td>
+                <td>@obj.Cadastro</td>
+                <td>@obj.Exclusao</td>
+                <td>@obj.EnumTipoPessoa</td>
+                <td>@obj.Documento</td>
+                <td>@obj.Endereco.ToString()</td>
+                <td>@obj.EnumSituacaoProprietario.ToString()</td>
+            </tr>
+        }
+    </tbody>
 </table>
