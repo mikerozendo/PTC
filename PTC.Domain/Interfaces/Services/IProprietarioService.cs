@@ -5,8 +5,8 @@ namespace PTC.Domain.Interfaces.Services
 {
     public interface IProprietarioService
     {
-        string Incluir(Proprietario proprietario);
+        string Inserir(Proprietario proprietario);
         bool Existe(Proprietario proprietario);
-        IEnumerable<Proprietario> Obter();
+        IEnumerable<Proprietario> ObterTodos();
     }
 }

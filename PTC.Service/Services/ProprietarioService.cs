@@ -1,8 +1,8 @@
-﻿using PTC.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
 
 namespace PTC.Application.Services
 {
@@ -19,22 +19,25 @@ namespace PTC.Application.Services
             _documentoService = documentoService;
         }
 
-        public string Incluir(Proprietario obj)
+        public string Inserir(Proprietario obj)
         {
-            obj.FormatarValoresEscritaDb();
+            obj.FormatarEscritaDb();
+            obj.Endereco.FormatarEscritaDb();
+
             if (!Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
-                    obj.Endereco.Id = _enderecoService.Incluir(obj.Endereco);
+                    obj.Endereco.Id = _enderecoService.Inserir(obj.Endereco);
                     if (obj.Endereco.Id > 0)
                     {
                         try
                         {
-                            _proprietarioRepository.Incluir(obj);
+                             return _proprietarioRepository.Inserir(obj);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
+                            _enderecoService.Deletar(obj.Endereco);
                             return "Erro cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
@@ -50,11 +53,11 @@ namespace PTC.Application.Services
             return _proprietarioRepository.Existe(obj);
         }
 
-        public IEnumerable<Proprietario> Obter()
+        public IEnumerable<Proprietario> ObterTodos()
         {
             var proprietarios = _proprietarioRepository.ObterTodos();
             foreach (Proprietario obj in proprietarios)
-                obj.FormatarValoresLeituraDb();
+                obj.FormatarLeituraDb();
 
             return proprietarios;
         }

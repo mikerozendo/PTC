@@ -1,8 +1,10 @@
-﻿using PTC.Domain.Enums;
+﻿using System;
+using PTC.Domain.Enums;
+using PTC.Domain.Interfaces.Entities;
 
 namespace PTC.Domain.Entities
 {
-    public class Proprietario : Base
+    public class Proprietario : Base, IFormato
     {
         public string Nome { get; set; }
         public string Documento { get; set; }
@@ -12,7 +14,7 @@ namespace PTC.Domain.Entities
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
 
-        public void FormatarValoresEscritaDb()
+        public void FormatarEscritaDb()
         {
             if (!string.IsNullOrEmpty(WhatsApp))
                 WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
@@ -22,21 +24,34 @@ namespace PTC.Domain.Entities
                 Documento = Documento.Replace("/", string.Empty);
         }
 
-        public void FormatarValoresLeituraDb()
+        public void FormatarLeituraDb()
         {
             if (!string.IsNullOrEmpty(WhatsApp))
             {
-                var array = WhatsApp.ToCharArray();
-                WhatsApp = $"({array[0]}{array[1]}) {array[2]} {array[3]}{array[4]}{array[5]}{array[6]}-{array[7]}{array[8]}{array[9]}{array[10]}";
+                var array = WhatsApp.AsSpan();
+                WhatsApp = $"({array.Slice(0, 1).ToString()}) {array[2]} {array.Slice(3, 6).ToString()}-{array.Slice(7, 10).ToString()}";
             }
             if (!string.IsNullOrEmpty(Documento))
             {
-                var array = Documento.ToCharArray();
+                var array = Documento.AsSpan();
 
                 if (Documento.Length == 10)
-                    Documento = $"{array[0]}{array[1]}{array[2]}.{array[3]}{array[4]}{array[5]}.{array[6]}{array[6]}{array[8]}-{array[9]}{array[10]}";
+                {
+                    Documento =
+                    $"{array.Slice(0, 2).ToString()}." +
+                    $"{array.Slice(3, 5).ToString()}." +
+                    $"{array.Slice(6, 8).ToString()}-" +
+                    $"{array.Slice(9, 10).ToString()}";
+                }
                 else
-                    Documento = $"{array[0]}{array[1]}.{array[2]}{array[3]}{array[4]}.{array[5]}{array[6]}{array[7]}/{array[8]}{array[9]}{array[10]}{array[11]}-{array[12]}{array[13]}";
+                {
+                    Documento =
+                        $"{array.Slice(0, 1).ToString()}." +
+                        $"{array.Slice(2, 4).ToString()}." +
+                        $"{array.Slice(5, 7).ToString()}/" +
+                        $"{array.Slice(8, 11).ToString()}-" +
+                        $"{array.Slice(12, 13).ToString()}";
+                }
             }
         }
     }

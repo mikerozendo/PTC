@@ -1,12 +1,7 @@
 ﻿using PTC.Domain.Entities;
-using System.Collections.Generic;
+using PTC.Domain.Interfaces.Repository.CQRS;
 
 namespace PTC.Domain.Interfaces.Repository
 {
-    public interface IProprietarioRepository 
-    {
-        IEnumerable<Proprietario> ObterTodos();
-        bool Existe(Proprietario obj);
-        void Incluir(Proprietario obj);
-    }
+    public interface IProprietarioRepository : IQueryRepository<Proprietario>, ICommandRepository<Proprietario> { }
 }

@@ -2,9 +2,10 @@
 
 namespace PTC.Domain.Interfaces.Services
 {
-    public  interface IEnderecoService
+    public interface IEnderecoService
     {
-        int Incluir(Endereco obj);
+        int Inserir(Endereco obj);
         Endereco ObterPorIdProprietario(int id);
+        void Deletar(Endereco obj);
     }
 }
