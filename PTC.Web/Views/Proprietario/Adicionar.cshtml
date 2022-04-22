@@ -153,6 +153,9 @@
                 serverPromise.text()
                     .then(function (j) {
                         alert(j);
+                        if (j.toString().includes("sucesso")) {
+                            window.location.href = "@Url.Action("Index","Proprietario")";
+                       }
                     })
                     .catch(function (e) {
                         console.log(e);
