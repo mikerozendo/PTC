@@ -89,5 +89,10 @@ namespace PTC.Application.Services
                 return new List<Proprietario>();
             }
         }
+
+        public void Deletar(Proprietario obj)
+        {
+            _proprietarioRepository.Deletar(obj);
+        }
     }
 }

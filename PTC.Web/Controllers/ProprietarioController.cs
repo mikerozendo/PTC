@@ -36,5 +36,12 @@ namespace PTC.Web.Controllers
         {
             return View("Index", _proprietarioService.ObterFiltrados(inicio, termino, situacao));
         }
+
+        [HttpGet]
+        public IActionResult Deletar(Proprietario obj)
+        {
+            _proprietarioService.Deletar(obj);
+            return RedirectToAction("Index");
+        }
     }
 }

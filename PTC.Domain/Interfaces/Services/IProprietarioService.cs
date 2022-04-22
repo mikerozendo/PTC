@@ -11,5 +11,6 @@ namespace PTC.Domain.Interfaces.Services
         bool Existe(Proprietario proprietario);
         IEnumerable<Proprietario> ObterTodos();
         IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao);
+        void Deletar(Proprietario obj);
     }
 }

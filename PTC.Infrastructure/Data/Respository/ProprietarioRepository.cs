@@ -66,7 +66,8 @@ namespace PTC.Infrastructure.Data.Respository
 
         public void Deletar(Proprietario obj)
         {
-            throw new NotImplementedException();
+            AddParametro("Id", obj.Id);
+            ExecutarProcedure("P_PROPRIETARIO_DELETAR");
         }
 
         public Proprietario ObterPorId(int id)
