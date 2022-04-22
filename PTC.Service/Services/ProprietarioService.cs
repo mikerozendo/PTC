@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
+using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
 
@@ -71,6 +72,25 @@ namespace PTC.Application.Services
             catch (Exception)
             {
                 return new List<Proprietario>();                
+            }
+        }
+
+        public IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao)
+        {
+            try
+            {
+                if (!(inicio is null) && !(termino is null) && situacao == EnumSituacao.Ativo)
+                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Cadastro);
+
+                else if (!(inicio is null) && !(termino is null) && situacao == EnumSituacao.Inativo)
+                    return ObterTodos().Where(x => x.Exclusao >= inicio && x.Exclusao <= termino && x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Cadastro);
+
+                else
+                    return ObterTodos().Where(x => x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Exclusao);
+            }
+            catch (Exception)
+            {
+               return new List<Proprietario>();
             }
         }
     }
