@@ -26,8 +26,8 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public IActionResult Inserir(Proprietario proprietario)
         {
-            var mensagem = _proprietarioService.Inserir(proprietario);
-            return RedirectToAction("Index", "Proprietario");
+            return Content(_proprietarioService.Inserir(proprietario));
+            //return RedirectToAction("Index", "Proprietario");
             //return Json();
         }
     }

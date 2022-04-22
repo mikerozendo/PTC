@@ -7,7 +7,7 @@
     <div class="modal-body">
         @*<form action="@Url.Action("Inserir","Proprietario")" method="post">*@
 
-        <form action="@Url.Action("Inserir","Proprietario")" method="post">
+        <form id="incluirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
             <div class="form-group">
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-4">
@@ -139,7 +139,27 @@
                 $(this).mask("99.999.999/9999-99");
             }
         });
-                        //teste
+
+        document.forms['incluirProprietario'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            ColetarEventoServidor();
+        });
+
+        function ColetarEventoServidor() {
+            let value = fetch(event.target.action, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(event.target)) 
+            }).then(function (serverPromise) {
+                serverPromise.text()
+                    .then(function (j) {
+                        alert(j);
+                    })
+                    .catch(function (e) {
+                        console.log(e);
+                    });
+            });
+            
+        }
 
     </script>
 
