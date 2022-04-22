@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Services;
-using System;
 
 namespace PTC.Web.Controllers
 {
