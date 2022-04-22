@@ -1,10 +1,11 @@
-﻿using PTC.Domain.Enums;
+﻿using System;
+using PTC.Domain.Enums;
+using PTC.Domain.Interfaces.Entities;
 
 namespace PTC.Domain.Entities
 {
-    public class Proprietario
+    public class Proprietario : Base, IFormato
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Documento { get; set; }
         public string Email { get; set; }
@@ -12,32 +13,48 @@ namespace PTC.Domain.Entities
         public Endereco Endereco { get; set; } = new();
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
+        public DateTime? Cadastro { get; set; } = null;
+        public DateTime? Exclusao { get; set; } = null;
 
-        public Proprietario()
+        public void FormatarEscritaDb()
         {
-            EnumTipoPessoa = Documento.Length == 14 ? EnumTipoPessoa.PessoaFisica : EnumTipoPessoa.PessoaJuridica;
-        }
-
-        public void FormatarValoresEnvioDb()
-        {
-            WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
-            Documento = Documento.Replace(".", "").Replace("-", string.Empty);
+            if (!string.IsNullOrEmpty(WhatsApp))
+                WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
+            if (!string.IsNullOrEmpty(Documento))
+                Documento = Documento.Replace(".", "").Replace("-", string.Empty);
             if (Documento.Contains("/"))
                 Documento = Documento.Replace("/", string.Empty);
         }
 
-        public void FormatarValoresRetornoDb()
+        public void FormatarLeituraDb()
         {
-            var array = WhatsApp.ToCharArray();
+            if (!string.IsNullOrEmpty(WhatsApp))
+            {
+                var array = WhatsApp.AsSpan();
+                WhatsApp = $"({array.Slice(0, 2).ToString()}) {array[2]} {array.Slice(3, 4).ToString()}-{array.Slice(5, 4).ToString()}";
+            }
+            if (!string.IsNullOrEmpty(Documento))
+            {
+                var array = Documento.AsSpan();
 
-            WhatsApp = $"({array[0]}{array[1]}) {array[2]} {array[3]}{array[4]}{array[5]}{array[6]}-{array[7]}{array[8]}{array[9]}{array[10]}";
-
-            array = Documento.ToCharArray();
-
-            if (Documento.Length == 10)
-                Documento = $"{array[0]}{array[1]}{array[2]}.{array[3]}{array[4]}{array[5]}.{array[6]}{array[6]}{array[8]}-{array[9]}{array[10]}";
-            else
-                Documento = $"{array[0]}{array[1]}.{array[2]}{array[3]}{array[4]}.{array[5]}{array[6]}{array[7]}/{array[8]}{array[9]}{array[10]}{array[11]}-{array[12]}{array[13]}";
+                if (Documento.Length == 11)
+                {
+                    Documento =
+                    $"{array.Slice(0, 3).ToString()}." +
+                    $"{array.Slice(3, 3).ToString()}." +
+                    $"{array.Slice(6, 3).ToString()}-" +
+                    $"{array.Slice(9, 2).ToString()}";
+                }
+                else
+                {
+                    Documento =
+                        $"{array.Slice(0, 2).ToString()}." +
+                        $"{array.Slice(2, 3).ToString()}." +
+                        $"{array.Slice(5, 3).ToString()}/" +
+                        $"{array.Slice(8, 4).ToString()}-" +
+                        $"{array.Slice(12, 2).ToString()}";
+                }
+            }
         }
     }
 }

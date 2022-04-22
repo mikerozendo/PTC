@@ -1,11 +1,8 @@
-﻿using System.Data;
-
-namespace PTC.Infrastructure.Data
+﻿namespace PTC.Infrastructure.Data.Base
 {
     public abstract class Parametro
     {
         public string Nome { get; set; }
-        public SqlDbType Tipo { get; set; }
         public object Valor { get; set; }
     }
 }

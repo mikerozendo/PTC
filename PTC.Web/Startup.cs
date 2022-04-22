@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Application.Services;
-using PTC.Infrastructure.Data;
+using PTC.Infrastructure.Data.Respository;
 
 namespace PTC.Web
 {
@@ -26,6 +26,7 @@ namespace PTC.Web
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
+            services.AddScoped<IDocumentoService, DocumentoService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

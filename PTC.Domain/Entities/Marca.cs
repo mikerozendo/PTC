@@ -2,9 +2,8 @@
 
 namespace PTC.Domain.Entities
 {
-    public class Marca
+    public class Marca : Base
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public EnumSituacao EnumSituacao { get; set; }
     }

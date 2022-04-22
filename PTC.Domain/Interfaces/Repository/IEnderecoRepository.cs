@@ -1,11 +1,7 @@
 ﻿using PTC.Domain.Entities;
+using PTC.Domain.Interfaces.Repository.CQRS;
 
 namespace PTC.Domain.Interfaces.Repository
 {
-    public interface IEnderecoRepository
-    {
-        int Incluir(Endereco obj);
-        int ExcluirPorId(int id);
-        Endereco ObterPorIdProprietario(int id);
-    }
+    public interface IEnderecoRepository : ICommandRepository<Endereco> { }
 }
