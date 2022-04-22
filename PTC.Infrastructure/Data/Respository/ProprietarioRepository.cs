@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using PTC.Domain.Entities;
+using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Infrastructure.Data.Base;
 
@@ -48,34 +50,42 @@ namespace PTC.Infrastructure.Data.Respository
 
         public IEnumerable<Proprietario> ObterTodos()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<Proprietario> proprietarios = new();
+                var tabela = ExecutarProcedure("P_PROPRIETARIO_OBTER_TODOS");
 
-            //List<Proprietario> proprietarios = new();
-            //var tabela = ExecutarProcedure("P_PROPRIETARIO_OBTER_TODOS");
+                foreach (DataRow sdr in tabela.Rows)
+                {
+                    proprietarios.Add(new Proprietario
+                    {
+                        Documento = sdr["Documento"].ToString(),
+                        Email = sdr["Email"].ToString(),
+                        EnumSituacaoProprietario = Convert.ToBoolean(sdr["Ativo"]) ? EnumSituacao.Ativo : EnumSituacao.Inativo,
+                        EnumTipoPessoa = (EnumTipoPessoa)sdr["IdTipoPessoa"],
+                        Id = Convert.ToInt32(sdr["Id"]),
+                        Nome = sdr["Nome"].ToString(),
+                        WhatsApp = sdr["WhatsApp"].ToString(),
+                        Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
+                        Exclusao = sdr["Exclusao"] is DBNull ? null : Convert.ToDateTime(sdr["Exclusao"]),
+                        Endereco = new Endereco
+                        {
+                            Bairro = sdr["Bairro"].ToString(),
+                            Cep = sdr["Cep"].ToString(),
+                            Logradouro = sdr["Logradouro"].ToString(),
+                            Numero = sdr["Numero"].ToString(),
+                            Uf = sdr["Uf"].ToString()
+                        }
+                    });
+                }
 
-            //foreach (DataRow sdr in tabela.Rows)
-            //{
-            //    proprietarios.Add(new Proprietario
-            //    {
-            //        Documento = sdr["Documento"].ToString(),
-            //        Email = sdr["Email"].ToString(),
-            //        EnumSituacaoProprietario = (EnumSituacao)sdr["Situacao"],
-            //        EnumTipoPessoa = (EnumTipoPessoa)sdr["TipoPessoa"],
-            //        Id = Convert.ToInt32(sdr["Id"]),
-            //        Nome = sdr["Nome"].ToString(),
-            //        WhatsApp = sdr["WhatsApp"].ToString(),
-            //        Endereco = new Endereco
-            //        {
-            //            Bairro = sdr["Bairro"].ToString(),
-            //            Cep = sdr["Cep"].ToString(),
-            //            Logradouro = sdr["Logradouro"].ToString(),
-            //            Numero = sdr["Logradouro"].ToString(),
-            //            Uf = sdr["Uf"].ToString()
-            //        }
-            //    });
-            //}
+                return proprietarios;
+            }
+            catch (Exception ex)
+            {
 
-            //return proprietarios;
+                throw;
+            }
         }
     }
 }

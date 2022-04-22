@@ -23,8 +23,14 @@ namespace PTC.Domain.Entities
             if (!string.IsNullOrEmpty(Cep))
             {
                 var array = Cep.AsSpan();
-                Cep = $"{array.Slice(0, 4).ToString()}-{array.Slice(6, 8).ToString()}";
+                Cep = $"{array.Slice(0, 5).ToString()}-{array.Slice(5, 3).ToString()}";
             }
+        }
+
+        public override string ToString()
+        {
+            return
+                $"{Logradouro}, {Numero}";
         }
     }
 }

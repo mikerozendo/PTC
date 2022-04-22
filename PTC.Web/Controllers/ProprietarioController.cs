@@ -15,7 +15,7 @@ namespace PTC.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_proprietarioService.ObterTodos());
         }
 
         public IActionResult Adicionar()
@@ -24,9 +24,11 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Incluir(Proprietario proprietario)
+        public IActionResult Inserir(Proprietario proprietario)
         {
-            return Json(_proprietarioService.Inserir(proprietario));
+            return Content(_proprietarioService.Inserir(proprietario));
+            //return RedirectToAction("Index", "Proprietario");
+            //return Json();
         }
     }
 }

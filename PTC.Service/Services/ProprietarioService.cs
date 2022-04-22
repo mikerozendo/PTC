@@ -33,7 +33,7 @@ namespace PTC.Application.Services
                     {
                         try
                         {
-                             return _proprietarioRepository.Inserir(obj);
+                            return _proprietarioRepository.Inserir(obj);
                         }
                         catch (Exception)
                         {
@@ -55,11 +55,23 @@ namespace PTC.Application.Services
 
         public IEnumerable<Proprietario> ObterTodos()
         {
-            var proprietarios = _proprietarioRepository.ObterTodos();
-            foreach (Proprietario obj in proprietarios)
-                obj.FormatarLeituraDb();
+            try
+            {
+                var proprietarios = _proprietarioRepository.ObterTodos();
 
-            return proprietarios;
+                foreach (Proprietario obj in proprietarios)
+                {
+                    obj.FormatarLeituraDb();
+                    obj.Endereco.FormatarLeituraDb();
+                }
+
+                return proprietarios;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

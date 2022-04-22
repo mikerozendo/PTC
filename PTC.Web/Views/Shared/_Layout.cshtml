@@ -6,12 +6,21 @@
     <title>@ViewData["Title"] - PTC.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="sidebar">
-        <a href="@Url.Action("Index","Marca")">Marcas</a>
-        <a href="@Url.Action("Index","Proprietario")">Proprietarios</a>
-        <a href="#about">Veículos</a>
+        <ul class="nav flex-column">
+            <li>
+                <a class="nav-link" href="@Url.Action("Index","Marca")">Marcas</a>
+            </li>
+            <li>
+                <a class="nav-link" href="@Url.Action("Index","Proprietario")">Proprietarios</a>
+            </li>
+            <li>
+                <a class="nav-link" href="#about">Veículos</a>
+            </li>
+        </ul>
     </div>
 
     <div class="container content">
