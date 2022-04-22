@@ -12,7 +12,6 @@ namespace PTC.Infrastructure.Data.Respository
     {
         public bool Existe(Proprietario obj)
         {
-            AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
             return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
         }

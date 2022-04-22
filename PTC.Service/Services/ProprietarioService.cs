@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
@@ -65,12 +66,11 @@ namespace PTC.Application.Services
                     obj.Endereco.FormatarLeituraDb();
                 }
 
-                return proprietarios;
+                return proprietarios.OrderByDescending(x => x.Cadastro);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw;
+                return new List<Proprietario>();                
             }
         }
     }
