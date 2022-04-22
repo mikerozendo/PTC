@@ -31,9 +31,10 @@ namespace PTC.Web.Controllers
             return Content(_proprietarioService.Inserir(proprietario));
         }
 
-        public IActionResult ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao)
+        [HttpGet]
+        public IActionResult ObterFiltrados(DateTime inicio, DateTime termino, EnumSituacao situacao)
         {
-            return Json(_proprietarioService.ObterFiltrados(inicio, termino, situacao));
+            return View("Index", _proprietarioService.ObterFiltrados(inicio, termino, situacao));
         }
     }
 }

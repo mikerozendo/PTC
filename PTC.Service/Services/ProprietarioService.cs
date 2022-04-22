@@ -71,7 +71,7 @@ namespace PTC.Application.Services
             }
             catch (Exception)
             {
-                return new List<Proprietario>();                
+                return new List<Proprietario>();
             }
         }
 
@@ -79,18 +79,14 @@ namespace PTC.Application.Services
         {
             try
             {
-                if (!(inicio is null) && !(termino is null) && situacao == EnumSituacao.Ativo)
-                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Cadastro);
-
-                else if (!(inicio is null) && !(termino is null) && situacao == EnumSituacao.Inativo)
-                    return ObterTodos().Where(x => x.Exclusao >= inicio && x.Exclusao <= termino && x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Cadastro);
-
+                if (situacao == EnumSituacao.Todos)
+                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino);
                 else
-                    return ObterTodos().Where(x => x.EnumSituacaoProprietario == situacao).OrderByDescending(x => x.Exclusao);
+                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao);
             }
             catch (Exception)
             {
-               return new List<Proprietario>();
+                return new List<Proprietario>();
             }
         }
     }
