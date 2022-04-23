@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
-@using System.Text.Json;
 
-    <div id="modalContainner"></div>
+<div id="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
         <form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
@@ -74,10 +73,14 @@
                         <td>
                             <a class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a> |
-                            <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
+                            </a> 
+                            @if (obj.Exclusao is null)
+                            {
+                               <span>|</span>
+                               <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                               </button>
+                            }
                         </td>
                     </tr>
                 }
