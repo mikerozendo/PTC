@@ -124,12 +124,6 @@
                 $("#modalContainner").html(html);
                 $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
             });
-
-            //$(".btn-warning").on('click', function (e) {
-            //    e.stopImmediatePropagation();
-            //    objAlterar = JSON.parse($(this).attr('data-id'));
-            //    Alterar();
-            //});
         });
 
         function AbrirGoogleMaps(obj) {
@@ -157,14 +151,6 @@
 
         function Reload() {
             window.location.href = window.location.href;
-        }
-
-        function Alterar() {
-            var form = new FormData();
-            form.append("obj", objAlterar);
-            var request = new XMLHttpRequest();
-            request.open("POST", "@Url.Action("Editar", "Proprietario")");
-            request.send(form);
         }
     </script>
 
