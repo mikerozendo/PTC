@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
 
-
+<div id="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
         <form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
@@ -71,13 +71,13 @@
                             </button>
                         </td>
                         <td>
-                            <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-warning">
+                            <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button>
+                            </a>
                             @if (obj.Exclusao is null)
                             {
                                 <span>|</span>
-                                <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
+                                <button class="btn btn-sm btn-danger" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             }
@@ -87,27 +87,6 @@
             </tbody>
         </table>
     </div>
-    <div id="modalContainner">
-        <div id="travaDelete" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Cuidado!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="msgDelete">Tem certeza que deseja excluir o proprietário?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
-                        <button onclick="Deletar()" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -115,11 +94,42 @@
 @section scripts {
     <script>
         var objValue = null;
+        var objAlterar = null;
         $(document).ready(function () {
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
+                objValue = JSON.parse($(this).attr('data-id'));
+                let html =
+                    `
+<div id="travaDelete" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cuidado!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o proprietário ${objValue.Nome}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
+        <button onclick="Deletar()" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    `;
+                $("#modalContainner").html(html);
                 $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
             });
+
+            //$(".btn-warning").on('click', function (e) {
+            //    e.stopImmediatePropagation();
+            //    objAlterar = JSON.parse($(this).attr('data-id'));
+            //    Alterar();
+            //});
         });
 
         function AbrirGoogleMaps(obj) {
@@ -148,6 +158,14 @@
         function Reload() {
             window.location.href = window.location.href;
         }
+
+        function Alterar() {
+            var form = new FormData();
+            form.append("obj", objAlterar);
+            var request = new XMLHttpRequest();
+            request.open("POST", "@Url.Action("Editar", "Proprietario")");
+            request.send(form);
+        }
     </script>
 
-} 
+}

@@ -42,5 +42,17 @@ namespace PTC.Web.Controllers
         {
             _proprietarioService.Deletar(obj); return Ok();
         }
+
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            return View(_proprietarioService.ObterPorId(id));
+        }
+
+        public IActionResult Alterar(Proprietario obj)
+        {
+            _proprietarioService.Alterar(obj); return Ok();
+        }
+
     }
 }

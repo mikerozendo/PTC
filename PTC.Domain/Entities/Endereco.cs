@@ -11,6 +11,7 @@ namespace PTC.Domain.Entities
         public string Cep { get; set; }
         public string Uf { get; set; }
         public string PontoReferencia { get; set; }
+        public int ProprietarioId { get; set; }
 
         public void FormatarEscritaDb()
         {

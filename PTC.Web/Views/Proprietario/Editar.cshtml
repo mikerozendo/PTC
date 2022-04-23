@@ -1,0 +1,177 @@
+﻿@model PTC.Domain.Entities.Proprietario
+
+<div class="modal-content margin-modais">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-12" style="text-align:start">
+                <h3>
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Alterar Proprietário: @Model.Nome                
+                </h3>
+                <sub>
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i> Cadastro Em: @Model.Cadastro
+                </sub>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form id="incluirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
+            <div class="form-group">
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-4">
+                        <label for="Nome">Nome</label>
+                        <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
+                    </div>
+                    <div class="col-4">
+                        <label for="tipoDocumento">Tipo Documento</label>
+                        <select id="tipoDocumento" class="form-control" required>
+                            <option value="none">Selecione</option>
+                            <option value="0">CPF</option>
+                            <option value="1">CNPJ</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="documento">Documento</label>
+                        <input id="documento" type="text" name="documento" value="@Model.Documento" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-2">
+                        <label for="Cep">CEP</label>
+                        <input id="Cep" type="text" name="Endereco.Cep" value="@Model.Endereco.Cep" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
+                    </div>
+                    <div class="col-3">
+                        <label for="Bairro">Bairro</label>
+                        <input id="Bairro" type="text" name="Endereco.Bairro" value="@Model.Endereco.Bairro" class="form-control" readonly />
+                    </div>
+                    <div class="col-2">
+                        <label for="Uf">Estado</label>
+                        <input id="Uf" type="text" name="Endereco.Uf" value="@Model.Endereco.Uf" class="form-control" readonly />
+                    </div>
+                    <div class="col-3">
+                        <label for="Cidade">Cidade</label>
+                        <input id="Cidade" type="text" name="Endereco.Cidade" value="" class="form-control" readonly />
+                    </div>
+                    <div class="col-2">
+                        <label for="Numero">Numero</label>
+                        <input id="Numero" type="text" name="Endereco.Numero" value="@Model.Endereco.Numero" class="form-control" required />
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-6">
+                        <label for="Logradouro">Logradouro</label>
+                        <input id="Logradouro" type="text" name="Endereco.Logradouro" value="@Model.Endereco.Logradouro" class="form-control" readonly />
+                    </div>
+                    <div class="col-6">
+                        <label for="pontoReferencia">Ponto de referência</label>
+                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="@Model.Endereco.PontoReferencia" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="Email">E-mail</label>
+                        <input id="Email" type="text" name="Email" value="@Model.Email" class="form-control" required />
+                    </div>
+                    <div class="col-6">
+                        <label for="WhatsApp">WhatsApp</label>
+                        <input id="WhatsApp" type="text" name="WhatsApp" value="@Model.WhatsApp" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12 div-btn-end" style="padding-top: 15px;">
+                    <a class="btn btn-danger" href="@Url.Action("Index","Proprietario")">Cancelar</a>
+                    &nbsp;|&nbsp;
+                    <button type="submit" class="btn btn-success">Alterar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        $('#Cep').keyup(function () {
+            if ($(this).val().length == 0) {
+                $('#mdlEnrecoRetornoContent').hide();
+            }
+            if ($(this).val().length == 9) {
+                var value = $(this).val().replace('-', '');
+                ConsultarCep(value);
+            }
+        });
+
+        function ConsultarCep(obj) {
+            $.ajax({
+                url: "https://viacep.com.br/ws/" + obj + "/json/",
+                type: "GET",
+                success: function (json) {
+                    if (json != null) {
+                        if (json.erro != true) {
+                            $('#Logradouro').val(json.logradouro);
+                            $('#Bairro').val(json.bairro);
+                            $('#Cidade').val(json.localidade);
+                            $('#Uf').val(json.uf);
+                        }
+                    }
+                },
+            });
+        }
+
+        $("#tipoDocumento").on('change', function (e) {
+            e.stopImmediatePropagation();
+            $("#documento").removeAttr("placeholder").removeAttr("readonly");
+            $("#documento").val("");
+
+            if ($("#tipoDocumento").val() == 0) {
+                $("#documento").attr("placeholder", "000.000.000-00");
+            }
+            else if ($("#tipoDocumento").val() == 1) {
+                $("#documento").attr("placeholder", "99.999.999/9999-99");
+            }
+            else {
+                $("#documento").attr("readonly", true);
+                $("#documento").attr("placeholder", "Selecione um tipo de documento");
+            }
+        });
+
+        $("#documento").on("keyup", function (e) {
+            e.stopImmediatePropagation();
+
+            if ($(this).val().length == 11 && $("#tipoDocumento").val() == 0) {
+                $(this).mask('999.999.999-99');
+            }
+            else if ($(this).val().length == 14 && $("#tipoDocumento").val() == 1) {
+                $(this).mask("99.999.999/9999-99");
+            }
+        });
+
+        document.forms['incluirProprietario'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            ColetarEventoServidor();
+        });
+
+        function ColetarEventoServidor() {
+            let value = fetch(event.target.action, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(event.target))
+            }).then(function (serverPromise) {
+                serverPromise.text()
+                    .then(function (j) {
+                        alert(j);
+                        if (j.toString().includes("sucesso")) {
+                            window.location.href = "@Url.Action("Index","Proprietario")";
+                       }
+                    })
+                    .catch(function (e) {
+                        console.log(e);
+                    });
+            });
+
+        }
+
+    </script>
+
+} 

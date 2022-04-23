@@ -94,5 +94,22 @@ namespace PTC.Application.Services
         {
             _proprietarioRepository.Deletar(obj);
         }
+
+        public void Alterar(Proprietario obj)
+        {
+            obj.FormatarEscritaDb();
+            obj.Endereco.FormatarEscritaDb();
+            obj.Endereco.ProprietarioId = obj.Id;
+            _enderecoService.Alterar(obj.Endereco);
+            _proprietarioRepository.Alterar(obj);
+        }
+
+        public Proprietario ObterPorId(int id)
+        {
+            Proprietario proprietario = _proprietarioRepository.ObterPorId(id);
+            proprietario.FormatarLeituraDb();
+            proprietario.Endereco.FormatarLeituraDb();
+            return proprietario;
+        }
     }
 }
