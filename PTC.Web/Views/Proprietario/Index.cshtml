@@ -1,37 +1,41 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
 
+<div id="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
-        <div class="row">
-            <div class="col-3" style="text-align:center">
-                <label>Inicio</label>
-                <input class="form-control form-control-sm" type="date" name="inicio" value="" />
+        <form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
+            <div class="row">
+                <div class="col-3" style="text-align:center">
+                    <label for="inicio">Inicio</label>
+                    <input class="form-control form-control-sm" type="date" name="inicio" value="" required/>
+                </div>
+                <div class="col-3" style="text-align:center">
+                    <label for="termino">Término</label>
+                    <input class="form-control form-control-sm" type="date" name="termino" value="" required />
+                </div>
+                <div class="col-3" style="text-align:center">
+                    <label for="situacao">Situação</label>
+                    <select id="situacao" class="form-control form-control-sm" name="situacao">
+                        <option value="4">Selecione</option>
+                        <option value="4">Todos</option>
+                        <option value="0">Ativo</option>
+                        <option value="1">Inativo</option>
+                    </select>
+                </div>
+                <div class="col-3 div-btn-end">
+                    <button type="submit" class="btn btn-primary btn-info btn-pesquisar-filtro">
+                        Pesquisar
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <div class="col-3" style="text-align:center">
-                <label>Término</label>
-                <input class="form-control form-control-sm" type="date" name="termino" value="" />
-            </div>
-            <div class="col-3" style="text-align:center">
-                <label>Status</label>
-                <select class="form-control form-control-sm">
-                    <option value="none">Selecione</option>
-                    <option value="1">Ativo</option>
-                    <option value="2">Inativo</option>
-                </select>
-            </div>
-            <div class="col-3 div-btn-end">
-                <button class="btn btn-primary btn-info btn-pesquisar-filtro">
-                    Pesquisar 
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
+        </form>   
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="col-12 div-btn-end div-btn-novo">
                 <a href="@Url.Action("Adicionar","Proprietario")" class="btn btn-success btn-novo">
-                    Novo 
+                    Novo
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
             </div>
@@ -44,7 +48,7 @@
                     <th>Cadastro</th>
                     <th>Exclusão</th>
                     <th>Documento</th>
-                    <th>Endereco</th>
+                    <th>Endereço</th>
                     <th></th>
                 </tr>
             </thead>
@@ -67,12 +71,16 @@
                             </button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-warning">
+                            <a class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button> |
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
+                            </a> 
+                            @if (obj.Exclusao is null)
+                            {
+                               <span>|</span>
+                               <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                               </button>
+                            }
                         </td>
                     </tr>
                 }
@@ -85,6 +93,39 @@
 
 @section scripts {
     <script>
+        var objValue = null;
+        $(document).ready(function () {
+            $(".btn-danger").on('click', function (e) {
+                e.stopImmediatePropagation();
+                objValue = JSON.parse($(this).attr('data-id'));
+                let html =
+                    `
+<div id="travaDelete" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cuidado!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o proprietário ${objValue.Nome}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
+        <button onclick="Deletar()" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    `;
+
+                $("#modalContainner").html(html);
+                $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
+            });
+        });
+
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link, "_blank");
@@ -95,6 +136,21 @@
             let link = "https://wa.me/55";
             link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
             window.open(link, "_blank");
+        }
+
+        function Deletar() {
+            console.log(objValue);
+            $("#travaDelete").modal('hide');
+            var form = new FormData();
+            form.append("Id", objValue.Id);
+            var request = new XMLHttpRequest();
+            request.onload = Reload;
+            request.open("POST", "@Url.Action("Deletar", "Proprietario")");
+            request.send(form);
+        }
+
+        function Reload() {
+            window.location.href = window.location.href;
         }
     </script>
 

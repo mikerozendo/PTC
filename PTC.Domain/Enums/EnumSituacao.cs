@@ -12,5 +12,8 @@ namespace PTC.Domain.Enums
 
         [Description("Vendido")]
         Vendido = 3,
+
+        [Description("Todos")]
+        Todos = 4
     }
 }

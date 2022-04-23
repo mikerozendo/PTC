@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
+using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Services;
 
 namespace PTC.Web.Controllers
@@ -27,6 +29,18 @@ namespace PTC.Web.Controllers
         public IActionResult Inserir(Proprietario proprietario)
         {
             return Content(_proprietarioService.Inserir(proprietario));
+        }
+
+        [HttpGet]
+        public IActionResult ObterFiltrados(DateTime inicio, DateTime termino, EnumSituacao situacao)
+        {
+            return View("Index", _proprietarioService.ObterFiltrados(inicio, termino, situacao));
+        }
+
+        [HttpPost]
+        public IActionResult Deletar(Proprietario obj)
+        {
+            _proprietarioService.Deletar(obj); return Ok();
         }
     }
 }
