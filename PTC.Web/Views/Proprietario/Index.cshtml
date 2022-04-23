@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
+@using System.Text.Json;
 
+    <div id="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
         <form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
@@ -70,10 +72,10 @@
                             </button>
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-warning">
+                            <a class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </button> |
-                            <button class="btn btn-sm btn-danger">
+                            </a> |
+                            <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -88,6 +90,39 @@
 
 @section scripts {
     <script>
+        var objValue = null;
+        $(document).ready(function () {
+            $(".btn-danger").on('click', function (e) {
+                e.stopImmediatePropagation();
+                objValue = JSON.parse($(this).attr('data-id'));
+                let html =
+                    `
+<div id="travaDelete" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cuidado!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o proprietário ${objValue.Nome}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
+        <button onclick="Deletar()" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+                    `;
+
+                $("#modalContainner").html(html);
+                $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
+            });
+        });
+
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link, "_blank");
@@ -98,6 +133,21 @@
             let link = "https://wa.me/55";
             link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
             window.open(link, "_blank");
+        }
+
+        function Deletar() {
+            console.log(objValue);
+            $("#travaDelete").modal('hide');
+            var form = new FormData();
+            form.append("Id", objValue.Id);
+            var request = new XMLHttpRequest();
+            request.onload = Reload;
+            request.open("POST", "@Url.Action("Deletar", "Proprietario")");
+            request.send(form);
+        }
+
+        function Reload() {
+            window.location.href = window.location.href;
         }
     </script>
 
