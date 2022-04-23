@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-3" style="text-align:center">
                     <label for="inicio">Inicio</label>
-                    <input class="form-control form-control-sm" type="date" name="inicio" value="" required/>
+                    <input class="form-control form-control-sm" type="date" name="inicio" value="" required />
                 </div>
                 <div class="col-3" style="text-align:center">
                     <label for="termino">Término</label>
@@ -29,7 +29,7 @@
                     </button>
                 </div>
             </div>
-        </form>   
+        </form>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -71,15 +71,15 @@
                             </button>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-warning">
+                            <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a> 
+                            </a>
                             @if (obj.Exclusao is null)
                             {
-                               <span>|</span>
-                               <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
+                                <span>|</span>
+                                <button class="btn btn-sm btn-danger" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
-                               </button>
+                                </button>
                             }
                         </td>
                     </tr>
@@ -94,6 +94,7 @@
 @section scripts {
     <script>
         var objValue = null;
+        var objAlterar = null;
         $(document).ready(function () {
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
@@ -120,7 +121,6 @@
   </div>
 </div>
                     `;
-
                 $("#modalContainner").html(html);
                 $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
             });
@@ -139,7 +139,6 @@
         }
 
         function Deletar() {
-            console.log(objValue);
             $("#travaDelete").modal('hide');
             var form = new FormData();
             form.append("Id", objValue.Id);
@@ -154,4 +153,4 @@
         }
     </script>
 
-} 
+}

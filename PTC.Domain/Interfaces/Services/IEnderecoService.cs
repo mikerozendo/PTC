@@ -7,5 +7,6 @@ namespace PTC.Domain.Interfaces.Services
         int Inserir(Endereco obj);
         Endereco ObterPorIdProprietario(int id);
         void Deletar(Endereco obj);
+        void Alterar(Endereco obj);
     }
 }

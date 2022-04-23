@@ -9,10 +9,14 @@ namespace PTC.Application.Services
     {
         public bool ValidarDocumento(string documento)
         {
-            if (documento.Length == 11)
-                return ValidarCPF(documento);
-            else
-                return ValidarCnpj(documento);
+            if (!string.IsNullOrEmpty(documento) && !ValidarCaracteresIguais(documento))
+            {
+                if (documento.Length == 11)
+                    return ValidarCPF(documento);
+                else
+                    return ValidarCnpj(documento);
+            }
+            else return false;
         }
 
         public bool ValidarCnpj(string cnpj)
@@ -122,6 +126,14 @@ namespace PTC.Application.Services
             {
                 return false;
             }
+        }
+
+        public bool ValidarCaracteresIguais(string documento)
+        {
+            var array = documento.ToCharArray();
+            string firstItem = array[0].ToString();
+            bool allEqual = array.Skip(1).All(s => string.Equals(firstItem, s.ToString(), StringComparison.InvariantCultureIgnoreCase));
+            return allEqual;
         }
     }
 }

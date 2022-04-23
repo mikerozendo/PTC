@@ -94,5 +94,38 @@ namespace PTC.Application.Services
         {
             _proprietarioRepository.Deletar(obj);
         }
+
+        public string Alterar(Proprietario obj)
+        {
+            obj.FormatarEscritaDb();
+            obj.Endereco.FormatarEscritaDb();
+
+            if (_documentoService.ValidarDocumento(obj.Documento))
+            {
+                try
+                {
+                    obj.Endereco.ProprietarioId = obj.Id;
+                    _enderecoService.Alterar(obj.Endereco);
+                    _proprietarioRepository.Alterar(obj);
+                    return "Alterado com sucesso!";
+                }
+                catch (Exception ex)
+                {
+                    return "Falha na alteração, revise seus dados";
+                }
+            }
+            else
+            {
+                return "Documento inválido, informe um documento válido";
+            }
+        }
+
+        public Proprietario ObterPorId(int id)
+        {
+            Proprietario proprietario = _proprietarioRepository.ObterPorId(id);
+            proprietario.FormatarLeituraDb();
+            proprietario.Endereco.FormatarLeituraDb();
+            return proprietario;
+        }
     }
 }

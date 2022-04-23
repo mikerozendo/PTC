@@ -14,6 +14,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("@Cep", obj.Cep);
             AddParametro("@Uf", obj.Uf);
             AddParametro("@PontoRefencia", obj.Numero);
+            AddParametro("@Cidade", obj.Cidade);
             var tabela = ExecutarProcedure("P_ENDERECO_INCLUIR");
             return int.TryParse(tabela.Rows[0]["Id"].ToString(), out int retorno) ? retorno : 0;
         }
@@ -26,14 +27,15 @@ namespace PTC.Infrastructure.Data.Respository
 
         public void Alterar(Endereco obj)
         {
-            AddParametro("@Id", obj.Id);
-            AddParametro("@Cep", obj.Cep);
-            AddParametro("@Bairro", obj.Bairro);
-            AddParametro("@Logradouro", obj.Logradouro);
-            AddParametro("@Numero", obj.Numero);
-            AddParametro("@PontoReferencia", obj.PontoReferencia);
-            AddParametro("@Uf", obj.Uf);
-            ExecutarProcedure("P_ENDERECO_EXCLUIR_POR_ID");
+            AddParametro("Logradouro", obj.Logradouro);
+            AddParametro("Bairro", obj.Bairro);
+            AddParametro("Numero", obj.Numero);
+            AddParametro("Cep", obj.Cep);
+            AddParametro("Uf", obj.Uf);
+            AddParametro("Cidade", obj.Cidade);
+            AddParametro("PontoReferencia", obj.PontoReferencia);
+            AddParametro("ProprietarioId", obj.ProprietarioId);
+            ExecutarProcedure("P_ENDERECO_ALTERAR");
         }
     }
 }

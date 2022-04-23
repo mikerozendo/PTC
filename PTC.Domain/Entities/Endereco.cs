@@ -1,5 +1,5 @@
-﻿using PTC.Domain.Interfaces.Entities;
-using System;
+﻿using System;
+using PTC.Domain.Interfaces.Entities;
 
 namespace PTC.Domain.Entities
 {
@@ -11,6 +11,8 @@ namespace PTC.Domain.Entities
         public string Cep { get; set; }
         public string Uf { get; set; }
         public string PontoReferencia { get; set; }
+        public string Cidade { get; set; }
+        public int ProprietarioId { get; set; }
 
         public void FormatarEscritaDb()
         {
