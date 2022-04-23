@@ -15,11 +15,13 @@ namespace PTC.Web.Controllers
             _proprietarioService = proprietarioService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(_proprietarioService.ObterTodos());
         }
 
+        [HttpGet]
         public IActionResult Adicionar()
         {
             return View();
@@ -49,10 +51,10 @@ namespace PTC.Web.Controllers
             return View(_proprietarioService.ObterPorId(id));
         }
 
+        [HttpPost]
         public IActionResult Alterar(Proprietario obj)
         {
             _proprietarioService.Alterar(obj); return Ok();
         }
-
     }
 }
