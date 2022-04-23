@@ -89,7 +89,21 @@ function ColetarRespostaServidor(aspAction, aspController) {
     });
 }
 
-function CopiarConteudo(obj) {
-    obj.text.select();
-    document.execCommand('copy');
+function CopiarConteudo() {
+    var copyTextarea = document.createElement("textarea");
+    copyTextarea.style.position = "fixed";
+    copyTextarea.style.opacity = "0";
+    copyTextarea.textContent = document.getElementById("CopyWhatsApp").value;
+
+    document.body.appendChild(copyTextarea);
+    copyTextarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(copyTextarea);
+}
+
+function AbrirWhatsAppWeb(obj) {
+    let object = $(obj).attr("data-id");
+    let link = "https://wa.me/55";
+    link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
+    window.open(link, "_blank");
 }

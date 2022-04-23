@@ -58,11 +58,11 @@
                     <tr>
                         <td>@obj.Nome</td>
                         <td>
-                            <button onclick="AbrirWhatsAppWeb(this)" class="btn btn-sm btn-success btn-whatsapp" data-id="@obj.WhatsApp">
+                            <button onclick="AbrirWhatsAppWeb(this)" class="btn btn-sm btn-success btn-icon" data-id="@obj.WhatsApp">
                                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
                             </button>
                             <span>|</span>
-                            <button class="btn btn-sm btn-info">
+                            <button id="CopyWhatsApp" onclick="CopiarConteudo()" class="btn btn-sm btn-info btn-icon" value="@obj.WhatsApp">
                                 <i class="fa fa-clone" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -75,13 +75,13 @@
                             </button>
                         </td>
                         <td>
-                            <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning">
+                            <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>
                             @if (obj.Exclusao is null)
                             {
                                 <span>|</span>
-                                <button class="btn btn-sm btn-danger" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
+                                <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             }
@@ -132,13 +132,6 @@
 
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
-            window.open(link, "_blank");
-        }
-
-        function AbrirWhatsAppWeb(obj) {
-            let object = $(obj).attr("data-id");
-            let link = "https://wa.me/55";
-            link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
             window.open(link, "_blank");
         }
 
