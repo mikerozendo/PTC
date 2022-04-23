@@ -13,6 +13,6 @@ namespace PTC.Domain.Interfaces.Services
         IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao);
         Proprietario ObterPorId(int id);
         void Deletar(Proprietario obj);
-        void Alterar(Proprietario obj);
+        string Alterar(Proprietario obj);
     }
 }

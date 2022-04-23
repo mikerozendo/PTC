@@ -54,7 +54,7 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public IActionResult Alterar(Proprietario obj)
         {
-            _proprietarioService.Alterar(obj); return Ok();
+            return Content(_proprietarioService.Alterar(obj));
         }
     }
 }

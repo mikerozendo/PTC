@@ -5,5 +5,6 @@
         bool ValidarCnpj(string cnpj);
         bool ValidarCPF(string cpf);
         bool ValidarDocumento(string documento);
+        bool ValidarCaracteresIguais(string documento);
     }
 }

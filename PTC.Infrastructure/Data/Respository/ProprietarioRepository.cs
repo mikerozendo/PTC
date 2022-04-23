@@ -51,7 +51,8 @@ namespace PTC.Infrastructure.Data.Respository
                         Cep = sdr["Cep"].ToString(),
                         Logradouro = sdr["Logradouro"].ToString(),
                         Numero = sdr["Numero"].ToString(),
-                        Uf = sdr["Uf"].ToString()
+                        Uf = sdr["Uf"].ToString(),
+                        Cidade = sdr["Cidade"].ToString()                        
                     }
                 });
             }
@@ -61,11 +62,12 @@ namespace PTC.Infrastructure.Data.Respository
 
         public void Alterar(Proprietario obj)
         {
+            AddParametro("Id", obj.Id);
             AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
             AddParametro("Email", obj.Email);
             AddParametro("WhatsApp", obj.WhatsApp);
-            ExecutarProcedure("P_PROPRIETARIO_EDITAR");
+            ExecutarProcedure("P_PROPRIETARIO_ALTERAR");
         }
 
         public void Deletar(Proprietario obj)
@@ -96,7 +98,8 @@ namespace PTC.Infrastructure.Data.Respository
                     Cep = tabela.Rows[0]["Cep"].ToString(),
                     Logradouro = tabela.Rows[0]["Logradouro"].ToString(),
                     Numero = tabela.Rows[0]["Numero"].ToString(),
-                    Uf = tabela.Rows[0]["Uf"].ToString()
+                    Uf = tabela.Rows[0]["Uf"].ToString(),
+                    Cidade = tabela.Rows[0]["Cidade"].ToString(),
                 }
             };
         }
