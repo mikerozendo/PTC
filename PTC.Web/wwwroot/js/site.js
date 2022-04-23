@@ -88,3 +88,8 @@ function ColetarRespostaServidor(aspAction, aspController) {
             });
     });
 }
+
+function CopiarConteudo(obj) {
+    obj.text.select();
+    document.execCommand('copy');
+}
