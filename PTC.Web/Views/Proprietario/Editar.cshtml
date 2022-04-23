@@ -17,6 +17,7 @@
     <div class="modal-body">
         <form id="AlterarProprietario" action="@Url.Action("Alterar","Proprietario")" method="post">
             <div class="form-group">
+                <input type="hidden" name="Id" value="@Model.Id" />
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-4">
                         <label for="Nome">Nome</label>
