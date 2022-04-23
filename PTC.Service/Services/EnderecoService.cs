@@ -14,6 +14,11 @@ namespace PTC.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
+        public void Alterar(Endereco obj)
+        {
+            _enderecoRepository.Alterar(obj);
+        }
+
         public void Deletar(Endereco obj)
         {
             _enderecoRepository.Deletar(obj);

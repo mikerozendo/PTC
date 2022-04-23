@@ -51,7 +51,8 @@ namespace PTC.Infrastructure.Data.Respository
                         Cep = sdr["Cep"].ToString(),
                         Logradouro = sdr["Logradouro"].ToString(),
                         Numero = sdr["Numero"].ToString(),
-                        Uf = sdr["Uf"].ToString()
+                        Uf = sdr["Uf"].ToString(),
+                        Cidade = sdr["Cidade"].ToString()                        
                     }
                 });
             }
@@ -61,7 +62,12 @@ namespace PTC.Infrastructure.Data.Respository
 
         public void Alterar(Proprietario obj)
         {
-            throw new NotImplementedException();
+            AddParametro("Id", obj.Id);
+            AddParametro("Nome", obj.Nome);
+            AddParametro("Documento", obj.Documento);
+            AddParametro("Email", obj.Email);
+            AddParametro("WhatsApp", obj.WhatsApp);
+            ExecutarProcedure("P_PROPRIETARIO_ALTERAR");
         }
 
         public void Deletar(Proprietario obj)
@@ -72,7 +78,30 @@ namespace PTC.Infrastructure.Data.Respository
 
         public Proprietario ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            AddParametro("Id", id);
+            var tabela = ExecutarProcedure("P_PROPRIETARIO_OBTER_POR_ID");
+
+            return new Proprietario
+            {
+                Documento = tabela.Rows[0]["Documento"].ToString(),
+                Email = tabela.Rows[0]["Email"].ToString(),
+                EnumSituacaoProprietario = Convert.ToBoolean(tabela.Rows[0]["Ativo"]) ? EnumSituacao.Ativo : EnumSituacao.Inativo,
+                EnumTipoPessoa = (EnumTipoPessoa)tabela.Rows[0]["IdTipoPessoa"],
+                Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
+                Nome = tabela.Rows[0]["Nome"].ToString(),
+                WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),
+                Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
+                Exclusao = tabela.Rows[0]["Exclusao"] is DBNull ? null : Convert.ToDateTime(tabela.Rows[0]["Exclusao"]),
+                Endereco = new Endereco
+                {
+                    Bairro = tabela.Rows[0]["Bairro"].ToString(),
+                    Cep = tabela.Rows[0]["Cep"].ToString(),
+                    Logradouro = tabela.Rows[0]["Logradouro"].ToString(),
+                    Numero = tabela.Rows[0]["Numero"].ToString(),
+                    Uf = tabela.Rows[0]["Uf"].ToString(),
+                    Cidade = tabela.Rows[0]["Cidade"].ToString(),
+                }
+            };
         }
     }
 }

@@ -158,11 +158,6 @@ div.content {
     text-align: end;
 }
 
-.link-whatsapp {
-    color: green;
-    font-weight: bold;
-}
-
 .div-btn-novo {
     margin-bottom: 2%;
 }
@@ -175,3 +170,12 @@ div.content {
     margin-top: 4%;
 }
 
+.btn-icon {
+    color: white;
+}
+
+.tbl-modal {
+    max-height: 376px !important;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+}

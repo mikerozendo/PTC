@@ -20,10 +20,13 @@ namespace PTC.Domain.Entities
         {
             if (!string.IsNullOrEmpty(WhatsApp))
                 WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
+
             if (!string.IsNullOrEmpty(Documento))
+            {
                 Documento = Documento.Replace(".", "").Replace("-", string.Empty);
-            if (Documento.Contains("/"))
-                Documento = Documento.Replace("/", string.Empty);
+                if (Documento.Contains("/"))
+                    Documento = Documento.Replace("/", string.Empty);
+            }
         }
 
         public void FormatarLeituraDb()
@@ -31,7 +34,7 @@ namespace PTC.Domain.Entities
             if (!string.IsNullOrEmpty(WhatsApp))
             {
                 var array = WhatsApp.AsSpan();
-                WhatsApp = $"({array.Slice(0, 2).ToString()}) {array[2]} {array.Slice(3, 4).ToString()}-{array.Slice(5, 4).ToString()}";
+                WhatsApp = $"({array.Slice(0, 2).ToString()}) {array[2]} {array.Slice(3, 4).ToString()}-{array.Slice(7, 4).ToString()}";
             }
             if (!string.IsNullOrEmpty(Documento))
             {

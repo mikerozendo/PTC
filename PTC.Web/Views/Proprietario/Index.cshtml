@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-3" style="text-align:center">
                     <label for="inicio">Inicio</label>
-                    <input class="form-control form-control-sm" type="date" name="inicio" value="" required/>
+                    <input class="form-control form-control-sm" type="date" name="inicio" value="" required />
                 </div>
                 <div class="col-3" style="text-align:center">
                     <label for="termino">Término</label>
@@ -29,9 +29,9 @@
                     </button>
                 </div>
             </div>
-        </form>   
+        </form>
     </div>
-    <div class="modal-body">
+    <div class="modal-body tbl-modal">
         <div class="row">
             <div class="col-12 div-btn-end div-btn-novo">
                 <a href="@Url.Action("Adicionar","Proprietario")" class="btn btn-success btn-novo">
@@ -44,7 +44,7 @@
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th style="width: 15%;">Telefone</th>
+                    <th style="width: 10%;">Telefone</th>
                     <th>Cadastro</th>
                     <th>Exclusão</th>
                     <th>Documento</th>
@@ -58,9 +58,13 @@
                     <tr>
                         <td>@obj.Nome</td>
                         <td>
-                            <a onclick="AbrirWhatsAppWeb(this)" class="btn-link" data-id="@obj.WhatsApp">
-                                <i class="fa fa-whatsapp link-whatsapp" aria-hidden="true"></i>
-                            </a> @obj.WhatsApp
+                            <button onclick="AbrirWhatsAppWeb(this)" class="btn btn-sm btn-success btn-icon" data-id="@obj.WhatsApp">
+                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                            </button>
+                            <span>|</span>
+                            <button id="CopyWhatsApp" onclick="CopiarConteudo()" class="btn btn-sm btn-info btn-icon" value="@obj.WhatsApp">
+                                <i class="fa fa-clone" aria-hidden="true"></i>
+                            </button>
                         </td>
                         <td>@obj.Cadastro</td>
                         <td>@obj.Exclusao</td>
@@ -71,15 +75,15 @@
                             </button>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-warning">
+                            <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                            </a> 
+                            </a>
                             @if (obj.Exclusao is null)
                             {
-                               <span>|</span>
-                               <button data-id="@System.Text.Json.JsonSerializer.Serialize(obj)" class="btn btn-sm btn-danger">
+                                <span>|</span>
+                                <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
-                               </button>
+                                </button>
                             }
                         </td>
                     </tr>
@@ -94,6 +98,7 @@
 @section scripts {
     <script>
         var objValue = null;
+        var objAlterar = null;
         $(document).ready(function () {
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
@@ -120,7 +125,6 @@
   </div>
 </div>
                     `;
-
                 $("#modalContainner").html(html);
                 $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
             });
@@ -131,15 +135,7 @@
             window.open(link, "_blank");
         }
 
-        function AbrirWhatsAppWeb(obj) {
-            let object = $(obj).attr("data-id");
-            let link = "https://wa.me/55";
-            link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
-            window.open(link, "_blank");
-        }
-
         function Deletar() {
-            console.log(objValue);
             $("#travaDelete").modal('hide');
             var form = new FormData();
             form.append("Id", objValue.Id);
@@ -154,4 +150,4 @@
         }
     </script>
 
-} 
+}

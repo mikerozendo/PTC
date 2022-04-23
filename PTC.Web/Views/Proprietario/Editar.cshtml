@@ -1,16 +1,27 @@
-﻿<div class="modal-content margin-modais">
+﻿@model PTC.Domain.Entities.Proprietario
+
+<div class="modal-content margin-modais">
     <div class="modal-header">
-        <h3>
-            Novo Proprietário <i class="fa fa-user" aria-hidden="true"></i>
-        </h3>
+        <div class="row">
+            <div class="col-12" style="text-align:start">
+                <h3>
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Alterar Proprietário: @Model.Nome                
+                </h3>
+                <sub>
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i> Cadastro Em: @Model.Cadastro
+                </sub>
+            </div>
+        </div>
     </div>
     <div class="modal-body">
-        <form id="IncluirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
+        <form id="AlterarProprietario" action="@Url.Action("Alterar","Proprietario")" method="post">
             <div class="form-group">
+                <input type="hidden" name="Id" value="@Model.Id" />
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-4">
                         <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                        <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
                     </div>
                     <div class="col-4">
                         <label for="tipoDocumento">Tipo Documento</label>
@@ -28,43 +39,43 @@
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-2">
                         <label for="Cep">CEP</label>
-                        <input id="Cep" type="text" name="Endereco.Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
+                        <input id="Cep" type="text" name="Endereco.Cep" value="@Model.Endereco.Cep" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
                     </div>
                     <div class="col-3">
                         <label for="Bairro">Bairro</label>
-                        <input id="Bairro" type="text" name="Endereco.Bairro" value="" class="form-control" readonly />
+                        <input id="Bairro" type="text" name="Endereco.Bairro" value="@Model.Endereco.Bairro" class="form-control" readonly />
                     </div>
                     <div class="col-2">
                         <label for="Uf">Estado</label>
-                        <input id="Uf" type="text" name="Endereco.Uf" value="" class="form-control" readonly />
+                        <input id="Uf" type="text" name="Endereco.Uf" value="@Model.Endereco.Uf" class="form-control" readonly />
                     </div>
                     <div class="col-3">
                         <label for="Cidade">Cidade</label>
-                        <input id="Cidade" type="text" name="Endereco.Cidade" value="" class="form-control" readonly />
+                        <input id="Cidade" type="text" name="Endereco.Cidade" value="@Model.Endereco.Cidade" class="form-control" readonly />
                     </div>
                     <div class="col-2">
                         <label for="Numero">Numero</label>
-                        <input id="Numero" type="text" name="Endereco.Numero" value="" class="form-control" required />
+                        <input id="Numero" type="text" name="Endereco.Numero" value="@Model.Endereco.Numero" class="form-control" required />
                     </div>
                 </div>
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-6">
                         <label for="Logradouro">Logradouro</label>
-                        <input id="Logradouro" type="text" name="Endereco.Logradouro" value="" class="form-control" readonly />
+                        <input id="Logradouro" type="text" name="Endereco.Logradouro" value="@Model.Endereco.Logradouro" class="form-control" readonly />
                     </div>
                     <div class="col-6">
                         <label for="pontoReferencia">Ponto de referência</label>
-                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="" class="form-control" />
+                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="@Model.Endereco.PontoReferencia" class="form-control" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <label for="Email">E-mail</label>
-                        <input id="Email" type="text" name="Email" value="" class="form-control" required />
+                        <input id="Email" type="text" name="Email" value="@Model.Email" class="form-control" required />
                     </div>
                     <div class="col-6">
                         <label for="WhatsApp">WhatsApp</label>
-                        <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
+                        <input id="WhatsApp" type="text" name="WhatsApp" value="@Model.WhatsApp" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
                     </div>
                 </div>
             </div>
@@ -86,7 +97,7 @@
         $(document).ready(function () {
             ValidarCep();
             ValidarDocumento();
-            FormEventHandler('IncluirProprietario', 'Index', 'Proprietario');
+            FormEventHandler('AlterarProprietario', 'Index', 'Proprietario');
         });
     </script>
 

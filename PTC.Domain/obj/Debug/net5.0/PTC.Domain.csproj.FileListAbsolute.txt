@@ -9,3 +9,4 @@ C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.cs
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\ref\PTC.Domain.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.pdb
+C:\Users\junior\Documents\Projetos\PTC\PTC.Domain\obj\Debug\net5.0\PTC.Domain.csprojAssemblyReference.cache

@@ -422,3 +422,4 @@ C:\Users\junior\Documents\Projetos\PTC\PTC.Web\obj\Debug\net5.0\PTC.Web.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Web\obj\Debug\net5.0\ref\PTC.Web.dll
 C:\Users\junior\Documents\Projetos\PTC\PTC.Web\obj\Debug\net5.0\PTC.Web.pdb
 C:\Users\junior\Documents\Projetos\PTC\PTC.Web\obj\Debug\net5.0\PTC.Web.genruntimeconfig.cache
+C:\Users\junior\Documents\Projetos\PTC\PTC.Web\obj\Debug\net5.0\Razor\Views\Proprietario\Editar.cshtml.g.cs
