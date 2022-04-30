@@ -42,5 +42,10 @@ namespace PTC.Infrastructure.Data.Respository
 
             return marcas;
         }
+
+        public IEnumerable<Marca> ObterTodos()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

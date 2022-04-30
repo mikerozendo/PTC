@@ -3,5 +3,5 @@ using PTC.Domain.Interfaces.Repository.CQRS;
 
 namespace PTC.Domain.Interfaces.Repository
 {
-   public interface IMarcasRepository : ICommandRepository<Marca> { }
+   public interface IMarcasRepository : ICommandRepository<Marca>, IBaseQueryRepository<Marca> { }
 }

@@ -2,9 +2,8 @@
 
 namespace PTC.Domain.Interfaces.Repository.CQRS
 {
-    public interface IQueryRepository<T>
+    public interface IQueryRepository<T> : IBaseQueryRepository<T>
     {
-        IEnumerable<T> ObterTodos();
         T ObterPorId(int id);
         bool Existe(T obj);
     }
