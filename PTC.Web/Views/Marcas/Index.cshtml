@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Marca>
 
-<div id="modalContainner"></div>
+<div class="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
         @*<form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
@@ -32,44 +32,57 @@
             </form>*@
     </div>
     <div class="modal-body tbl-modal">
-        @*<div class="row">
-                <div class="col-6 div-btn-end div-btn-novo" style="text-align:start">
-                    <a href="@Url.Action("Adicionar","Marcas")" class="btn btn-success btn-novo">
-                        Novo
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </a>
-                </div>
-                <div class="col-6" style="text-align: end">
+        <div class="row">
+            <div class="col-12 div-btn-end div-btn-novo" style="text-align:end">
+                <a href="@Url.Action("Adicionar","Marcas")" class="btn btn-success btn-novo">
+                    Novo
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+            @*<div class="col-6" style="text-align: end">
                     <input class="input-filtro-dinamico" type="text" name="filtro" value="" />
                     <a class="btn btn-success btn-novo filtro-dinamico-link">
                         Filtrar
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </a>
-                </div>
-            </div>*@
+                </div>*@
+        </div>
         <table id="tblMarcas" class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
                     <th>Nome</th>
+                    <th>Logo</th>
                     <th>Cadastro</th>
                     <th>Exclusão</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Teste</td>
-                    <td>Teste</td>
-                    @*<td>
-                        <a href="@Url.Action("Editar", "Marca", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </a>
-                        <span>|</span>
-                        <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                    </td>*@
-                </tr>
+                @foreach (PTC.Domain.Entities.Marca obj in Model)
+                {
+                    <tr>
+                        <td>@obj.Nome</td>
+                        <td>
+                            <div style="max-height: 100%;">
+                                <img src="@obj.UrlImagem" alt="Imagem" style="max-height: 50px;" />
+                            </div>
+                        </td>
+                        <td>@obj.Cadastro</td>
+                        <td>@obj.Exclusao</td>
+                        <td>
+                            <a href="@Url.Action("Editar", "Marcas", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </a>
+                            @if (obj.Exclusao is null)
+                            {
+                                <span>|</span>
+                                <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -80,8 +93,12 @@
 @section scripts {
     <script>
         $(document).ready(function () {
-
-
+            $(".btn-danger").on('click', function (e) {
+                e.stopImmediatePropagation();
+                objValue = JSON.parse($(this).attr('data-id'));
+                let mensagem = 'Tem certeza que deseja deletar o(a) ' + objValue.Nome + '?';
+                RenderizarModalTravaDelete("Marcas", "Deletar", objValue.Id, mensagem);
+            });
         });
     </script>
 

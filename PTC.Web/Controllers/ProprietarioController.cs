@@ -27,22 +27,10 @@ namespace PTC.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Inserir(Proprietario proprietario)
-        {
-            return Content(_proprietarioService.Inserir(proprietario));
-        }
-
         [HttpGet]
         public IActionResult ObterFiltrados(DateTime inicio, DateTime termino, EnumSituacao situacao)
         {
             return View("Index", _proprietarioService.ObterFiltrados(inicio, termino, situacao));
-        }
-
-        [HttpPost]
-        public IActionResult Deletar(Proprietario obj)
-        {
-            _proprietarioService.Deletar(obj); return Ok();
         }
 
         [HttpGet]
@@ -51,16 +39,28 @@ namespace PTC.Web.Controllers
             return View(_proprietarioService.ObterPorId(id));
         }
 
+        [HttpGet]
+        public IActionResult FiltroDinamico(string filtro)
+        {
+            return View("Index", _proprietarioService.Filtrar(filtro));
+        }
+
+        [HttpPost]
+        public IActionResult Inserir(Proprietario proprietario)
+        {
+            return Content(_proprietarioService.Inserir(proprietario));
+        }
+
+        [HttpPost]
+        public IActionResult Deletar(Proprietario obj)
+        {
+            _proprietarioService.Deletar(obj); return Ok();
+        }
+
         [HttpPost]
         public IActionResult Alterar(Proprietario obj)
         {
             return Content(_proprietarioService.Alterar(obj));
-        }
-
-        [HttpGet]
-        public IActionResult FiltroDinamico(string filtro) 
-        {
-            return View("Index", _proprietarioService.Filtrar(filtro));
         }
     }
 }

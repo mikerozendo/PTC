@@ -6,7 +6,10 @@ namespace PTC.Domain.Interfaces.Services
     public interface IMarcasService
     {
         IEnumerable<Marca> ObterTodos();
+        Marca ObterPorId(int id);
+        bool Existe(Marca obj);
         void Deletar(Marca obj);
-        IEnumerable<Marca> Inserir(Marca obj);
+        string Inserir(Marca obj);
+        void Alterar(Marca obj);
     }
 }

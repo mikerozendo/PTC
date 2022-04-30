@@ -13,6 +13,7 @@ namespace PTC.Web.Controllers
             _marcasService = marcasService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(_marcasService.ObterTodos());
@@ -27,13 +28,26 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public IActionResult Inserir(Marca obj)
         {
-            return View("Index", _marcasService.Inserir(obj));
+            return Content(_marcasService.Inserir(obj));
         }
 
         [HttpPost]
         public IActionResult Deletar(Marca obj)
         {
             _marcasService.Deletar(obj);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            return View(_marcasService.ObterPorId(id));
+        }
+
+        [HttpPost]
+        public IActionResult Alterar(Marca obj)
+        {
+            _marcasService.Alterar(obj);
             return RedirectToAction("Index");
         }
     }

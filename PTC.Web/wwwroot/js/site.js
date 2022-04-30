@@ -154,7 +154,6 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
 }
 
 function Deletar(controller, action, id) {
-    debugger;
     let url = "/" + controller + "/" + action;
     $(".mdl-trava-delete").modal('hide');
 
