@@ -31,8 +31,7 @@ namespace PTC.Domain.Entities
 
         public override string ToString()
         {
-            return
-                $"{Logradouro}, {Numero}";
+            return $"{Logradouro}, {Numero}";
         }
     }
 }

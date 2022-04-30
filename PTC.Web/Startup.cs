@@ -22,11 +22,17 @@ namespace PTC.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
             services.AddScoped<IProprietarioService, ProprietarioService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
+
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
+
             services.AddScoped<IDocumentoService, DocumentoService>();
+
+            services.AddScoped<IMarcasService, MarcasService>();
+            services.AddScoped<IMarcasRepository, MarcasRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

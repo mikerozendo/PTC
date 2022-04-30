@@ -13,8 +13,6 @@ namespace PTC.Domain.Entities
         public Endereco Endereco { get; set; } = new();
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
-        public DateTime? Cadastro { get; set; } = null;
-        public DateTime? Exclusao { get; set; } = null;
 
         public void FormatarEscritaDb()
         {
