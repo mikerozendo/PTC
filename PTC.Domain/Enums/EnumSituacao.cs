@@ -15,8 +15,5 @@ namespace PTC.Domain.Enums
 
         [Description("Todos")]
         Todos = 4,
-
-        [Description("Cancelado")]
-        Cancelado = 5
     }
 }
