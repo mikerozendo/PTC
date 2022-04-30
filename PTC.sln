@@ -9,7 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Web", "PTC.Web\PTC.Web.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Infrastructure", "PTC.Infrastructure\PTC.Infrastructure.csproj", "{51073C62-37CF-4094-930E-8BA3EAA6D016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTC.Application", "PTC.Service\PTC.Application.csproj", "{69E53A9E-591D-4061-88CE-6CBA3F35BBE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PTC.Application", "PTC.Service\PTC.Application.csproj", "{69E53A9E-591D-4061-88CE-6CBA3F35BBE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WEB", "WEB", "{BE1D3B3C-87D4-489F-A716-6DE36811493D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A6526D54-42C4-4254-BA1C-CA22837873A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{1E222F34-687D-416C-865D-3DCA2BDF181F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{4BAA89D9-AA7C-4C42-9B4C-7B7F2925F240}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +44,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6992F76C-91CE-42EE-9220-C7C70B44808A} = {1E222F34-687D-416C-865D-3DCA2BDF181F}
+		{E7F41E49-858B-4746-AF7A-A63AD0773D1F} = {BE1D3B3C-87D4-489F-A716-6DE36811493D}
+		{51073C62-37CF-4094-930E-8BA3EAA6D016} = {4BAA89D9-AA7C-4C42-9B4C-7B7F2925F240}
+		{69E53A9E-591D-4061-88CE-6CBA3F35BBE6} = {A6526D54-42C4-4254-BA1C-CA22837873A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5844550-D025-4C48-8B6C-2FC1DEBF3F38}
