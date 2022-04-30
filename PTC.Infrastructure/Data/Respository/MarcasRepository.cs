@@ -27,6 +27,7 @@ namespace PTC.Infrastructure.Data.Respository
 
             return marcas;
         }
+
         public dynamic Inserir(Marca obj)
         {
             List<Marca> marcas = new();

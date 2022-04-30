@@ -1,7 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿//JS helper
 
 function ValidarCep() {
     $('#Cep').keyup(function () {
@@ -13,7 +10,6 @@ function ValidarCep() {
             ConsultarCep(value);
         }
     });
-
 }
 
 function ConsultarCep(obj) {
@@ -128,5 +124,50 @@ function EventoFiltro() {
 function LinkFiltroDinamico(stringFiltro) {
     var urlAction = "/Proprietario/FiltroDinamico?filtro=";
     $(".filtro-dinamico-link").attr("href", urlAction + stringFiltro);
+}
+
+function RenderizarModalTravaDelete(controller, action, id, msgString) {
+    $(".modalContainner").html('');
+    let html =
+    `<div class="modal mdl-trava-delete" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cuidado!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>${msgString}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
+            <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+    $(".modalContainner").html(html);
+    $(".mdl-trava-delete").modal({ backdrop: 'static', keyboard: true });
+}
+
+function Deletar(controller, action, id) {
+    debugger;
+    let url = "/" + controller + "/" + action;
+    $(".mdl-trava-delete").modal('hide');
+
+    var form = new FormData();
+    form.append("Id", id);
+    var request = new XMLHttpRequest();
+    request.onload = Reload;
+    request.open("POST", url);
+    request.send(form);
+}
+
+
+function Reload() {
+    window.location.href = window.location.href;
 }
 

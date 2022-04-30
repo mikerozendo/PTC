@@ -23,5 +23,11 @@ namespace PTC.Application.Services
         {
             return _marcasRepository.Inserir(obj);
         }
+
+        public IEnumerable<Marca> ObterTodos()
+        {
+            // return _marcasRepository.ObterTodos();
+            return new List<Marca>();
+        }
     }
 }

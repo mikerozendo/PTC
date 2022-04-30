@@ -15,7 +15,7 @@ namespace PTC.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_marcasService.ObterTodos());
         }
 
         [HttpGet]
@@ -31,9 +31,9 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Excluir(Marca obj)
+        public IActionResult Deletar(Marca obj)
         {
-            _marcasService.Inserir(obj);
+            _marcasService.Deletar(obj);
             return RedirectToAction("Index");
         }
     }

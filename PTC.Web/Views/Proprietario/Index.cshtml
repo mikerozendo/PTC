@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
 
-<div id="modalContainner"></div>
+<div class="modalContainner"></div>
 <div class="modal-content margin-modais">
     <div class="modal-header" style="display: block;">
         <form action="@Url.Action("ObterFiltrados","Proprietario")" method="get">
@@ -47,7 +47,7 @@
                 </a>
             </div>
         </div>
-        <table id="tblMarcas" class="table table-striped table-hover table-bordered">
+        <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -101,11 +101,11 @@
 </div>
 
 
-
 @section scripts {
     <script>
         var objValue = null;
         var objAlterar = null;
+
         $(document).ready(function () {
             LinkFiltroDinamico();
             EventoFiltro();
@@ -113,50 +113,14 @@
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
-                let html =
-                    `
-<div id="travaDelete" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cuidado!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Tem certeza que deseja excluir o proprietário ${objValue.Nome}?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
-        <button onclick="Deletar()" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
-      </div>
-    </div>
-  </div>
-</div>
-                    `;
-                $("#modalContainner").html(html);
-                $("#travaDelete").modal({ backdrop: 'static', keyboard: true });
+                let mensagem = 'Tem certeza que deseja deletar o proprietário(a) ' + objValue.Nome + '?';
+                RenderizarModalTravaDelete("Proprietario", "Deletar", objValue.Id, mensagem);
             });
         });
 
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link, "_blank");
-        }
-
-        function Deletar() {
-            $("#travaDelete").modal('hide');
-            var form = new FormData();
-            form.append("Id", objValue.Id);
-            var request = new XMLHttpRequest();
-            request.onload = Reload;
-            request.open("POST", "@Url.Action("Deletar", "Proprietario")");
-            request.send(form);
-        }
-
-        function Reload() {
-            window.location.href = window.location.href;
         }
     </script>
 
