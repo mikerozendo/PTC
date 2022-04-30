@@ -14,6 +14,9 @@ namespace PTC.Domain.Enums
         Vendido = 3,
 
         [Description("Todos")]
-        Todos = 4
+        Todos = 4,
+
+        [Description("Cancelado")]
+        Cancelado = 5
     }
 }
