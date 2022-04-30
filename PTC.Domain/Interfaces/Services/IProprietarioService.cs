@@ -14,5 +14,6 @@ namespace PTC.Domain.Interfaces.Services
         Proprietario ObterPorId(int id);
         void Deletar(Proprietario obj);
         string Alterar(Proprietario obj);
+        IEnumerable<Proprietario> Filtrar(string filtro);
     }
 }

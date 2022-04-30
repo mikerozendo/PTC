@@ -109,7 +109,7 @@ namespace PTC.Application.Services
                     _proprietarioRepository.Alterar(obj);
                     return "Alterado com sucesso!";
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return "Falha na alteração, revise seus dados";
                 }
@@ -126,6 +126,14 @@ namespace PTC.Application.Services
             proprietario.FormatarLeituraDb();
             proprietario.Endereco.FormatarLeituraDb();
             return proprietario;
+        }
+
+        public IEnumerable<Proprietario> Filtrar(string filtro)
+        {
+            if (!string.IsNullOrWhiteSpace(filtro) && !filtro.Contains("undefined"))
+                return ObterTodos().Where(x => x.Documento.Contains(filtro) || x.Email.Contains(filtro) || x.Endereco.Cep.Contains(filtro) || x.Nome.Contains(filtro) || x.WhatsApp.Contains(filtro));
+            else
+                return ObterTodos();
         }
     }
 }

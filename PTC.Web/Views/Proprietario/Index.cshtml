@@ -33,10 +33,17 @@
     </div>
     <div class="modal-body tbl-modal">
         <div class="row">
-            <div class="col-12 div-btn-end div-btn-novo">
+            <div class="col-6 div-btn-end div-btn-novo" style="text-align:start">
                 <a href="@Url.Action("Adicionar","Proprietario")" class="btn btn-success btn-novo">
                     Novo
                     <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="col-6" style="text-align: end">
+                <input class="input-filtro-dinamico" type="text" name="filtro" value="" />
+                <a class="btn btn-success btn-novo filtro-dinamico-link">
+                    Filtrar
+                    <i class="fa fa-search" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
@@ -100,6 +107,9 @@
         var objValue = null;
         var objAlterar = null;
         $(document).ready(function () {
+            LinkFiltroDinamico();
+            EventoFiltro();
+
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));

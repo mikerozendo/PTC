@@ -107,3 +107,26 @@ function AbrirWhatsAppWeb(obj) {
     link += object.replace("(", "").replace(")", "").replace(" ", "").replace(" ", "").replace("-", "");
     window.open(link, "_blank");
 }
+
+function EventoFiltro() {
+    $(".input-filtro-dinamico").on('change', function (e) {
+        e.stopImmediatePropagation();
+        LinkFiltroDinamico($(this).val());
+    });
+
+    $(".input-filtro-dinamico").on('keyup', function (e) {
+        e.stopImmediatePropagation();
+        LinkFiltroDinamico($(this).val());
+    });
+
+    $(".input-filtro-dinamico").on('keydown', function (e) {
+        e.stopImmediatePropagation();
+        LinkFiltroDinamico($(this).val());
+    });
+}
+
+function LinkFiltroDinamico(stringFiltro) {
+    var urlAction = "/Proprietario/FiltroDinamico?filtro=";
+    $(".filtro-dinamico-link").attr("href", urlAction + stringFiltro);
+}
+

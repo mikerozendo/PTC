@@ -56,5 +56,11 @@ namespace PTC.Web.Controllers
         {
             return Content(_proprietarioService.Alterar(obj));
         }
+
+        [HttpGet]
+        public IActionResult FiltroDinamico(string filtro) 
+        {
+            return View("Index", _proprietarioService.Filtrar(filtro));
+        }
     }
 }
