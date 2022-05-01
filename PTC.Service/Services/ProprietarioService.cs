@@ -21,7 +21,7 @@ namespace PTC.Application.Services
             _documentoService = documentoService;
         }
 
-        public string Inserir(Proprietario obj)
+        public dynamic Inserir(Proprietario obj)
         {
             obj.FormatarEscritaDb();
             obj.Endereco.FormatarEscritaDb();

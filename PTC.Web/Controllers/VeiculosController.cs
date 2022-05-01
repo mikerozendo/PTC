@@ -6,9 +6,9 @@ namespace PTC.Web.Controllers
 {
     public class VeiculosController : Controller
     {
-        private readonly IVeiculoService _marcasService;
+        private readonly IVeiculosService _marcasService;
 
-        public VeiculosController(IVeiculoService marcasService)
+        public VeiculosController(IVeiculosService marcasService)
         {
             _marcasService = marcasService;
         }

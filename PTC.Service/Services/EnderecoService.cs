@@ -24,15 +24,14 @@ namespace PTC.Application.Services
             _enderecoRepository.Deletar(obj);
         }
 
-        public int Inserir(Endereco obj)
-        {
-            return _enderecoRepository.Inserir(obj);
-        }
-
-        public Endereco ObterPorIdProprietario(int id)
+        public Endereco ObterPorId(int id)
         {
             throw new NotImplementedException();
-            //return _enderecoRepository.ObterPorIdProprietario(id);
+        }
+
+        public dynamic Inserir(Endereco obj)
+        {
+            return _enderecoRepository.Inserir(obj);
         }
     }
 }
