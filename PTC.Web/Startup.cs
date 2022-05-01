@@ -25,14 +25,13 @@ namespace PTC.Web
 
             services.AddScoped<IProprietarioService, ProprietarioService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
-
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
-
             services.AddScoped<IDocumentoService, DocumentoService>();
-
             services.AddScoped<IMarcasService, MarcasService>();
             services.AddScoped<IMarcasRepository, MarcasRepository>();
+            services.AddScoped<IVeiculosRepository, VeiculosRepository>();
+            services.AddScoped<IVeiculosService, VeiculosService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

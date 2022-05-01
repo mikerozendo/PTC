@@ -1,27 +1,48 @@
-﻿using PTC.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using PTC.Domain.Entities;
+using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
-using System;
+
 
 namespace PTC.Application.Services
 {
     public class VeiculosService : IVeiculosService
     {
-        public void Alterar(Veiculo obj)
+
+        private readonly IVeiculosRepository _veiculosRepository;
+
+        public VeiculosService(IVeiculosRepository veiculosRepository)
         {
-            throw new NotImplementedException();
+            _veiculosRepository = veiculosRepository;
         }
 
-        public void Deletar(Veiculo obj)
+        public void Alterar(Veiculo obj)
         {
-            throw new NotImplementedException();
+            _veiculosRepository.Alterar(obj);
         }
 
         public dynamic Inserir(Veiculo obj)
         {
-            throw new NotImplementedException();
+            return _veiculosRepository.Inserir(obj);
+        }
+
+        public void Deletar(Veiculo obj)
+        {
+            return;
         }
 
         public Veiculo ObterPorId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Veiculo> ObterTodos()
+        {
+            return _veiculosRepository.ObterTodos();
+        }
+
+        public bool Existe(Veiculo obj)
         {
             throw new NotImplementedException();
         }

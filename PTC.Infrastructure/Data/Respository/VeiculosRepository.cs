@@ -3,12 +3,12 @@ using System.Data;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
-using PTC.Domain.Interfaces.Repository.CQRS;
 using PTC.Infrastructure.Data.Base;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Infrastructure.Data.Respository
 {
-    public class VeiculosRepository : BaseRepository, ICommandRepository<Veiculo>, IBaseQueryRepository<Veiculo>
+    public class VeiculosRepository : BaseRepository, IVeiculosRepository
     {
         public void Alterar(Veiculo obj)
         {
