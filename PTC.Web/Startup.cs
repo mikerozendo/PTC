@@ -7,6 +7,8 @@ using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Application.Services;
 using PTC.Infrastructure.Data.Respository;
+using PTC.Web.Models.Interfaces.Services;
+using PTC.Web.Models.Services;
 
 namespace PTC.Web
 {
@@ -32,6 +34,7 @@ namespace PTC.Web
             services.AddScoped<IMarcasRepository, MarcasRepository>();
             services.AddScoped<IVeiculosRepository, VeiculosRepository>();
             services.AddScoped<IVeiculosService, VeiculosService>();
+            services.AddScoped<IHelperService, HelperService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

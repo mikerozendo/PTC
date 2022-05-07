@@ -5,33 +5,32 @@
         </h3>
     </div>
     <div class="modal-body">
-        <form id="InserirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
-            <div class="form-group">
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-12" style=" height: 40vh;">
+        <div class="form-group">
+            <form id="InserirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
+                <div class="row" style="height: 50vh;">
+                    <div class="col-sm-6">
+                        <img id="imgProprietario" class="card-img" src="~/images/minasurfando.jpg" alt="Alternate Text" style="width: 100%; height: 50%;" />
+                        <input type="file" hidden name="ImagemPerfil.Arquivo" value="" id="inputImg" />
                         <div class="row">
-                            <div class="col-4">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <img class="card-img" src="~/images/userDefault.jpg" alt="Alternate Text" style=" width: 100%; height: 57%; "  />
-                                        <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
-                                        <input id="inputImg" hidden type="file" name="imgUrl" value=""  accept="image/*"/>
-                                    </div>
-                                </div>
+                            <div class="col-sm-6">
+                                <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
                             </div>
-                            <div class="col-8">
-                                <label for="Nome">Nome</label>
-                                <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
-                                <label for="tipoDocumento">Tipo Documento</label>
-                                <select id="tipoDocumento" class="form-control" required>
-                                    <option value="none">Selecione</option>
-                                    <option value="0">CPF</option>
-                                    <option value="1">CNPJ</option>
-                                </select>
-                                <label for="documento">Documento</label>
-                                <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
+                            <div class="col-sm-6">
+                                <button id="btnImgSalvar" class="form-control-file btn btn-success">Salvar Imagem</button>
                             </div>
-                        </div>           
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Nome">Nome</label>
+                        <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                        <label for="tipoDocumento">Tipo Documento</label>
+                        <select id="tipoDocumento" class="form-control" required>
+                            <option value="none">Selecione</option>
+                            <option value="0">CPF</option>
+                            <option value="1">CNPJ</option>
+                        </select>
+                        <label for="documento">Documento</label>
+                        <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
                     </div>
                 </div>
                 <div class="row" style="padding-bottom:20px">
@@ -63,7 +62,7 @@
                     </div>
                     <div class="col-6">
                         <label for="pontoReferencia">Ponto de referência</label>
-                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="" class="form-control" />
+                        <input id="pontoReferencia" type="text" name="Endereco.PontoReferencia" value="" class="form-control" />
                     </div>
                 </div>
                 <div class="row">
@@ -76,30 +75,65 @@
                         <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
                     </div>
                 </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-12 div-btn-end" style="padding-top: 15px;">
-                    <a class="btn btn-danger" href="@Url.Action("Index","Proprietario")">Cancelar</a>
-                    &nbsp;|&nbsp;
-                    <button type="submit" class="btn btn-success">Salvar</button>
+                <div class="row">
+                    <div class="col-12">
+                        <input id="ProprietarioImagem" hidden type="text" name="CaminhoImagem" value="" />
+                    </div>
                 </div>
-            </div>
-        </form>
+                <hr />
+                <div class="row">
+                    <div class="col-12 div-btn-end" style="padding-top: 15px;">
+                        <a class="btn btn-danger" href="@Url.Action("Index","Proprietario")">Cancelar</a>
+                        &nbsp;|&nbsp;
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 
 @section scripts {
     <script>
+        var imagem = new FormData();
         $(document).ready(function () {
             ValidarCep();
             ValidarDocumento();
             FormEventHandler('InserirProprietario', 'Index', 'Proprietario');
-            $("#btnImgUpload").on('click', function () {
+            imagem = new FormData();
+
+            $("#btnImgSalvar").on('click', function (e) {
+                e.stopImmediatePropagation();
+                var fileInput = $('#inputImg')[0];
+                var file = fileInput.files[0];
+                imagem.append("imagem", file);
+                SalvarImagem();
+            });
+
+            $("#btnImgUpload").on('click', function (e) {
+                e.stopImmediatePropagation();
                 $("#inputImg").click();
             });
         });
+
+        function SalvarImagem() {
+            debugger;
+            $.ajax({
+                url: '@Url.Action("InserirImagem","Proprietario")',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: imagem,
+                success: function (json) {
+                    var retorno = json;
+                    var caminho = "/images/" + retorno.caminhoImagem;
+                    $("#ProprietarioImagem").val(retorno.caminhoImagem);
+                    console.log(retorno.caminhoImagem);
+                    $("#imgProprietario").attr("src", caminho);
+                },
+            });
+        }
 
     </script>
 
