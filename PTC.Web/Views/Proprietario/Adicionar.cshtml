@@ -8,21 +8,30 @@
         <form id="InserirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
             <div class="form-group">
                 <div class="row" style="padding-bottom:20px">
-                    <div class="col-4">
-                        <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
-                    </div>
-                    <div class="col-4">
-                        <label for="tipoDocumento">Tipo Documento</label>
-                        <select id="tipoDocumento" class="form-control" required>
-                            <option value="none">Selecione</option>
-                            <option value="0">CPF</option>
-                            <option value="1">CNPJ</option>
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <label for="documento">Documento</label>
-                        <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
+                    <div class="col-12" style=" height: 40vh;">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <img class="card-img" src="~/images/userDefault.jpg" alt="Alternate Text" style=" width: 100%; height: 57%; "  />
+                                        <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
+                                        <input id="inputImg" hidden type="file" name="imgUrl" value=""  accept="image/*"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <label for="Nome">Nome</label>
+                                <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                                <label for="tipoDocumento">Tipo Documento</label>
+                                <select id="tipoDocumento" class="form-control" required>
+                                    <option value="none">Selecione</option>
+                                    <option value="0">CPF</option>
+                                    <option value="1">CNPJ</option>
+                                </select>
+                                <label for="documento">Documento</label>
+                                <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
+                            </div>
+                        </div>           
                     </div>
                 </div>
                 <div class="row" style="padding-bottom:20px">
@@ -87,7 +96,11 @@
             ValidarCep();
             ValidarDocumento();
             FormEventHandler('InserirProprietario', 'Index', 'Proprietario');
+            $("#btnImgUpload").on('click', function () {
+                $("#inputImg").click();
+            });
         });
+
     </script>
 
 } 
