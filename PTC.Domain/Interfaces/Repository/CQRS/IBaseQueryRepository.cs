@@ -2,7 +2,7 @@
 
 namespace PTC.Domain.Interfaces.Repository.CQRS
 {
-    public interface IBaseQueryRepository<T>
+    public interface IBaseQueryRepository<T> where T : class
     {
         IEnumerable<T> ObterTodos();
     }

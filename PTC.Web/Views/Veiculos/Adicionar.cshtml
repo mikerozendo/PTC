@@ -6,7 +6,7 @@
         </h3>
     </div>
     <div class="modal-body">
-        <form id="InserirMarca" action="@Url.Action("Inserir","Marcas")" method="post">
+        <form id="InserirMarca" action="@Url.Action("Inserir","Veiculos")" method="post">
             <div class="form-group">
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-4">
@@ -25,7 +25,7 @@
             <hr />
             <div class="row">
                 <div class="col-12 div-btn-end" style="padding-top: 15px;">
-                    <a class="btn btn-danger" href="@Url.Action("Index","Marcas")">Cancelar</a>
+                    <a class="btn btn-danger" href="@Url.Action("Index","Veiculos")">Cancelar</a>
                     &nbsp;|&nbsp;
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
@@ -40,7 +40,7 @@
     <script>
         $(document).ready(function () {
             $(".containner-img").hide();
-            FormEventHandler('InserirMarca', 'Index', 'Marcas');
+            FormEventHandler('InserirMarca', 'Index', 'Veiculos');
 
             $("#UrlImagem").on('change', function (e) {
                 e.stopImmediatePropagation();
