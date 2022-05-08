@@ -23,6 +23,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Email", obj.Email);
             AddParametro("IdEndereco", obj.Endereco.Id);
             AddParametro("WhatsApp", obj.WhatsApp);
+            AddParametro("CaminhoImagem", obj.CaminhoImagem);
             ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
             return "Proprietário Cadastrado com sucesso!";
         }
@@ -45,6 +46,7 @@ namespace PTC.Infrastructure.Data.Respository
                     WhatsApp = sdr["WhatsApp"].ToString(),
                     Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
                     Exclusao = sdr["Exclusao"] is DBNull ? null : Convert.ToDateTime(sdr["Exclusao"]),
+                    CaminhoImagem = sdr["CaminhoImagem"] is DBNull ? null : sdr["CaminhoImagem"].ToString(),
                     Endereco = new Endereco
                     {
                         Bairro = sdr["Bairro"].ToString(),

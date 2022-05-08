@@ -9,7 +9,7 @@
             <form id="InserirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
                 <div class="row" style="height: 50vh;">
                     <div class="col-sm-6">
-                        <img id="imgProprietario" class="card-img" src="~/images/minasurfando.jpg" alt="Alternate Text" style="width: 100%; height: 50%;" />
+                        <img id="imgProprietario" class="img-fluid card-img" src="~/images/generic.jpg" alt="Alternate Text" style="width: 100%; height: 50%;" />
                         <input type="file" hidden name="Imagem" value="" id="inputImg" />
                         <div class="row">
                             <div class="col-sm-12">
@@ -72,6 +72,11 @@
                         <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input id="caminhoImagem" type="text" name="CaminhoImagem" value="" hidden />
+                    </div>
+                </div>
                 <hr />
                 <div class="row">
                     <div class="col-12 div-btn-end" style="padding-top: 15px;">
@@ -94,6 +99,13 @@
             ValidarDocumento();
             FormEventHandler('InserirProprietario', 'Index', 'Proprietario');
             imagem = new FormData();
+
+            $("#inputImg").on('change', function (e) {
+                e.stopImmediatePropagation();
+                debugger;
+                var value = "/images/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+                $("#caminhoImagem").val(value);
+            });
 
             $("#btnImgUpload").on('click', function (e) {
                 e.stopImmediatePropagation();

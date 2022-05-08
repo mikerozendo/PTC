@@ -13,9 +13,9 @@ namespace PTC.Domain.Entities
         public string WhatsApp { get; set; }
         public Endereco Endereco { get; set; } = new();
         public IFormFile Imagem { get; set; }
+        public string CaminhoImagem { get; set; }
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
-        public string CaminhoImagem { get; set; }
 
         public void FormatarEscritaDb()
         {

@@ -50,6 +50,7 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Nome</th>
                     <th style="width: 10%;">Telefone</th>
                     <th>Cadastro</th>
@@ -63,6 +64,16 @@
                 @foreach (PTC.Domain.Entities.Proprietario obj in Model)
                 {
                     <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(obj.CaminhoImagem))
+                            {
+                                <img  class="rounded-circle img-fluid" src="@obj.CaminhoImagem" width="40" height="60" />
+                            }
+                            else
+                            {
+                                <img class="rounded-circle img-fluid" src="~/images/generic.jpg" width="40" height="60" />
+                            }
+                        </td>
                         <td>@obj.Nome</td>
                         <td>
                             <button onclick="AbrirWhatsAppWeb(this)" class="btn btn-sm btn-success btn-icon" data-id="@obj.WhatsApp">
