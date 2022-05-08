@@ -70,7 +70,7 @@ function FormEventHandler(form, aspAction, aspController) {
 function ColetarRespostaServidor(aspAction, aspController) {
     fetch(event.target.action, {
         method: 'POST',
-        body: new URLSearchParams(new FormData(event.target))
+        body: new FormData(event.target)
     }).then(function (serverPromise) {
         serverPromise.text()
             .then(function (j) {
@@ -80,7 +80,7 @@ function ColetarRespostaServidor(aspAction, aspController) {
                 }
             })
             .catch(function (e) {
-                console.log(e);
+                alert("Algo deu errado");
             });
     });
 }

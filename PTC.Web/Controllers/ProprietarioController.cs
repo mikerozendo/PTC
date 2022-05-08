@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
@@ -54,17 +53,11 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Inserir(Proprietario proprietario)
+        public async Task<IActionResult> Inserir(Proprietario proprietario)
         {
             var mensagem = _proprietarioService.Inserir(proprietario);
-            _helperService.DeletarImagem(_webHostEnvironment.WebRootPath, proprietario.CaminhoImagem, mensagem);
+            await _helperService.GerarImagemProprietario(proprietario.Imagem, _webHostEnvironment.WebRootPath, mensagem);
             return Content(mensagem);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> InserirImagem(IFormFile imagem)
-        {
-            return Json(await _helperService.GerarImagemProprietario(imagem, _webHostEnvironment.WebRootPath));
         }
 
         [HttpPost]
