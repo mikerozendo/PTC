@@ -69,6 +69,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Documento", obj.Documento);
             AddParametro("Email", obj.Email);
             AddParametro("WhatsApp", obj.WhatsApp);
+            AddParametro("CaminhoImagem", obj.CaminhoImagem);
             ExecutarProcedure("P_PROPRIETARIO_ALTERAR");
         }
 
