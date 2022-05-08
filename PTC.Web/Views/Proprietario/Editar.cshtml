@@ -5,8 +5,15 @@
         <div class="row">
             <div class="col-12" style="text-align:start">
                 <h3>
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    Alterar Proprietário: @Model.Nome                
+                    @if (!string.IsNullOrEmpty(Model.CaminhoImagem))
+                    {
+                        <img class="rounded-circle img-fluid" src="@Model.CaminhoImagem" width="40" height="60" />
+                    }
+                    else
+                    {
+                        <img class="rounded-circle img-fluid" src="~/images/generic.jpg" width="40" height="60" />
+                    }
+                    @Model.Nome
                 </h3>
                 <sub>
                     <i class="fa fa-calendar-o" aria-hidden="true"></i> Cadastro Em: @Model.Cadastro
@@ -18,20 +25,25 @@
         <form id="AlterarProprietario" action="@Url.Action("Alterar","Proprietario")" method="post">
             <div class="form-group">
                 <input type="hidden" name="Id" value="@Model.Id" />
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-4">
+                <div class="row" style="height: 50vh;">
+                    <div class="col-sm-6">
+                        <img id="imgProprietario" class="img-fluid card-img" src="~/images/generic.jpg" alt="Alternate Text" style="width: 100%; height: 50%;" />
+                        <input type="file" hidden name="Imagem" value="" id="inputImg" />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
                         <label for="Nome">Nome</label>
                         <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
-                    </div>
-                    <div class="col-4">
                         <label for="tipoDocumento">Tipo Documento</label>
                         <select id="tipoDocumento" class="form-control" required>
                             <option value="none">Selecione</option>
                             <option value="0">CPF</option>
                             <option value="1">CNPJ</option>
                         </select>
-                    </div>
-                    <div class="col-4">
                         <label for="documento">Documento</label>
                         <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
                     </div>

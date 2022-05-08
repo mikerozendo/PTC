@@ -94,6 +94,7 @@ namespace PTC.Infrastructure.Data.Respository
                 WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),
                 Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
                 Exclusao = tabela.Rows[0]["Exclusao"] is DBNull ? null : Convert.ToDateTime(tabela.Rows[0]["Exclusao"]),
+                CaminhoImagem = tabela.Rows[0]["CaminhoImagem"] is DBNull ? null : tabela.Rows[0]["CaminhoImagem"].ToString(),
                 Endereco = new Endereco
                 {
                     Bairro = tabela.Rows[0]["Bairro"].ToString(),
