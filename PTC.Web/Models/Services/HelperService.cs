@@ -29,7 +29,6 @@ namespace PTC.Web.Models.Services
         {
             try
             {
-
                 if (!string.IsNullOrEmpty(caminhoImagem) && !(arquivo is null))
                 {
                     string antigaImagem = Path.Combine(path, caminhoImagem);
