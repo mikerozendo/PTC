@@ -14,11 +14,34 @@ namespace PTC.Web.Models.Services
             {
                 if (mensagem.ToLower().Contains("sucesso"))
                 {
-                    string uploadsFolder = Path.Combine(path, "images");
-                    string filePath = Path.Combine(uploadsFolder, arquivo.FileName);
+                    string filePath = Path.Combine(path, "images", arquivo.FileName);
                     using var fileStream = new FileStream(filePath, FileMode.Create);
                     await arquivo.CopyToAsync(fileStream);
                 }
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async Task AlterarImagemProprietario(IFormFile arquivo, string path, string mensagem, string caminhoImagem)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(caminhoImagem) && !(arquivo is null))
+                {
+                    string antigaImagem = Path.Combine(path, caminhoImagem);
+                    if (File.Exists(antigaImagem) && mensagem.ToLower().Contains("sucesso"))
+                    {
+                        File.Delete(antigaImagem);
+                        string newFile = Path.Combine(path, "images", arquivo.FileName);
+                        using var fileStream = new FileStream(newFile, FileMode.Create);
+                        await arquivo.CopyToAsync(fileStream);
+                    }
+                }
+             
+                await Task.Delay(1);
             }
             catch (Exception)
             {

@@ -67,9 +67,11 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Alterar(Proprietario obj)
+        public async Task<IActionResult> Alterar(Proprietario obj)
         {
-            return Content(_proprietarioService.Alterar(obj));
+            var mensagem = _proprietarioService.Alterar(obj);
+            await _helperService.AlterarImagemProprietario(obj.Imagem, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
+            return Content(mensagem);
         }
     }
 }

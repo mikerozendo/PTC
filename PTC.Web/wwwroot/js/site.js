@@ -170,3 +170,16 @@ function Reload() {
     window.location.href = window.location.href;
 }
 
+function ImagemEvent() {
+    $("#inputImg").on('change', function (e) {
+        e.stopImmediatePropagation();
+        var value = "/images/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+        $("#caminhoImagem").val(value);
+    });
+
+    $("#btnImgUpload").on('click', function (e) {
+        e.stopImmediatePropagation();
+        $("#inputImg").click();
+    });
+}
+
