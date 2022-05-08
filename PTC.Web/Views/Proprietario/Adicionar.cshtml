@@ -95,22 +95,10 @@
     <script>
         var imagem = new FormData();
         $(document).ready(function () {
+            ImagemEvent();
             ValidarCep();
             ValidarDocumento();
             FormEventHandler('InserirProprietario', 'Index', 'Proprietario');
-            imagem = new FormData();
-
-            $("#inputImg").on('change', function (e) {
-                e.stopImmediatePropagation();
-                debugger;
-                var value = "/images/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
-                $("#caminhoImagem").val(value);
-            });
-
-            $("#btnImgUpload").on('click', function (e) {
-                e.stopImmediatePropagation();
-                $("#inputImg").click();
-            });
         });
     </script>
 

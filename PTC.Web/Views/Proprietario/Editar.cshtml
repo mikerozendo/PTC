@@ -90,6 +90,11 @@
                         <input id="WhatsApp" type="text" name="WhatsApp" value="@Model.WhatsApp" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <input id="caminhoImagem" type="text" name="CaminhoImagem" value="" hidden />
+                    </div>
+                </div>
             </div>
             <hr />
             <div class="row">
@@ -107,6 +112,7 @@
 @section scripts {
     <script>
         $(document).ready(function () {
+            ImagemEvent();
             ValidarCep();
             ValidarDocumento();
             FormEventHandler('AlterarProprietario', 'Index', 'Proprietario');
