@@ -170,10 +170,10 @@ function Reload() {
     window.location.href = window.location.href;
 }
 
-function ImagemEvent() {
+function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
         e.stopImmediatePropagation();
-        var value = "/images/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+        var value = "/images/" + pasta +"/"+ $("#inputImg").val().replace('C:\\fakepath\\', '');
         $("#caminhoImagem").val(value);
     });
 
@@ -184,7 +184,6 @@ function ImagemEvent() {
 }
 
 function MontarSelect(action, controller, element, binder) {
-    debugger;
     fetch('https://localhost:44306/' + controller + '/' + action, {
         headers: {
             'Accept': 'application/json'
