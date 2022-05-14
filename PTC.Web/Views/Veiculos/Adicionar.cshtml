@@ -2,7 +2,7 @@
     <div class="modal-header">
         <h3>
             <span id="headerMarca">Novo Veículo</span>
-            @*<img class="img-logo" src="#" style="display:none" />*@
+            <img class="img-logo" src="#" style="display:none" />
         </h3>
     </div>
     <div class="modal-body">
@@ -20,6 +20,17 @@
                     <div id="selectMarca" class="col-4"></div>
                 </div>
                 <div class="row">
+                    <div class="col-4">
+                        <label for="km">Km</label>
+                        <input type="text" class="form-control" name="km" value="" />
+                    </div>
+                    <div class="col-4">
+                        <label for="valor">Valor</label>
+                        <input type="number" class="form-control" name="valor" value="" step=".01" />
+                    </div>
+                    <div id="selectProprietario" class="col-4"></div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <label for="fabricacao">Fabricacao</label>
                         <input id="fabricacao" type="date" name="fabricacao" value="" class="form-control" required />
@@ -28,17 +39,6 @@
                         <label for="Anomodelo">Modelo</label>
                         <input id="Anomodelo" type="date" name="Anomodelo" value="" class="form-control" required />
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="km">Km</label>
-                        <input type="text" class="form-control" name="km" value="" />
-                    </div>
-                    <div class="col-4">
-                        <label for="valor">Valor</label>
-                        <input type="number" class="form-control" name="valor" value="" />
-                    </div>
-                    <div id="selectProprietario" class="col-4"></div>
                 </div>
             </div>
             <hr />

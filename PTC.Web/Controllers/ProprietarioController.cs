@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Services;
+using PTC.Web.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
 
 namespace PTC.Web.Controllers
@@ -15,12 +15,14 @@ namespace PTC.Web.Controllers
         private readonly IProprietarioService _proprietarioService;
         private readonly IHelperService _helperService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly EnumPastaArquivoIdentificador pasta;
 
         public ProprietarioController(IProprietarioService proprietarioService, IHelperService helperService, IWebHostEnvironment webHostEnvironment)
         {
             _proprietarioService = proprietarioService;
             _helperService = helperService;
             _webHostEnvironment = webHostEnvironment;
+            pasta = EnumPastaArquivoIdentificador.Proprietarios;
         }
 
         [HttpGet]
@@ -57,7 +59,7 @@ namespace PTC.Web.Controllers
         public async Task<IActionResult> Inserir(Proprietario proprietario)
         {
             var mensagem = await Task.Run(() => _proprietarioService.Inserir(proprietario));
-            await _helperService.GerarImagemProprietario(proprietario.Imagem, _webHostEnvironment.WebRootPath, mensagem);
+            await _helperService.GerarImagem(proprietario.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
             return await Task.Run(() => Content(mensagem)); 
         }
 
@@ -71,7 +73,7 @@ namespace PTC.Web.Controllers
         public async Task<IActionResult> Alterar(Proprietario obj)
         {
             var mensagem = await Task.Run(() => _proprietarioService.Alterar(obj));
-            await _helperService.AlterarImagemProprietario(obj.Imagem, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
+            await _helperService.AlterarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
             return await Task.Run(() => Content(mensagem));
         }
 
