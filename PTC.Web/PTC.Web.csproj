@@ -16,4 +16,8 @@
     <ProjectReference Include="..\PTC.Service\PTC.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

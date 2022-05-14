@@ -29,7 +29,7 @@ namespace PTC.Application.Services
             return _marcasRepository.Existe(obj);
         }
 
-        public string Inserir(Marca obj)
+        public dynamic Inserir(Marca obj)
         {
             if (!Existe(obj))
                 return _marcasRepository.Inserir(obj);

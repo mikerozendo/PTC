@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace PTC.Domain.Interfaces.Repository.CQRS
+﻿namespace PTC.Domain.Interfaces.Repository.CQRS
 {
-    public interface IQueryRepository<T> : IBaseQueryRepository<T>
+    public interface IQueryRepository<T> : IBaseQueryRepository<T> where T : class
     {
         T ObterPorId(int id);
         bool Existe(T obj);

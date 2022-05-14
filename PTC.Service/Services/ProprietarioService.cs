@@ -21,7 +21,7 @@ namespace PTC.Application.Services
             _documentoService = documentoService;
         }
 
-        public string Inserir(Proprietario obj)
+        public dynamic Inserir(Proprietario obj)
         {
             obj.FormatarEscritaDb();
             obj.Endereco.FormatarEscritaDb();
@@ -37,10 +37,10 @@ namespace PTC.Application.Services
                         {
                             return _proprietarioRepository.Inserir(obj);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
                             _enderecoService.Deletar(obj.Endereco);
-                            return "Erro cadastrar proprietário, tente novamente mais tarde";
+                            return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
                     return "Proprietário cadastrado com sucesso!";
