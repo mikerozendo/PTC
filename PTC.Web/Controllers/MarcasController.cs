@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
-using System.Threading.Tasks;
 
 namespace PTC.Web.Controllers
 {
@@ -15,9 +15,9 @@ namespace PTC.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_marcasService.ObterTodos());
+            return View( await Task.Run(() => _marcasService.ObterTodos()));
         }
 
         [HttpGet]
@@ -27,35 +27,35 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Inserir(Marca obj)
+        public async Task<IActionResult> Inserir(Marca obj)
         {
-            return Content(_marcasService.Inserir(obj));
+            return Content(await Task.Run(() => _marcasService.Inserir(obj)));
         }
 
         [HttpPost]
-        public IActionResult Deletar(Marca obj)
+        public async Task<IActionResult> Deletar(Marca obj)
         {
-            _marcasService.Deletar(obj);
-            return RedirectToAction("Index");
+            await Task.Run(() => _marcasService.Deletar(obj));
+            return await Task.Run(() => RedirectToAction(nameof(Index)));
         }
 
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            return View(_marcasService.ObterPorId(id));
+            return View(await Task.Run(() => _marcasService.ObterPorId(id)));
         }
 
         [HttpPost]
-        public IActionResult Alterar(Marca obj)
+        public async Task<IActionResult> Alterar(Marca obj)
         {
-            _marcasService.Alterar(obj);
-            return RedirectToAction("Index");
+            await Task.Run(() => _marcasService.Alterar(obj));
+            return await Task.Run(() => RedirectToAction(nameof(Index)));
         }
 
         [HttpGet]
-        public async Task<IActionResult>  ObterTodos()
+        public async Task<IActionResult> ObterTodos()
         {
-           return await Task.Run(() => Json(_marcasService.ObterTodos()));
+            return await Task.Run(() => Json(_marcasService.ObterTodos()));
         }
     }
 }
