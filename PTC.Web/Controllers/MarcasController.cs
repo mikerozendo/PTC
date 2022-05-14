@@ -50,5 +50,11 @@ namespace PTC.Web.Controllers
             _marcasService.Alterar(obj);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            return Json(_marcasService.ObterTodos());
+        }
     }
 }

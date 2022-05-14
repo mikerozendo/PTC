@@ -73,5 +73,11 @@ namespace PTC.Web.Controllers
             await _helperService.AlterarImagemProprietario(obj.Imagem, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
             return Content(mensagem);
         }
+
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            return Json(_proprietarioService.ObterTodos());
+        }
     }
 }

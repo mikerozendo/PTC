@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
+using System.Threading.Tasks;
 
 namespace PTC.Web.Controllers
 {
@@ -49,6 +50,12 @@ namespace PTC.Web.Controllers
         {
             _marcasService.Alterar(obj);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public JsonResult ObterTodos()
+        {
+            return Json(_marcasService.ObterTodos());
         }
     }
 }

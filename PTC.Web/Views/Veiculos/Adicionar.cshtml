@@ -1,12 +1,12 @@
 ﻿<div class="modal-content margin-modais">
     <div class="modal-header">
         <h3>
-            <span id="headerMarca">Nova Marca</span>
-            <img class="img-logo" src="#" style="display:none" />
+            <span id="headerMarca">Novo Veículo</span>
+            @*<img class="img-logo" src="#" style="display:none" />*@
         </h3>
     </div>
     <div class="modal-body">
-        <form id="InserirMarca" action="@Url.Action("Inserir","Veiculos")" method="post">
+        <form id="InserirVeiculo" action="@Url.Action("Inserir","Veiculos")" method="post">
             <div class="form-group">
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-4">
@@ -14,12 +14,31 @@
                         <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
                     </div>
                     <div class="col-4">
-                        <label for="UrlImagem">Url Imagem</label>
-                        <input id="UrlImagem" type="text" name="UrlImagem" value="" class="form-control" required />
+                        <label for="modelo">Modelo</label>
+                        <input id="modelo" type="text" name="modelo" value="" class="form-control" required />
                     </div>
-                    <div class="containner-img col-4">
-                        <img class="img-logo" src="#" />
+                    <div id="selectMarca" class="col-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="fabricacao">Fabricacao</label>
+                        <input id="fabricacao" type="date" name="fabricacao" value="" class="form-control" required />
                     </div>
+                    <div class="col-6">
+                        <label for="Anomodelo">Modelo</label>
+                        <input id="Anomodelo" type="date" name="Anomodelo" value="" class="form-control" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="km">Km</label>
+                        <input type="text" class="form-control" name="km" value="" />
+                    </div>
+                    <div class="col-4">
+                        <label for="valor">Valor</label>
+                        <input type="number" class="form-control" name="valor" value="" />
+                    </div>
+                    <div id="selectProprietario" class="col-4"></div>
                 </div>
             </div>
             <hr />
@@ -39,32 +58,9 @@
 
     <script>
         $(document).ready(function () {
-            $(".containner-img").hide();
-            FormEventHandler('InserirMarca', 'Index', 'Veiculos');
-
-            $("#UrlImagem").on('change', function (e) {
-                e.stopImmediatePropagation();
-                if ($(this).val() != undefined && $(this).val() != null && $(this).val() != "") {
-                    RenderizarImagemLogo();
-                }
-            });
-
-            $("#Nome").on('change', function () {
-                if ($(this).val() != undefined && $(this).val() != null && $(this).val() != "") {
-                    $("#headerMarca").text($(this).val());
-                }
-                else {
-                    $("#headerMarca").text('Nova Marca');
-                }
-            });
+            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca');
+            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'Proprietário');
         });
-
-
-        function RenderizarImagemLogo() {
-            $(".img-logo").attr("src", $("#UrlImagem").val());
-            $(".containner-img").show();
-            $(".img-logo").show();
-        }
     </script>
 
 } 
