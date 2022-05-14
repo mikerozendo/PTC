@@ -40,8 +40,8 @@ namespace PTC.Web.Models.Services
                         await arquivo.CopyToAsync(fileStream);
                     }
                 }
-             
-                await Task.Delay(1);
+
+                return;
             }
             catch (Exception)
             {
