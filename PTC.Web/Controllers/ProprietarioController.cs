@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,9 @@ namespace PTC.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_proprietarioService.ObterTodos());
+            return View(await Task.Run(() => _proprietarioService.ObterTodos()));
         }
 
         [HttpGet]
@@ -41,43 +42,43 @@ namespace PTC.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            return View(_proprietarioService.ObterPorId(id));
+            return View(await Task.Run(() => _proprietarioService.ObterPorId(id)));
         }
 
         [HttpGet]
-        public IActionResult FiltroDinamico(string filtro)
+        public async Task<IActionResult> FiltroDinamico(string filtro)
         {
-            return View("Index", _proprietarioService.Filtrar(filtro));
+            return View("Index", await Task.Run(() => _proprietarioService.Filtrar(filtro)));
         }
 
         [HttpPost]
         public async Task<IActionResult> Inserir(Proprietario proprietario)
         {
-            var mensagem = _proprietarioService.Inserir(proprietario);
+            var mensagem = await Task.Run(() => _proprietarioService.Inserir(proprietario));
             await _helperService.GerarImagemProprietario(proprietario.Imagem, _webHostEnvironment.WebRootPath, mensagem);
-            return Content(mensagem);
+            return await Task.Run(() => Content(mensagem)); 
         }
 
         [HttpPost]
-        public IActionResult Deletar(Proprietario obj)
+        public async Task<IActionResult> Deletar(Proprietario obj)
         {
-            _proprietarioService.Deletar(obj); return Ok();
+            await Task.Run(() => _proprietarioService.Deletar(obj)); return Ok();
         }
 
         [HttpPost]
         public async Task<IActionResult> Alterar(Proprietario obj)
         {
-            var mensagem = _proprietarioService.Alterar(obj);
+            var mensagem = await Task.Run(() => _proprietarioService.Alterar(obj));
             await _helperService.AlterarImagemProprietario(obj.Imagem, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
-            return Content(mensagem);
+            return await Task.Run(() => Content(mensagem));
         }
 
         [HttpGet]
-        public IActionResult ObterTodos()
+        public async Task<IActionResult> ObterTodos()
         {
-            return Json(_proprietarioService.ObterTodos());
+            return await Task.Run(() => Json(_proprietarioService.ObterTodos()));
         }
     }
 }
