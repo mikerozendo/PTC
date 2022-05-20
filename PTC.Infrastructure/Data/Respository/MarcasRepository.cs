@@ -48,9 +48,9 @@ namespace PTC.Infrastructure.Data.Respository
                     EnumSituacao = (EnumSituacao)tabela.Rows[0]["Situacao"]
                 };
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw;
+                return new();
             }
         }
 

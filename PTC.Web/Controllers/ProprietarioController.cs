@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Services;
+using PTC.Web.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
 
 namespace PTC.Web.Controllers
@@ -14,18 +15,20 @@ namespace PTC.Web.Controllers
         private readonly IProprietarioService _proprietarioService;
         private readonly IHelperService _helperService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly EnumPastaArquivoIdentificador pasta;
 
         public ProprietarioController(IProprietarioService proprietarioService, IHelperService helperService, IWebHostEnvironment webHostEnvironment)
         {
             _proprietarioService = proprietarioService;
             _helperService = helperService;
             _webHostEnvironment = webHostEnvironment;
+            pasta = EnumPastaArquivoIdentificador.Proprietarios;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_proprietarioService.ObterTodos());
+            return View(await Task.Run(() => _proprietarioService.ObterTodos()));
         }
 
         [HttpGet]
@@ -41,37 +44,43 @@ namespace PTC.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            return View(_proprietarioService.ObterPorId(id));
+            return View(await Task.Run(() => _proprietarioService.ObterPorId(id)));
         }
 
         [HttpGet]
-        public IActionResult FiltroDinamico(string filtro)
+        public async Task<IActionResult> FiltroDinamico(string filtro)
         {
-            return View("Index", _proprietarioService.Filtrar(filtro));
+            return View("Index", await Task.Run(() => _proprietarioService.Filtrar(filtro)));
         }
 
         [HttpPost]
         public async Task<IActionResult> Inserir(Proprietario proprietario)
         {
-            var mensagem = _proprietarioService.Inserir(proprietario);
-            await _helperService.GerarImagemProprietario(proprietario.Imagem, _webHostEnvironment.WebRootPath, mensagem);
-            return Content(mensagem);
+            var mensagem = await Task.Run(() => _proprietarioService.Inserir(proprietario));
+            await _helperService.GerarImagem(proprietario.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
+            return await Task.Run(() => Content(mensagem)); 
         }
 
         [HttpPost]
-        public IActionResult Deletar(Proprietario obj)
+        public async Task<IActionResult> Deletar(Proprietario obj)
         {
-            _proprietarioService.Deletar(obj); return Ok();
+            await Task.Run(() => _proprietarioService.Deletar(obj)); return Ok();
         }
 
         [HttpPost]
         public async Task<IActionResult> Alterar(Proprietario obj)
         {
-            var mensagem = _proprietarioService.Alterar(obj);
-            await _helperService.AlterarImagemProprietario(obj.Imagem, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
-            return Content(mensagem);
+            var mensagem = await Task.Run(() => _proprietarioService.Alterar(obj));
+            await _helperService.AlterarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
+            return await Task.Run(() => Content(mensagem));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObterTodos()
+        {
+            return await Task.Run(() => Json(_proprietarioService.ObterTodos()));
         }
     }
 }

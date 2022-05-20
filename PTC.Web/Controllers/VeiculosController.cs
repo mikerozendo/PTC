@@ -1,54 +1,73 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using PTC.Domain.Entities;
+using PTC.Web.Models.Enums;
 using PTC.Domain.Interfaces.Services;
+using PTC.Web.Models.Interfaces.Services;
 
 namespace PTC.Web.Controllers
 {
     public class VeiculosController : Controller
     {
         private readonly IVeiculosService _marcasService;
+        private readonly EnumPastaArquivoIdentificador pasta;
+        private readonly IHelperService _helperService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public VeiculosController(IVeiculosService marcasService)
+        public VeiculosController(IVeiculosService marcasService, IHelperService helperService, IWebHostEnvironment webHostEnvironment )
         {
             _marcasService = marcasService;
+            _helperService = helperService;
+            _webHostEnvironment = webHostEnvironment;
+            pasta = EnumPastaArquivoIdentificador.Veiculos;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_marcasService.ObterTodos());
+            return View(await Task.Run(() => _marcasService.ObterTodos()));
         }
 
         [HttpGet]
-        public IActionResult Adicionar()
+        public async Task<IActionResult>  Adicionar()
         {
-            return View();
+            return await Task.Run(() => View());
         }
 
         [HttpPost]
-        public IActionResult Inserir(Veiculo obj)
+        public async Task<IActionResult> Inserir(Veiculo obj)
         {
-            return Content(_marcasService.Inserir(obj));
+            var mensagem = await Task.Run(() => _marcasService.Inserir(obj));
+            await _helperService.GerarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
+            return await Task.Run(() => Content(mensagem));
         }
 
         [HttpPost]
-        public IActionResult Deletar(Veiculo obj)
+        public async Task<IActionResult> Deletar(Veiculo obj)
         {
-            _marcasService.Deletar(obj);
-            return RedirectToAction("Index");
+            await Task.Run(() => _marcasService.Deletar(obj));
+            return await Task.Run(() => RedirectToAction(nameof(Index))); 
         }
 
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            return View(_marcasService.ObterPorId(id));
+            return View( await Task.Run(() => _marcasService.ObterPorId(id)));
         }
 
         [HttpPost]
-        public IActionResult Alterar(Veiculo obj)
+        public async Task<IActionResult> Alterar(Veiculo obj)
         {
-            _marcasService.Alterar(obj);
-            return RedirectToAction("Index");
+            await Task.Run(() => _marcasService.Alterar(obj));
+            //await _helperService.AlterarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
+            return await Task.Run(() => RedirectToAction(nameof(Index)));
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> ObterTodos()
+        {
+            return await Task.Run(() => Json(_marcasService.ObterTodos()));
         }
     }
 }

@@ -170,16 +170,39 @@ function Reload() {
     window.location.href = window.location.href;
 }
 
-function ImagemEvent() {
+function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
         e.stopImmediatePropagation();
-        var value = "/images/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+        var value = "/images/" + pasta +"/"+ $("#inputImg").val().replace('C:\\fakepath\\', '');
         $("#caminhoImagem").val(value);
     });
 
     $("#btnImgUpload").on('click', function (e) {
         e.stopImmediatePropagation();
         $("#inputImg").click();
+    });
+}
+
+function MontarSelect(action, controller, element, binder) {
+    fetch('https://localhost:44306/' + controller + '/' + action, {
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(data => {
+        data.json().then(value => {
+            var select = '<label for=' + binder + '>' + binder + '</label><select id = "' + binder + '" class="form-control form-control-sm" >';
+            if (value.length >= 0) {
+                select += '<option value="none">- selecione -</option >';
+                for (var i = 0; i < value.length; i++) {
+                    select += '<option value="' + value[i].id + '">' + value[i].nome + '</option>';
+                }
+                select += '</select>';
+                $("#" + element).html(select);
+            }
+            else {
+                return 'nenhum registro encontrado';
+            }
+        });
     });
 }
 
