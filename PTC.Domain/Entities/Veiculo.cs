@@ -1,5 +1,6 @@
-﻿using PTC.Domain.Enums;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using PTC.Domain.Enums;
 
 namespace PTC.Domain.Entities
 {
@@ -14,5 +15,7 @@ namespace PTC.Domain.Entities
         public string Km { get; set; }
         public decimal Valor { get; set; }
         public EnumSituacao EnumSituacao { get; set; }
+        public IFormFile Imagem { get; set; }
+        public string CaminhoImagem { get; set; }
     }
 }
