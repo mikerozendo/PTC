@@ -188,3 +188,16 @@ div.content {
 .containner-btn-img-upload {
     max-width: 100%;
 }
+
+.container-img-proprietario {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.container-btn-img-proprietario {
+    max-width: 100%;
+}
+
+.btn-img-proprietario {
+    width: 43%;
+}
