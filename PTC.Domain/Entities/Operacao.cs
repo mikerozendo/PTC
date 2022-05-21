@@ -1,8 +1,10 @@
-﻿using PTC.Domain.Enums;
+﻿using System;
+using PTC.Domain.Entities.Base;
+using PTC.Domain.Enums;
 
 namespace PTC.Domain.Entities
 {
-    public class Operacao
+    public class Operacao : BaseCadastro
     {
         public Proprietario Proprietario { get; set; }
         public Proprietario Comprador { get; set; }
@@ -10,5 +12,6 @@ namespace PTC.Domain.Entities
         public EnumSituacaoAquisicao EnumSituacaoAquisicao { get; set; }
         public EnumFormaPagamento EnumTipoPagamentoAquisicao { get; set; }
         public EnumFormaPagamento EnumTipoPagamentoRevenda { get; set; }
+        public DateTime? DataRevenda { get; set; } = null;
     }
 }
