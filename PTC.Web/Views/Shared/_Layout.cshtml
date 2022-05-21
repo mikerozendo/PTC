@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar" style="position:fixed">
         <ul class="nav flex-column">
             <li>
                 <a class="nav-link" href="@Url.Action("Index","Proprietario")">
@@ -33,16 +33,17 @@
     </div>
 
     <div class="container content">
-        <main role="main" class="pb-3" style="text-align: center;">
+        <main role="main" class="pb-3" style="text-align: center; width: 1260px;">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - PTC.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container" style="text-align:right">
+            &copy; 20052022 - MR.Solutions -
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -50,4 +51,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>
