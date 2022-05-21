@@ -12,8 +12,8 @@ namespace PTC.Domain.Entities
         public string Email { get; set; }
         public string WhatsApp { get; set; }
         public Endereco Endereco { get; set; } = new();
-        public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
+        public EnumTipoProprietario EnumTipoProprietario { get; set; }
 
         public void FormatarEscritaDb()
         {

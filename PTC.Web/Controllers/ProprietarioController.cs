@@ -37,11 +37,11 @@ namespace PTC.Web.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult ObterFiltrados(DateTime inicio, DateTime termino, EnumSituacao situacao)
-        {
-            return View("Index", _proprietarioService.ObterFiltrados(inicio, termino, situacao));
-        }
+        //[HttpGet]
+        //public IActionResult ObterFiltrados(DateTime inicio, DateTime termino)
+        //{
+        //    return View("Index", _proprietarioService.ObterFiltrados(inicio, termino));
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Editar(int id)

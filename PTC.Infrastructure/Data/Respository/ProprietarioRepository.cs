@@ -39,7 +39,6 @@ namespace PTC.Infrastructure.Data.Respository
                 {
                     Documento = sdr["Documento"].ToString(),
                     Email = sdr["Email"].ToString(),
-                    EnumSituacaoProprietario = Convert.ToBoolean(sdr["Ativo"]) ? EnumSituacao.Ativo : EnumSituacao.Inativo,
                     EnumTipoPessoa = (EnumTipoPessoa)sdr["IdTipoPessoa"],
                     Id = Convert.ToInt32(sdr["Id"]),
                     Nome = sdr["Nome"].ToString(),
@@ -88,7 +87,6 @@ namespace PTC.Infrastructure.Data.Respository
             {
                 Documento = tabela.Rows[0]["Documento"].ToString(),
                 Email = tabela.Rows[0]["Email"].ToString(),
-                EnumSituacaoProprietario = Convert.ToBoolean(tabela.Rows[0]["Ativo"]) ? EnumSituacao.Ativo : EnumSituacao.Inativo,
                 EnumTipoPessoa = (EnumTipoPessoa)tabela.Rows[0]["IdTipoPessoa"],
                 Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
                 Nome = tabela.Rows[0]["Nome"].ToString(),

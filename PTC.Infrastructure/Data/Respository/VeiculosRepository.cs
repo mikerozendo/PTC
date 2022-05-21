@@ -2,7 +2,6 @@
 using System.Data;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
-using PTC.Domain.Enums;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
 
@@ -12,27 +11,22 @@ namespace PTC.Infrastructure.Data.Respository
     {
         public void Alterar(Veiculo obj)
         {
-            AddParametro("ProprietarioId", obj.Proprietario.Id);
             AddParametro("Renavam", obj.Renavam);
             AddParametro("MarcaVeiculo", obj.MarcaVeiculo.Id);
             AddParametro("Modelo", obj.Modelo);
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("Km", obj.Km);
-            AddParametro("Valor", obj.Valor);
-            AddParametro("Situacao", obj.EnumSituacao);
             ExecutarProcedure("P_VEICULO_ALTERAR");
         }
 
         public dynamic Inserir(Veiculo obj)
         {
-            AddParametro("ProprietarioId", obj.Proprietario.Id);
             AddParametro("Renavam", obj.Renavam);
             AddParametro("MarcaVeiculo", obj.MarcaVeiculo.Id);
             AddParametro("Modelo", obj.Modelo);
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("Km", obj.Km);
-            AddParametro("Valor", obj.Valor);
-            AddParametro("Situacao", obj.EnumSituacao);
+            AddParametro("Valor", obj.ValorCompra);
             ExecutarProcedure("P_VEICULO_INSERIR");
             return "Veiculo inserido com sucesso!";
         }
@@ -51,16 +45,10 @@ namespace PTC.Infrastructure.Data.Respository
                     Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
                     DataFabricacao = Convert.ToDateTime(sdr["DataFabricacao"]),
                     Exclusao = Convert.ToDateTime(sdr["Exclusao"]),
-                    EnumSituacao = (EnumSituacao)sdr["Situacao"],
                     Km = (decimal)sdr["Km"],
                     Modelo = sdr["Modelo"].ToString(),
                     Renavam = sdr["Renavam"].ToString(),
-                    Valor = Convert.ToDecimal(sdr["Valor"]),
-                    Proprietario = new()
-                    {
-                        Id = Convert.ToInt32(sdr["IdProprietario"]),
-                        Nome = sdr["NomeProprietario"].ToString(),
-                    },
+                    ValorCompra = Convert.ToDecimal(sdr["Valor"]),
                     MarcaVeiculo = new()
                     {
                         Nome = sdr["NomeMarca"].ToString(),

@@ -1,5 +1,4 @@
 ﻿@model PTC.Domain.Entities.Marca
-@using PTC.Domain.Enums
 
 <div class="modal-content margin-modais">
     <div class="modal-header">
@@ -28,7 +27,7 @@
                         <label for="UrlImagem">Url</label>
                         <input id="imgUrl" type="url" name="UrlImagem" value="@Model.UrlImagem" class="form-control" />
                     </div>
-                    <div class="col-4">
+                    @*<div class="col-4">
                         <label for="Situacao">Situacao</label>
                         <select name="Situacao" id="Situacao" class="form-control" style="text-align:center">
                             <option value="none">-- Selecione --</option>
@@ -41,7 +40,7 @@
                                 }
                             }
                         </select>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <hr />
