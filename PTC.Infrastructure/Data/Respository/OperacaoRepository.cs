@@ -23,6 +23,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("IdProprietario", obj.Proprietario.Id);
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
             AddParametro("FormaPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
+            AddParametro("Compra", obj.DataAquisicao);
             AddParametro("Cadastro", DateTime.Now);
             var tabela = ExecutarProcedure("P_OPERACAO_INSERIR");
             return tabela.Rows.Count;
