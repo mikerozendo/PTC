@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PTC.Domain.Entities;
+using PTC.Domain.Interfaces.Repository.CQRS;
 
 namespace PTC.Domain.Interfaces.Repository
 {
-    class IOperacaoRepository
-    {
-    }
+    public interface IOperacaoRepository : ICommandRepository<Operacao> { }
 }
