@@ -8,7 +8,7 @@ namespace PTC.Domain.Entities
         public Proprietario Comprador { get; set; }
         public Veiculo Veiculo { get; set; }
         public EnumSituacaoAquisicao EnumSituacaoAquisicao { get; set; }
-        public EnumTipoPagamento EnumTipoPagamentoAquisicao { get; set; }
-        public EnumTipoPagamento EnumTipoPagamentoRevenda { get; set; }
+        public EnumFormaPagamento EnumTipoPagamentoAquisicao { get; set; }
+        public EnumFormaPagamento EnumTipoPagamentoRevenda { get; set; }
     }
 }

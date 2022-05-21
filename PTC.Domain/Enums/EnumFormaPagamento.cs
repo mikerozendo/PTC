@@ -1,12 +1,13 @@
 ﻿namespace PTC.Domain.Enums
 {
-    public enum EnumTipoPagamento
+    public enum EnumFormaPagamento
     {
         Dinheiro = 1,
         TED = 2,
         PIX = 3,
         Financiado = 4,
         Boleto = 5,
-        Consignado = 6
+        Cheque = 6,
+        Consignado = 7
     }
 }

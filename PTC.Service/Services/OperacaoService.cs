@@ -1,5 +1,6 @@
 ﻿using System;
 using PTC.Domain.Entities;
+using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
 
 namespace PTC.Application.Services
@@ -7,6 +8,7 @@ namespace PTC.Application.Services
     public class OperacaoService : IOperacaoService
     {
         private readonly IVeiculosService _veiculosService;
+        private readonly IOperacaoRepository _operacaoRepository;
 
         public OperacaoService(IVeiculosService veiculosService)
         {
@@ -28,7 +30,7 @@ namespace PTC.Application.Services
                 {
                     try
                     {
-                        //tabela juntando veiculo ao proprietario + valores de compra venda + situacao da aquisicao
+                        return _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
                     }
                     catch (Exception)
                     {
@@ -36,12 +38,10 @@ namespace PTC.Application.Services
                         return "Erro ocorrido ao cadastro nova operação";
                     }
                 }
+
                 else return "Informe um proprietario!";
-            }
-
+            } 
             else return "Erro ao cadastrar veículo!";
-
-            return string.Empty;
         }
 
         public Operacao ObterPorId(int id)
