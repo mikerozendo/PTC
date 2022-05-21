@@ -28,6 +28,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Km", obj.Km);
             AddParametro("Valor", obj.ValorCompra);
             ExecutarProcedure("P_VEICULO_INSERIR");
+            //voltarId
             return "Veiculo inserido com sucesso!";
         }
 
