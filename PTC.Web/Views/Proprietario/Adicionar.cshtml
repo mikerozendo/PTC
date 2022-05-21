@@ -7,17 +7,17 @@
     <div class="modal-body">
         <div class="form-group">
             <form id="InserirProprietario" action="@Url.Action("Inserir","Proprietario")" method="post">
-                <div class="row" style="height: 50vh;">
-                    <div class="col-sm-6">
-                        <img id="imgProprietario" class="img-fluid card-img" src="~/images/generic.jpg" alt="Alternate Text" style="width: 100%; height: 50%;" />
-                        <input type="file" hidden name="Imagem" value="" id="inputImg" />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
-                            </div>
+                <div class="row" style="padding-bottom: 3%;">
+                    <div class="col-6">
+                        <div class="col-lg-6 container-img-proprietario ">
+                            <img id="imgProprietario" class="img-fluid card-img btn-img-proprietario" src="~/images/generic.jpg" alt="Alternate Text"/>
+                            <input type="file" hidden name="Imagem" value="" id="inputImg" />
+                        </div>
+                        <div class="col-lg-6 container-btn-img-proprietario">
+                            <button id="btnImgUpload" class="form-control-file btn btn-info btn-img-proprietario">Upload</button>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-6">
                         <label for="Nome">Nome</label>
                         <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
                         <label for="tipoDocumento">Tipo Documento</label>
@@ -28,18 +28,17 @@
                         </select>
                         <label for="documento">Documento</label>
                         <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
-                    </div>
-                </div>
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-2">
                         <label for="Cep">CEP</label>
                         <input id="Cep" type="text" name="Endereco.Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
                     </div>
+                </div>
+                <hr />
+                <div class="row" style="padding-bottom:20px">
                     <div class="col-3">
                         <label for="Bairro">Bairro</label>
                         <input id="Bairro" type="text" name="Endereco.Bairro" value="" class="form-control" readonly />
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <label for="Uf">Estado</label>
                         <input id="Uf" type="text" name="Endereco.Uf" value="" class="form-control" readonly />
                     </div>
@@ -47,7 +46,7 @@
                         <label for="Cidade">Cidade</label>
                         <input id="Cidade" type="text" name="Endereco.Cidade" value="" class="form-control" readonly />
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                         <label for="Numero">Numero</label>
                         <input id="Numero" type="text" name="Endereco.Numero" value="" class="form-control" required />
                     </div>

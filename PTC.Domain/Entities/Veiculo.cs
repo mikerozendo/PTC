@@ -12,7 +12,7 @@ namespace PTC.Domain.Entities
         public string Modelo { get; set; }
         public DateTime DataFabricacao { get; set; }
         public DateTime AnoModelo { get; set; }
-        public string Km { get; set; }
+        public decimal Km { get; set; }
         public decimal Valor { get; set; }
         public EnumSituacao EnumSituacao { get; set; }
         public IFormFile Imagem { get; set; }
