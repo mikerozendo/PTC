@@ -8,17 +8,17 @@
     <div class="modal-body">
         <form id="InserirVeiculo" action="@Url.Action("Inserir","Veiculos")" method="post">
             <div class="form-group" style="text-align:center">
-                <div class="row" style="height: 50vh;">
-                    <div class="col-sm-6">
-                        <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carromodelo.png" alt="Alternate Text" style="width: 100%;height: 43%;" />
-                        <input type="file" hidden name="Imagem" value="" id="inputImg" />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
-                            </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="col-lg-6 containner-img-upload">
+                            <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carromodelo.png" alt="Alternate Text" style=" width: auto;" />
+                            <input type="file" hidden name="Imagem" value="" id="inputImg" />
+                        </div>
+                        <div class="col-lg-6 containner-btn-img-upload">
+                            <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-6">
                         <label for="Nome">Nome</label>
                         <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
                         <label for="modelo">Modelo</label>
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="km">Km</label>
-                        <input type="text" class="form-control" name="km" value="" />
+                        <input type="number" class="form-control" name="km" value="" />
                     </div>
                     <div class="col-6">
                         <label for="valor">Valor</label>

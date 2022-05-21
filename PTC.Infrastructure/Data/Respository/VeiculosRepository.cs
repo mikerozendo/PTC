@@ -52,7 +52,7 @@ namespace PTC.Infrastructure.Data.Respository
                     DataFabricacao = Convert.ToDateTime(sdr["DataFabricacao"]),
                     Exclusao = Convert.ToDateTime(sdr["Exclusao"]),
                     EnumSituacao = (EnumSituacao)sdr["Situacao"],
-                    Km = sdr["Km"].ToString(),
+                    Km = (decimal)sdr["Km"],
                     Modelo = sdr["Modelo"].ToString(),
                     Renavam = sdr["Renavam"].ToString(),
                     Valor = Convert.ToDecimal(sdr["Valor"]),
