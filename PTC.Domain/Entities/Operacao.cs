@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using PTC.Domain.Enums;
+﻿using PTC.Domain.Enums;
 
 namespace PTC.Domain.Entities
 {
@@ -9,5 +8,7 @@ namespace PTC.Domain.Entities
         public Proprietario Comprador { get; set; }
         public Veiculo Veiculo { get; set; }
         public EnumSituacaoAquisicao EnumSituacaoAquisicao { get; set; }
+        public EnumTipoPagamento EnumTipoPagamentoAquisicao { get; set; }
+        public EnumTipoPagamento EnumTipoPagamentoRevenda { get; set; }
     }
 }
