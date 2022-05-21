@@ -198,6 +198,7 @@ function MontarSelect(action, controller, element, binder) {
                 }
                 select += '</select>';
                 $("#" + element).html(select);
+                //$("#" + binder).select2({language:"pt"});
             }
             else {
                 return 'nenhum registro encontrado';
