@@ -1,19 +1,17 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Entities;
+using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
-    public class Proprietario : Base, IFormato
+    public class Proprietario : BaseCadastroExtention, IFormato
     {
         public string Nome { get; set; }
         public string Documento { get; set; }
         public string Email { get; set; }
         public string WhatsApp { get; set; }
         public Endereco Endereco { get; set; } = new();
-        public IFormFile Imagem { get; set; }
-        public string CaminhoImagem { get; set; }
         public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
 

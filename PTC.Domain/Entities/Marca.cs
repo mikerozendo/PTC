@@ -1,8 +1,9 @@
-﻿using PTC.Domain.Enums;
+﻿using PTC.Domain.Entities.Base;
+using PTC.Domain.Enums;
 
 namespace PTC.Domain.Entities
 {
-    public class Marca : Base
+    public class Marca : BaseCadastro
     {
         public string Nome { get; set; }
         public EnumSituacao EnumSituacao { get; set; }

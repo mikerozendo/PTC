@@ -10,10 +10,7 @@ namespace PTC.Domain.Enums
         [Description("Inativo")]
         Inativo = 1,
 
-        [Description("Vendido")]
-        Vendido = 3,
-
         [Description("Todos")]
-        Todos = 4,
+        Todos = 3,
     }
 }

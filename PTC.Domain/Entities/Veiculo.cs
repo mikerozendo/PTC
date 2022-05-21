@@ -1,12 +1,10 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
-using PTC.Domain.Enums;
+using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
-    public class Veiculo : Base
+    public class Veiculo : BaseCadastroExtention
     {
-        public Proprietario Proprietario { get; set; }
         public string Renavam { get; set; }
         public Marca MarcaVeiculo { get; set; }
         public string Modelo { get; set; }
@@ -15,8 +13,5 @@ namespace PTC.Domain.Entities
         public decimal Km { get; set; }
         public decimal ValorCompra { get; set; }
         public decimal ValorRevenda { get { return ValorCompra + (ValorCompra * 20 / 100); } }
-        public EnumSituacao EnumSituacao { get; set; }
-        public IFormFile Imagem { get; set; }
-        public string CaminhoImagem { get; set; }
     }
 }
