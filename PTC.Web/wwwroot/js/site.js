@@ -165,7 +165,6 @@ function Deletar(controller, action, id) {
     request.send(form);
 }
 
-
 function Reload() {
     window.location.href = window.location.href;
 }
@@ -183,14 +182,25 @@ function ImagemEvent(pasta) {
     });
 }
 
-function MontarSelect(action, controller, element, binder) {
+function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget) {
     fetch('https://localhost:44306/' + controller + '/' + action, {
         headers: {
             'Accept': 'application/json'
         }
     }).then(data => {
         data.json().then(value => {
-            var select = '<label for=' + binder + '>' + binder + '</label><select id = "' + binder + '" class="form-control" style="text-align:center" >';
+            let select =
+                `
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <label for="${binder}">${binder}</label>
+                        </div>
+                `;
+            if (btnAdicionar) {
+                select += '<div class="col-6 text-right"><button type="button" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
+            } 
+
+            select += '</div><select id = "' + binder + '" class="form-control form-select" style="text-align:center">';
             if (value.length >= 0) {
                 select += '<option value="none">- selecione -</option >';
                 for (var i = 0; i < value.length; i++) {
@@ -198,12 +208,7 @@ function MontarSelect(action, controller, element, binder) {
                 }
                 select += '</select>';
                 $("#" + element).html(select);
-                //$("#" + binder).select2({language:"pt"});
-            }
-            else {
-                return 'nenhum registro encontrado';
             }
         });
     });
 }
-

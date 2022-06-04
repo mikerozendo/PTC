@@ -18,31 +18,47 @@
                             <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
-                        <label for="modelo">Modelo</label>
-                        <input id="modelo" type="text" name="modelo" value="" class="form-control" required />
-                        <div id="selectMarca"></div>
-                        <div id="selectProprietario"></div>
+                    <div class="col-6 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="Nome">Nome</label>
+                                <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="modelo">Modelo</label>
+                                <input id="modelo" type="text" name="modelo" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectMarca"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectProprietario"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label for="km">Km</label>
                         <input type="number" class="form-control" name="km" value="" />
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label for="valor">Valor</label>
                         <input type="number" class="form-control" name="ValorCompra" value="" step=".01" />
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label for="fabricacao">Fabricacao</label>
                         <input id="fabricacao" type="date" name="fabricacao" value="" class="form-control" required />
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label for="Anomodelo">Modelo</label>
                         <input id="Anomodelo" type="date" name="Anomodelo" value="" class="form-control" required />
                     </div>
@@ -57,8 +73,38 @@
                 </div>
             </div>
         </form>
+        <div id="mdlAdicionarMarca" class="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="@Url.Action("Inserir","Marcas")" method="post">
+                            <div class="row">
+                                <div class="col-12 text-left">
+                                    <label for="Nome">Nome</label>
+                                    <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Salvar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
 
 
 @section scripts {
@@ -68,10 +114,15 @@
 
     <script>
         $(document).ready(function () {
+            $("#mdlAdicionarMarca").hide();
             ImagemEvent("Veiculos");
             FormEventHandler('InserirVeiculo', 'Index', 'Proprietario');
-            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca');
-            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'Proprietário');
+            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca', 'mdlAdicionarMarca');
+                            //MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca');
+
+
+
+            $(".row").css("padding-bottom", "10px");
         });
     </script>
 
