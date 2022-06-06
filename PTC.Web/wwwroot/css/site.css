@@ -201,3 +201,8 @@ div.content {
 .btn-img-proprietario {
     width: 43%;
 }
+
+.lbl-inputs {
+    font-weight: bold;
+    color: darkgray;
+}

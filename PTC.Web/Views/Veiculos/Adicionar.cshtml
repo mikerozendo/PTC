@@ -21,13 +21,13 @@
                     <div class="col-6 text-left">
                         <div class="row">
                             <div class="col-12">
-                                <label for="Nome">Nome</label>
+                                <label class="lbl-inputs" for="Nome">Nome</label>
                                 <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <label for="modelo">Modelo</label>
+                                <label class="lbl-inputs" for="modelo">Modelo</label>
                                 <input id="modelo" type="text" name="modelo" value="" class="form-control" required />
                             </div>
                         </div>
@@ -44,22 +44,53 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 text-left">
-                        <label for="km">Km</label>
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="valor">Valor</label>
+                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    </div>
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="valor">Valor Tabela</label>
+                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    </div>
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="valor">Valor Compra</label>
+                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    </div>
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="valor">Valor Revenda</label>
+                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="km">Km</label>
                         <input type="number" class="form-control" name="km" value="" />
                     </div>
-                    <div class="col-6 text-left">
-                        <label for="valor">Valor</label>
-                        <input type="number" class="form-control" name="ValorCompra" value="" step=".01" />
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="status">Status</label>
+                        <select class="form-control form-select text-center">
+                            <option value="none">-- Selecione --</option>
+                            <option value="1">Negociação de compra</option>
+                            <option value="2">Estoque</option>
+                            <option value="3">Negociação de venda</option>
+                            <option value="4">Vendido</option>
+                        </select>
+                    </div>
+                    <div class="col-4 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectComprador"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6 text-left">
-                        <label for="fabricacao">Fabricacao</label>
+                        <label class="lbl-inputs" for="fabricacao">Fabricacao</label>
                         <input id="fabricacao" type="date" name="fabricacao" value="" class="form-control" required />
                     </div>
                     <div class="col-6 text-left">
-                        <label for="Anomodelo">Modelo</label>
+                        <label class="lbl-inputs" for="Anomodelo">Modelo</label>
                         <input id="Anomodelo" type="date" name="Anomodelo" value="" class="form-control" required />
                     </div>
                 </div>
@@ -110,9 +141,7 @@
                     </div>
                     <div class="modal-body">
                         <fieldset>
-                            <span>
-                                Tem certeza que deseja ser redirecionado para a tela de inclusão de proprietário?
-                            </span>
+                            <p>Tem certeza que deseja ser redirecionado para a tela de inclusão de proprietário?</p>
                         </fieldset>
                         <hr />
                         <div class="row">
@@ -142,7 +171,7 @@
             FormEventHandler('InserirVeiculo', 'Index', 'Proprietario');
             MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca', 'mdlAdicionarMarca');
             MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'Proprietario', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm');
-
+            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'Comprador', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm');
             $(".row").css("padding-bottom", "10px");
         });
 

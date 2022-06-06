@@ -193,7 +193,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                 `
                     <div class="row">
                         <div class="col-6 text-left">
-                            <label for="${binder}">${binder}</label>
+                            <label class="lbl-inputs" for="${binder}">${binder}</label>
                         </div>
                 `;
             if (btnAdicionar) {
