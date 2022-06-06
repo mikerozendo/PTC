@@ -68,6 +68,7 @@ function FormEventHandler(form, aspAction, aspController) {
 }
 
 function ColetarRespostaServidor(aspAction, aspController) {
+    console.log(evert.target);
     fetch(event.target.action, {
         method: 'POST',
         body: new FormData(event.target)
