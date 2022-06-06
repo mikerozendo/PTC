@@ -11,16 +11,18 @@ namespace PTC.Web.Controllers
     public class OperacaoController : Controller
     {
         private readonly IVeiculosService _veiculosService;
+        private readonly IOperacaoService _operacaoService;
         private readonly EnumPastaArquivoIdentificador pasta;
         private readonly IHelperService _helperService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public OperacaoController(IVeiculosService veiculosService, IHelperService helperService, IWebHostEnvironment webHostEnvironment )
+        public OperacaoController(IVeiculosService veiculosService, IHelperService helperService, IWebHostEnvironment webHostEnvironment, IOperacaoService operacaoService)
         {
             _veiculosService = veiculosService;
             _helperService = helperService;
             _webHostEnvironment = webHostEnvironment;
             pasta = EnumPastaArquivoIdentificador.Veiculos;
+            _operacaoService = operacaoService;
         }
 
         [HttpGet]
@@ -30,16 +32,16 @@ namespace PTC.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>  Adicionar()
+        public async Task<IActionResult> Adicionar()
         {
-            return await Task.Run(() => View());
+            return await Task.Run(() => RedirectToAction("Adicionar","Veiculos"));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir(Veiculo obj)
+        public async Task<IActionResult> Inserir(Operacao obj)
         {
-            var mensagem = await Task.Run(() => _veiculosService.Inserir(obj));
-            await _helperService.GerarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
+            var mensagem = await Task.Run(() => _operacaoService.Inserir(obj));
+            await _helperService.GerarImagem(obj.Veiculo.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
             return await Task.Run(() => Content(mensagem));
         }
 

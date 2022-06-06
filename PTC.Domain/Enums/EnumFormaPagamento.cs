@@ -2,6 +2,7 @@
 {
     public enum EnumFormaPagamento
     {
+        Nenhum = 0,
         Dinheiro = 1,
         TED = 2,
         PIX = 3,

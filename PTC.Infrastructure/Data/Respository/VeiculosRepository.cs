@@ -27,9 +27,8 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("Km", obj.Km);
             AddParametro("Valor", obj.ValorCompra);
-            ExecutarProcedure("P_VEICULO_INSERIR");
-            //voltarId
-            return "Veiculo inserido com sucesso!";
+            int.TryParse(ExecutarProcedure("P_VEICULO_INSERIR").Rows[0]["Id"].ToString(), out int response);
+            return response;
         }
 
         public IEnumerable<Veiculo> ObterTodos()
@@ -53,7 +52,7 @@ namespace PTC.Infrastructure.Data.Respository
                     MarcaVeiculo = new()
                     {
                         Nome = sdr["NomeMarca"].ToString(),
-                        UrlImagem = sdr["CaminhoImagem"].ToString(),                       
+                        UrlImagem = sdr["CaminhoImagem"].ToString(),
                     }
                 });
             }

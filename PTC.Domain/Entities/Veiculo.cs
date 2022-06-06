@@ -12,6 +12,7 @@ namespace PTC.Domain.Entities
         public DateTime AnoModelo { get; set; }
         public decimal Km { get; set; }
         public decimal ValorCompra { get; set; }
-        public decimal ValorRevenda { get { return ValorCompra + (ValorCompra * 20 / 100); } }
+        public decimal ValorTabela { get; set; }
+        public decimal ValorRevenda { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿<div class="modal-content margin-modais">
+﻿@using PTC.Domain.Enums;
+
+<div class="modal-content margin-modais">
     <div class="modal-header">
         <h3>
             <span id="headerMarca">Novo Veículo</span>
@@ -44,21 +46,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3 text-left">
-                        <label class="lbl-inputs" for="valor">Valor</label>
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorCompra">Valor Compra</label>
                         <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
                     </div>
-                    <div class="col-3 text-left">
-                        <label class="lbl-inputs" for="valor">Valor Tabela</label>
-                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorTabela">Valor Tabela</label>
+                        <input type="number" class="form-control" name="ValorTabela" value="" step=".1" />
                     </div>
-                    <div class="col-3 text-left">
-                        <label class="lbl-inputs" for="valor">Valor Compra</label>
-                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorRevenda">Valor Revenda</label>
+                        <input type="number" class="form-control" name="ValorRevenda" value="" step=".1" />
                     </div>
-                    <div class="col-3 text-left">
-                        <label class="lbl-inputs" for="valor">Valor Revenda</label>
-                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Aquisição</label>
+                        <select name="EnumTipoPagamentoAquisicao" class="form-control form-select text-center">
+                            @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
+                            {
+                                <option value="@value">@value.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Revenda</label>
+                        <select class="form-control form-select text-center">
+                            @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
+                            {
+                                <option value="@value">@value.ToString()</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -67,8 +85,8 @@
                         <input type="number" class="form-control" name="km" value="" />
                     </div>
                     <div class="col-4 text-left">
-                        <label class="lbl-inputs" for="status">Status</label>
-                        <select class="form-control form-select text-center">
+                        <label class="lbl-inputs" for="EnumSituacaoAquisicao">Situação</label>
+                        <select name="EnumSituacaoAquisicao" class="form-control form-select text-center">
                             <option value="none">-- Selecione --</option>
                             <option value="1">Negociação de compra</option>
                             <option value="2">Estoque</option>
