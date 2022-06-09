@@ -68,7 +68,6 @@ function FormEventHandler(form, aspAction, aspController) {
 }
 
 function ColetarRespostaServidor(aspAction, aspController) {
-    console.log(evert.target);
     fetch(event.target.action, {
         method: 'POST',
         body: new FormData(event.target)
@@ -201,7 +200,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                 select += '<div class="col-6 text-right"><button type="button" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
             } 
 
-            select += '</div><select id = "' + binder + '" class="form-control form-select" style="text-align:center">';
+            select += '</div><select name="' + binder + '" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
             if (value.length >= 0) {
                 select += '<option value="none">- selecione -</option >';
                 for (var i = 0; i < value.length; i++) {

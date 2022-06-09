@@ -9,6 +9,7 @@ namespace PTC.Application.Dtos
         public int CompradorId { get; set; }
         public string RenavamVeiculo { get; set; }
         public int MarcaVeiculoId { get; set; }
+        public string NomeVeiculo { get; set; }
         public string ModeloVeiculo { get; set; }
         public DateTime DataFabricacaoVeiculo { get; set; }
         public DateTime AnoModeloVeiculo { get; set; }

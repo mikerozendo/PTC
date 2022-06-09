@@ -5,6 +5,8 @@ using PTC.Domain.Entities;
 using PTC.Web.Models.Enums;
 using PTC.Domain.Interfaces.Services;
 using PTC.Web.Models.Interfaces.Services;
+using PTC.Application.Dtos;
+using System;
 
 namespace PTC.Web.Controllers
 {
@@ -38,11 +40,12 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Inserir(Operacao obj)
+        public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
-            var mensagem = await Task.Run(() => _operacaoService.Inserir(obj));
-            await _helperService.GerarImagem(obj.Veiculo.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
-            return await Task.Run(() => Content(mensagem));
+            //var mensagem = await Task.Run(() => _operacaoService.Inserir(obj));
+            //await _helperService.GerarImagem(obj.Veiculo.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
+            //return await Task.Run(() => Content(mensagem));
+            throw new NotImplementedException();
         }
 
         [HttpPost]

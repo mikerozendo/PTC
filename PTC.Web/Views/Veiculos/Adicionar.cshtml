@@ -23,14 +23,14 @@
                     <div class="col-6 text-left">
                         <div class="row">
                             <div class="col-12">
-                                <label class="lbl-inputs" for="Nome">Nome</label>
-                                <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+                                <label class="lbl-inputs" for="NomeVeiculo">Nome</label>
+                                <input id="NomeVeiculo" type="text" name="NomeVeiculo" value="" class="form-control" required />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <label class="lbl-inputs" for="modelo">Modelo</label>
-                                <input id="modelo" type="text" name="modelo" value="" class="form-control" required />
+                                <label class="lbl-inputs" for="ModeloVeiculo">Modelo</label>
+                                <input id="ModeloVeiculo" type="text" name="ModeloVeiculo" value="" class="form-control" required />
                             </div>
                         </div>
                         <div class="row">
@@ -62,7 +62,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Aquisição</label>
-                        <select name="EnumTipoPagamentoAquisicao" class="form-control form-select text-center">
+                        <select name="TipoPagamentoAquisicaoId" class="form-control form-select text-center">
                             @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
                             {
                                 <option value="@value">@value.ToString()</option>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-6">
                         <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Revenda</label>
-                        <select class="form-control form-select text-center">
+                        <select name="TipoPagamentoRevendaId" class="form-control form-select text-center">
                             @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
                             {
                                 <option value="@value">@value.ToString()</option>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-4 text-left">
                         <label class="lbl-inputs" for="EnumSituacaoAquisicao">Situação</label>
-                        <select name="EnumSituacaoAquisicao" class="form-control form-select text-center">
+                        <select name="SituacaoAquisicaoId" class="form-control form-select text-center">
                             <option value="none">-- Selecione --</option>
                             <option value="1">Negociação de compra</option>
                             <option value="2">Estoque</option>
@@ -188,8 +188,8 @@
             ImagemEvent("Veiculos");
             FormEventHandler('InserirVeiculo', 'Index', 'Proprietario');
             MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca', 'mdlAdicionarMarca');
-            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'Proprietario', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm');
-            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'Comprador', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm');
+            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'ProprietarioId', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm');
+            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'CompradorId', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm');
             $(".row").css("padding-bottom", "10px");
         });
 
