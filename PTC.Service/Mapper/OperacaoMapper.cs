@@ -46,7 +46,7 @@ namespace PTC.Application.Mapper
             };
         }
 
-        public static OperacaoViewModel ToDomain(Operacao domain)
+        public static OperacaoViewModel ToViewModel(Operacao domain)
         {
             return new OperacaoViewModel
             {

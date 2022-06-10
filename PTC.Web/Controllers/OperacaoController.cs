@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using PTC.Domain.Entities;
+using PTC.Application.Dtos;
 using PTC.Web.Models.Enums;
+using PTC.Application.Mapper;
 using PTC.Domain.Interfaces.Services;
 using PTC.Web.Models.Interfaces.Services;
-using PTC.Application.Dtos;
-using System;
-using PTC.Application.Mapper;
 
 namespace PTC.Web.Controllers
 {
@@ -58,7 +57,7 @@ namespace PTC.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int id)
         {
-            return View(await Task.Run(() => OperacaoMapper.ToView_operacaoService.ObterPorId(id)));
+            return View(await Task.Run(() => OperacaoMapper.ToViewModel(_operacaoService.ObterPorId(id))));
         }
 
         [HttpPost]
@@ -68,11 +67,5 @@ namespace PTC.Web.Controllers
             //await _helperService.AlterarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
             return await Task.Run(() => RedirectToAction(nameof(Index)));
         }
-
-        //[HttpGet]
-        //public async Task<JsonResult> ObterTodos()
-        //{
-        //    return await Task.Run(() => Json(_veiculosService.ObterTodos()));
-        //}
     }
 }
