@@ -35,6 +35,7 @@ namespace PTC.Web
             services.AddScoped<IVeiculosRepository, VeiculosRepository>();
             services.AddScoped<IVeiculosService, VeiculosService>();
             services.AddScoped<IOperacaoService, OperacaoService>();
+            services.AddScoped<IOperacaoRepository, OperacaoRepository>();
             services.AddScoped<IHelperService, HelperService>();
         }
 
