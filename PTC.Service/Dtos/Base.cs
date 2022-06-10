@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 
 namespace PTC.Application.Dtos
 {
@@ -7,5 +8,7 @@ namespace PTC.Application.Dtos
         public long Id { get; set; }
         public DateTime? Cadastro { get; set; }
         public DateTime? Exclusao { get; set; }
+        public string CaminhoImagem { get; set; }
+        public IFormFile Imagem { get; set; }
     }
 }

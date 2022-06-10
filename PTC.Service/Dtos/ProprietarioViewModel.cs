@@ -16,7 +16,5 @@ namespace PTC.Application.Dtos
         public string Uf { get; set; }
         public string PontoReferencia { get; set; }
         public string Cidade { get; set; }
-        public IFormFile Imagem { get; set; }
-        public string CaminhoImagem { get; set; }
     }
 }

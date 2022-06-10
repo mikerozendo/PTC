@@ -13,7 +13,7 @@ namespace PTC.Application.Mapper
                 Veiculo = new Veiculo
                 {
                     AnoModelo = viewModel.AnoModeloVeiculo,
-                    Cadastro = viewModel.CadastroVeiculo,
+                    Cadastro = viewModel.Cadastro,
                     CaminhoImagem = viewModel.CaminhoImagem,
                     DataFabricacao = viewModel.DataFabricacaoVeiculo,
                     Exclusao = viewModel.DataFabricacaoVeiculo,
@@ -41,7 +41,8 @@ namespace PTC.Application.Mapper
                 EnumTipoPagamentoAquisicao = (EnumFormaPagamento)viewModel.TipoPagamentoAquisicaoId,
                 EnumTipoPagamentoRevenda = (EnumFormaPagamento)viewModel.TipoPagamentoRevendaId,
                 DataRevenda = viewModel.DataRevenda,
-                Cadastro = viewModel.DataAquisicao                
+                Cadastro = viewModel.Cadastro,
+                Exclusao = viewModel.Exclusao
             };
         }
     }

@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 
 namespace PTC.Application.Dtos
 {
-    public class OperacaoViewModel
+    public class OperacaoViewModel : Base
     {
         public int ProprietarioId { get; set; }
         public int CompradorId { get; set; }
@@ -20,12 +19,7 @@ namespace PTC.Application.Dtos
         public int SituacaoAquisicaoId { get; set; }
         public int TipoPagamentoAquisicaoId { get; set; }
         public int TipoPagamentoRevendaId { get; set; }
-        public DateTime? DataAquisicao { get; set; } = null;
         public DateTime? DataRevenda { get; set; } = null;
-        public DateTime? CadastroVeiculo { get; set; } = null;
-        public DateTime? ExclusaoVeiculo { get; set; } = null;
-        public IFormFile Imagem { get; set; }
-        public string CaminhoImagem { get; set; }
         public int VeiculoId { get; set; }
     }
 }

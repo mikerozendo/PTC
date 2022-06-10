@@ -25,7 +25,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
             AddParametro("FormaPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
             AddParametro("FormaPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
-            AddParametro("Compra", obj.DataAquisicao);
+            AddParametro("Compra", obj.Cadastro);
             AddParametro("Revenda", obj.DataRevenda);
             AddParametro("Cadastro", DateTime.Now);
             var tabela = ExecutarProcedure("P_OPERACAO_INSERIR");

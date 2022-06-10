@@ -1,5 +1,5 @@
-﻿using PTC.Application.Dtos;
-using PTC.Domain.Entities;
+﻿using PTC.Domain.Entities;
+using PTC.Application.Dtos;
 
 namespace PTC.Application.Mapper
 {
