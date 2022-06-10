@@ -10,9 +10,10 @@ namespace PTC.Application.Services
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoRepository _operacaoRepository;
 
-        public OperacaoService(IVeiculosService veiculosService)
+        public OperacaoService(IVeiculosService veiculosService, IOperacaoRepository operacaoRepository)
         {
             _veiculosService = veiculosService;
+            _operacaoRepository = operacaoRepository;
         }
 
         public void Deletar(Operacao obj)
