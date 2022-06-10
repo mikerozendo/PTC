@@ -1,11 +1,10 @@
 ﻿using System;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Entities;
-using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
-    public class Proprietario : BaseCadastroExtention, IFormato
+    public class Proprietario : Base, IFormato
     {
         public string Nome { get; set; }
         public string Documento { get; set; }

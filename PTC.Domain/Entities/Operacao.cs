@@ -1,10 +1,9 @@
 ﻿using System;
 using PTC.Domain.Enums;
-using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
-    public class Operacao : BaseCadastro
+    public class Operacao : Base
     {
         public Proprietario Proprietario { get; set; }
         public Proprietario Comprador { get; set; }

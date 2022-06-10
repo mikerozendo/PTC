@@ -1,10 +1,9 @@
 ﻿using System;
-using PTC.Domain.Entities.Base;
 using PTC.Domain.Interfaces.Entities;
 
 namespace PTC.Domain.Entities
 {
-    public class Endereco : BaseCadastro, IFormato
+    public class Endereco : Base, IFormato
     {
         public string Logradouro { get; set; }
         public string Numero { get; set; }

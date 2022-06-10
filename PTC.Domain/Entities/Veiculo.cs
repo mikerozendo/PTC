@@ -1,9 +1,8 @@
 ﻿using System;
-using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
-    public class Veiculo : BaseCadastroExtention
+    public class Veiculo : Base
     {
         public string Renavam { get; set; }
         public Marca MarcaVeiculo { get; set; }
