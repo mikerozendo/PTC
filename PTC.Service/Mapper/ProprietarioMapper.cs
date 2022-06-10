@@ -25,7 +25,29 @@ namespace PTC.Application.Mapper
                 Exclusao = viewModel.Exclusao,
                 Email = viewModel.Email,
                 Documento = viewModel.Documento,
-                CaminhoImagem = viewModel.CaminhoImagem          
+                CaminhoImagem = viewModel.CaminhoImagem
+            };
+        }
+
+        public static ProprietarioViewModel ToViewModel(Proprietario domain)
+        {
+            return new ProprietarioViewModel
+            {
+                Logradouro = domain.Endereco.Logradouro,
+                Numero = domain.Endereco.Numero,
+                Bairro = domain.Endereco.Bairro,
+                Cep = domain.Endereco.Cep,
+                Uf = domain.Endereco.Uf,
+                PontoReferencia = domain.Endereco.PontoReferencia,
+                Cidade = domain.Endereco.Cidade,
+                Nome = domain.Nome,
+                WhatsApp = domain.WhatsApp,
+                Cadastro = domain.Cadastro,
+                Exclusao = domain.Exclusao,
+                Email = domain.Email,
+                Documento = domain.Documento,
+                CaminhoImagem = domain.CaminhoImagem,
+                Id = domain.Id
             };
         }
     }
