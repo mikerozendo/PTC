@@ -2,9 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
-using PTC.Domain.Enums;
-using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
@@ -37,7 +36,7 @@ namespace PTC.Application.Services
                         {
                             return _proprietarioRepository.Inserir(obj);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             _enderecoService.Deletar(obj.Endereco);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
@@ -75,20 +74,20 @@ namespace PTC.Application.Services
             }
         }
 
-        public IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao)
-        {
-            try
-            {
-                if (situacao == EnumSituacao.Todos)
-                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino);
-                else
-                    return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao);
-            }
-            catch (Exception)
-            {
-                return new List<Proprietario>();
-            }
-        }
+        //public IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao)
+        //{
+        //    try
+        //    {
+        //        if (situacao == EnumSituacao.Todos)
+        //            return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino);
+        //        else
+        //            return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return new List<Proprietario>();
+        //    }
+        //}
 
         public void Deletar(Proprietario obj)
         {

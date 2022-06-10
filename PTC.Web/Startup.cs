@@ -34,6 +34,8 @@ namespace PTC.Web
             services.AddScoped<IMarcasRepository, MarcasRepository>();
             services.AddScoped<IVeiculosRepository, VeiculosRepository>();
             services.AddScoped<IVeiculosService, VeiculosService>();
+            services.AddScoped<IOperacaoService, OperacaoService>();
+            services.AddScoped<IOperacaoRepository, OperacaoRepository>();
             services.AddScoped<IHelperService, HelperService>();
         }
 
@@ -59,7 +61,7 @@ namespace PTC.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Veiculos}/{action=Adicionar}");
+                    pattern: "{controller=Operacao}/{action=Adicionar}");
             });
         }
     }

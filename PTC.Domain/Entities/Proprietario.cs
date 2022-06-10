@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Entities;
 
@@ -12,10 +11,8 @@ namespace PTC.Domain.Entities
         public string Email { get; set; }
         public string WhatsApp { get; set; }
         public Endereco Endereco { get; set; } = new();
-        public IFormFile Imagem { get; set; }
-        public string CaminhoImagem { get; set; }
-        public EnumSituacao EnumSituacaoProprietario { get; set; }
         public EnumTipoPessoa EnumTipoPessoa { get; set; }
+        public EnumTipoProprietario EnumTipoProprietario { get; set; }
 
         public void FormatarEscritaDb()
         {

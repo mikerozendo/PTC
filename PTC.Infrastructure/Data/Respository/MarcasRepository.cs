@@ -2,9 +2,8 @@
 using System.Data;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
-using PTC.Domain.Enums;
-using PTC.Domain.Interfaces.Repository;
 using PTC.Infrastructure.Data.Base;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Infrastructure.Data.Respository
 {
@@ -22,7 +21,6 @@ namespace PTC.Infrastructure.Data.Respository
                     Id = Convert.ToInt32(sdr["Id"]),
                     Nome = sdr["Nome"].ToString(),
                     UrlImagem = sdr["CaminhoImagem"].ToString(),
-                    EnumSituacao = (EnumSituacao)sdr["Situacao"],
                     Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
                     Exclusao = sdr["Exclusao"] is DBNull ? null : Convert.ToDateTime(sdr["Exclusao"])
                 });
@@ -44,8 +42,7 @@ namespace PTC.Infrastructure.Data.Respository
                     Nome = tabela.Rows[0]["Nome"].ToString(),
                     UrlImagem = tabela.Rows[0]["CaminhoImagem"].ToString(),
                     Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
-                    Exclusao = DateTime.TryParse(tabela.Rows[0]["Exclusao"].ToString().AsSpan(), out DateTime value) ? value : null,
-                    EnumSituacao = (EnumSituacao)tabela.Rows[0]["Situacao"]
+                    Exclusao = DateTime.TryParse(tabela.Rows[0]["Exclusao"].ToString().AsSpan(), out DateTime value) ? value : null
                 };
             }
             catch (Exception)
@@ -72,7 +69,6 @@ namespace PTC.Infrastructure.Data.Respository
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Id", obj.Id);
-            AddParametro("Status", obj.EnumSituacao);
             AddParametro("Url", obj.UrlImagem);
             ExecutarProcedure("P_MARCA_ALTERAR");
         }

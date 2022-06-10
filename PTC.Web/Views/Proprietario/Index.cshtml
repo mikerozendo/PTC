@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PTC.Domain.Entities.Proprietario>
+﻿@model IEnumerable<PTC.Application.Dtos.ProprietarioViewModel>
 
 <div class="modalContainner"></div>
 <div class="modal-content margin-modais">
@@ -61,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (PTC.Domain.Entities.Proprietario obj in Model)
+                @foreach (PTC.Application.Dtos.ProprietarioViewModel obj in Model)
                 {
                     <tr>
                         <td>
@@ -88,7 +88,7 @@
                         <td>@obj.Exclusao</td>
                         <td>@obj.Documento</td>
                         <td>
-                            <button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Endereco.Cep">
+                            <button class="btn btn-sm btn-success" onclick="AbrirGoogleMaps(this)" data-endereco="https://www.google.com.br/maps/place/@obj.Cep">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                             </button>
                         </td>
