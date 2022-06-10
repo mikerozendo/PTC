@@ -10,8 +10,6 @@ Camada de Domínio (PTC.Domain) => Contém entidades, enums e Interfaces que apo
 Camada de Serviço (PTC.Application) => Contém toda lógica de negócio, validações, aplicações de regras e tratamento de possíveis exceptions visando chamar a camada de repository passando valores limpos p/ escrita no banco;<br />
 Camada de Dados (PTC.Repository) => Recebe paramêtros passados pela camada de serviço e inicia fluxo de leitura ou escrita no banco por meio de Stored Procedures;<br />
 
-DTO'S => Não presentes na estrutura do projeto p/ evitar custos de processamento e tempo de implementação;<br />
-
  
 Técnologias utilizadas{<br />
   C# / .NET 5,<br />
