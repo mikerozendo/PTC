@@ -37,7 +37,7 @@ namespace PTC.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Adicionar()
         {
-            return await Task.Run(() => RedirectToAction("Adicionar","Veiculos"));
+            return await Task.Run(() => View());
         }
 
         [HttpPost]
@@ -49,16 +49,16 @@ namespace PTC.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Deletar(Veiculo obj)
+        public async Task<IActionResult> Deletar(OperacaoViewModel obj)
         {
-            await Task.Run(() => _veiculosService.Deletar(obj));
+            await Task.Run(() => _operacaoService.Deletar(OperacaoMapper.ToDomain(obj)));
             return await Task.Run(() => RedirectToAction(nameof(Index))); 
         }
 
         [HttpGet]
         public async Task<IActionResult> Editar(int id)
         {
-            return View(await Task.Run(() => _veiculosService.ObterPorId(id)));
+            return View(await Task.Run(() => OperacaoMapper.ToView_operacaoService.ObterPorId(id)));
         }
 
         [HttpPost]

@@ -17,7 +17,8 @@ namespace PTC.Application.Services
 
         public void Deletar(Operacao obj)
         {
-            throw new NotImplementedException();
+            _veiculosService.Deletar(obj.Veiculo);
+            _operacaoRepository.Deletar(obj);
         }
 
         public dynamic Inserir(Operacao obj)
