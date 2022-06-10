@@ -1,6 +1,6 @@
-﻿using PTC.Application.Dtos;
+﻿using PTC.Domain.Enums;
 using PTC.Domain.Entities;
-using PTC.Domain.Enums;
+using PTC.Application.Dtos;
 
 namespace PTC.Application.Mapper
 {
@@ -41,7 +41,7 @@ namespace PTC.Application.Mapper
                 EnumTipoPagamentoAquisicao = (EnumFormaPagamento)viewModel.TipoPagamentoAquisicaoId,
                 EnumTipoPagamentoRevenda = (EnumFormaPagamento)viewModel.TipoPagamentoRevendaId,
                 DataRevenda = viewModel.DataRevenda,
-                DataAquisicao = viewModel.DataAquisicao                
+                Cadastro = viewModel.DataAquisicao                
             };
         }
     }

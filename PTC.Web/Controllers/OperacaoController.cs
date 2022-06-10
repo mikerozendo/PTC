@@ -7,6 +7,7 @@ using PTC.Domain.Interfaces.Services;
 using PTC.Web.Models.Interfaces.Services;
 using PTC.Application.Dtos;
 using System;
+using PTC.Application.Mapper;
 
 namespace PTC.Web.Controllers
 {
@@ -42,10 +43,9 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
-            //var mensagem = await Task.Run(() => _operacaoService.Inserir(obj));
-            //await _helperService.GerarImagem(obj.Veiculo.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
-            //return await Task.Run(() => Content(mensagem));
-            throw new NotImplementedException();
+            var mensagem = await Task.Run(() => _operacaoService.Inserir(OperacaoMapper.ToDomain(obj)));
+            await _helperService.GerarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem);
+            return await Task.Run(() => Content(mensagem));
         }
 
         [HttpPost]

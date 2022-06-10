@@ -1,6 +1,6 @@
 ﻿using System;
-using PTC.Domain.Entities.Base;
 using PTC.Domain.Enums;
+using PTC.Domain.Entities.Base;
 
 namespace PTC.Domain.Entities
 {
@@ -12,7 +12,6 @@ namespace PTC.Domain.Entities
         public EnumSituacaoAquisicao EnumSituacaoAquisicao { get; set; }
         public EnumFormaPagamento EnumTipoPagamentoAquisicao { get; set; }
         public EnumFormaPagamento EnumTipoPagamentoRevenda { get; set; }
-        public DateTime? DataAquisicao { get; set; } = null;
         public DateTime? DataRevenda { get; set; } = null;
     }
 }
