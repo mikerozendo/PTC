@@ -2,6 +2,8 @@
 
 Projeto para controle de compra e venda de veículos, cadastro de proprietários e estatísticas de compra e venda. <br />
 
+O projeto ainda não esta finalizado!!
+
 Estrutura do projeto<br />
 Arquitetura baseada em DOMAIN DRIVEN DESIGN(DDD).<br />
 
@@ -11,12 +13,12 @@ Camada de Serviço (PTC.Application) => Contém toda lógica de negócio, valida
 Camada de Dados (PTC.Repository) => Recebe paramêtros passados pela camada de serviço e inicia fluxo de leitura ou escrita no banco por meio de Stored Procedures;<br />
 
  
-Técnologias utilizadas{<br />
+Técnologias utilizadas<br />
   C# / .NET 5,<br />
   Html,<br />
   Css,<br />
   JavaScript,<br />
   MySQL
-}<br />
+<br />
 
 
