@@ -1,4 +1,4 @@
-﻿@model PTC.Domain.Entities.Proprietario
+﻿@model PTC.Application.Dtos.ProprietarioViewModel
 
 <div class="modal-content margin-modais">
     <div class="modal-header">
@@ -51,33 +51,33 @@
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-2">
                         <label for="Cep">CEP</label>
-                        <input id="Cep" type="text" name="Endereco.Cep" value="@Model.Endereco.Cep" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
+                        <input id="Cep" type="text" name="Endereco.Cep" value="@Model.Cep" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
                     </div>
                     <div class="col-3">
                         <label for="Bairro">Bairro</label>
-                        <input id="Bairro" type="text" name="Endereco.Bairro" value="@Model.Endereco.Bairro" class="form-control" readonly />
+                        <input id="Bairro" type="text" name="Endereco.Bairro" value="@Model.Bairro" class="form-control" readonly />
                     </div>
                     <div class="col-2">
                         <label for="Uf">Estado</label>
-                        <input id="Uf" type="text" name="Endereco.Uf" value="@Model.Endereco.Uf" class="form-control" readonly />
+                        <input id="Uf" type="text" name="Endereco.Uf" value="@Model.Uf" class="form-control" readonly />
                     </div>
                     <div class="col-3">
                         <label for="Cidade">Cidade</label>
-                        <input id="Cidade" type="text" name="Endereco.Cidade" value="@Model.Endereco.Cidade" class="form-control" readonly />
+                        <input id="Cidade" type="text" name="Endereco.Cidade" value="@Model.Cidade" class="form-control" readonly />
                     </div>
                     <div class="col-2">
                         <label for="Numero">Numero</label>
-                        <input id="Numero" type="text" name="Endereco.Numero" value="@Model.Endereco.Numero" class="form-control" required />
+                        <input id="Numero" type="text" name="Endereco.Numero" value="@Model.Numero" class="form-control" required />
                     </div>
                 </div>
                 <div class="row" style="padding-bottom:20px">
                     <div class="col-6">
                         <label for="Logradouro">Logradouro</label>
-                        <input id="Logradouro" type="text" name="Endereco.Logradouro" value="@Model.Endereco.Logradouro" class="form-control" readonly />
+                        <input id="Logradouro" type="text" name="Endereco.Logradouro" value="@Model.Logradouro" class="form-control" readonly />
                     </div>
                     <div class="col-6">
                         <label for="pontoReferencia">Ponto de referência</label>
-                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="@Model.Endereco.PontoReferencia" class="form-control" />
+                        <input id="pontoReferencia" type="text" name="Endereco.pontoReferencia" value="@Model.PontoReferencia" class="form-control" />
                     </div>
                 </div>
                 <div class="row">
