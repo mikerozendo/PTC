@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
@@ -14,37 +15,37 @@ namespace PTC.Application.Services
             _marcasRepository = marcasRepository;
         }
 
-        public void Alterar(Marca obj)
+        public async Task Alterar(Marca obj)
         {
-            _marcasRepository.Alterar(obj);
+            await _marcasRepository.Alterar(obj);
         }
 
-        public void Deletar(Marca obj)
+        public async Task Deletar(Marca obj)
         {
-            _marcasRepository.Deletar(obj);
+            await _marcasRepository.Deletar(obj);
         }
 
-        public bool Existe(Marca obj)
+        public async Task<bool> Existe(Marca obj)
         {
-            return _marcasRepository.Existe(obj);
+            return await _marcasRepository.Existe(obj);
         }
 
-        public dynamic Inserir(Marca obj)
+        public async Task<dynamic> Inserir(Marca obj)
         {
-            if (!Existe(obj))
-                return _marcasRepository.Inserir(obj);
+            if (! await Existe(obj))
+                return await _marcasRepository.Inserir(obj);
 
             else return "Marca já existente!";
         }
 
-        public Marca ObterPorId(int id)
+        public async Task<Marca> ObterPorId(int id)
         {
-            return _marcasRepository.ObterPorId(id);
+            return await _marcasRepository.ObterPorId(id);
         }
 
-        public IEnumerable<Marca> ObterTodos()
+        public async Task<IEnumerable<Marca>> ObterTodos()
         {
-            return _marcasRepository.ObterTodos();
+            return await _marcasRepository.ObterTodos();
         }
     }
 }

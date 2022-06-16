@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace PTC.Domain.Interfaces.Services
 {
     public interface IBaseGetService<T> where T : class
     {
-        IEnumerable<T> ObterTodos();
-        bool Existe(T obj);
+        Task<IEnumerable<T>> ObterTodos();
+        Task<bool> Existe(T obj);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
@@ -9,17 +10,17 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class VeiculosRepository : BaseRepository, IVeiculosRepository
     {
-        public void Alterar(Veiculo obj)
+        public async Task Alterar(Veiculo obj)
         {
             AddParametro("Renavam", obj.Renavam);
             AddParametro("MarcaVeiculo", obj.MarcaVeiculo.Id);
             AddParametro("Modelo", obj.Modelo);
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("Km", obj.Km);
-            ExecutarProcedure("P_VEICULO_ALTERAR");
+            await ExecutarProcedureAsync("P_VEICULO_ALTERAR");
         }
 
-        public dynamic Inserir(Veiculo obj)
+        public async Task<dynamic> Inserir(Veiculo obj)
         {
             AddParametro("Renavam", obj.Renavam);
             AddParametro("MarcaVeiculo", obj.MarcaVeiculo.Id);
@@ -27,14 +28,16 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("Km", obj.Km);
             AddParametro("Valor", obj.ValorCompra);
-            int.TryParse(ExecutarProcedure("P_VEICULO_INSERIR").Rows[0]["Id"].ToString(), out int response);
+
+            var dbResponse = await ExecutarProcedureAsync("P_VEICULO_INSERIR");
+            int.TryParse(dbResponse.Rows[0]["Id"].ToString(), out int response);
             return response;
         }
 
-        public IEnumerable<Veiculo> ObterTodos()
+        public async Task<IEnumerable<Veiculo>> ObterTodos()
         {
             List<Veiculo> veiculos = new();
-            var tabela = ExecutarProcedure("P_VEICULO_OBTER_TODOS");
+            var tabela = await ExecutarProcedureAsync("P_VEICULO_OBTER_TODOS");
 
             foreach (DataRow sdr in tabela.Rows)
             {
@@ -60,9 +63,9 @@ namespace PTC.Infrastructure.Data.Respository
             return veiculos;
         }
 
-        public void Deletar(Veiculo obj)
+        public async Task Deletar(Veiculo obj)
         {
-            return;
+            await Task.CompletedTask; return;
         }
     }
 }

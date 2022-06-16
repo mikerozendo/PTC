@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
@@ -9,10 +10,10 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class MarcasRepository : BaseRepository, IMarcasRepository
     {
-        public IEnumerable<Marca> ObterTodos()
+        public async Task<IEnumerable<Marca>> ObterTodos()
         {
             List<Marca> marcas = new();
-            var tabela = ExecutarProcedure("P_MARCA_OBTER");
+            var tabela = await ExecutarProcedureAsync("P_MARCA_OBTER");
 
             foreach (DataRow sdr in tabela.Rows)
             {
@@ -29,12 +30,12 @@ namespace PTC.Infrastructure.Data.Respository
             return marcas;
         }
 
-        public Marca ObterPorId(int id)
+        public async Task<Marca> ObterPorId(int id)
         {
             try
             {
                 AddParametro("Id", id);
-                var tabela = ExecutarProcedure("P_MARCA_OBTER_POR_ID");
+                var tabela = await ExecutarProcedureAsync("P_MARCA_OBTER_POR_ID");
 
                 return new()
                 {
@@ -51,32 +52,33 @@ namespace PTC.Infrastructure.Data.Respository
             }
         }
 
-        public bool Existe(Marca obj)
+        public async Task<bool> Existe(Marca obj)
         {
             AddParametro("Nome", obj.Nome);
-            return ExecutarProcedure("P_MARCA_EXISTE").Rows.Count > 0;
+            var response = await ExecutarProcedureAsync("P_MARCA_EXISTE");
+            return response.Rows.Count > 0;
         }
 
-        public dynamic Inserir(Marca obj)
+        public async Task<dynamic> Inserir(Marca obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Url", obj.UrlImagem);
-            ExecutarProcedure("P_MARCA_INSERIR");
+            await ExecutarProcedureAsync("P_MARCA_INSERIR");
             return "Marca cadastrada com sucesso!";
         }
 
-        public void Alterar(Marca obj)
+        public async Task Alterar(Marca obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Id", obj.Id);
             AddParametro("Url", obj.UrlImagem);
-            ExecutarProcedure("P_MARCA_ALTERAR");
+            await ExecutarProcedureAsync("P_MARCA_ALTERAR");
         }
 
-        public void Deletar(Marca obj)
+        public async Task Deletar(Marca obj)
         {
             AddParametro("Id", obj.Id);
-            ExecutarProcedure("P_MARCA_DELETAR");
+            await ExecutarProcedureAsync("P_MARCA_DELETAR");
         }     
     }
 }

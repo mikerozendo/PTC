@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
@@ -7,17 +8,17 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class OperacaoRepository : BaseRepository, IOperacaoRepository
     {
-        public void Alterar(Operacao obj)
+        public Task Alterar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public void Deletar(Operacao obj)
+        public Task Deletar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public dynamic Inserir(Operacao obj)
+        public async Task<dynamic> Inserir(Operacao obj)
         {
             AddParametro("IdVeiculo", obj.Veiculo.Id);
             AddParametro("IdProprietario", obj.Proprietario.Id);
@@ -28,7 +29,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Compra", obj.Cadastro);
             AddParametro("Revenda", obj.DataRevenda);
             AddParametro("Cadastro", DateTime.Now);
-            var tabela = ExecutarProcedure("P_OPERACAO_INSERIR");
+            var tabela = await ExecutarProcedureAsync("P_OPERACAO_INSERIR");
             return tabela.Rows.Count;
         }
     }

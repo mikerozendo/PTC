@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
@@ -20,16 +21,16 @@ namespace PTC.Application.Services
             _documentoService = documentoService;
         }
 
-        public dynamic Inserir(Proprietario obj)
+        public async Task<dynamic> Inserir(Proprietario obj)
         {
             obj.FormatarEscritaDb();
             obj.Endereco.FormatarEscritaDb();
 
-            if (!Existe(obj))
+            if (! await Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
-                    obj.Endereco.Id = _enderecoService.Inserir(obj.Endereco);
+                    obj.Endereco.Id = await _enderecoService.Inserir(obj.Endereco);
                     if (obj.Endereco.Id > 0)
                     {
                         try
@@ -38,7 +39,7 @@ namespace PTC.Application.Services
                         }
                         catch (Exception)
                         {
-                            _enderecoService.Deletar(obj.Endereco);
+                            await _enderecoService.Deletar(obj.Endereco);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
@@ -49,16 +50,16 @@ namespace PTC.Application.Services
             else return "Proprietário existente!";
         }
 
-        public bool Existe(Proprietario obj)
+        public async Task<bool> Existe(Proprietario obj)
         {
-            return _proprietarioRepository.Existe(obj);
+            return await _proprietarioRepository.Existe(obj);
         }
 
-        public IEnumerable<Proprietario> ObterTodos()
+        public async Task<IEnumerable<Proprietario>> ObterTodos()
         {
             try
             {
-                var proprietarios = _proprietarioRepository.ObterTodos();
+                var proprietarios = await _proprietarioRepository.ObterTodos();
 
                 foreach (Proprietario obj in proprietarios)
                 {
@@ -66,7 +67,7 @@ namespace PTC.Application.Services
                     obj.Endereco.FormatarLeituraDb();
                 }
 
-                return proprietarios.OrderByDescending(x => x.Cadastro);
+                return proprietarios.OrderByDescending(x => x.Cadastro).ToList();
             }
             catch (Exception)
             {
@@ -74,27 +75,12 @@ namespace PTC.Application.Services
             }
         }
 
-        //public IEnumerable<Proprietario> ObterFiltrados(DateTime? inicio, DateTime? termino, EnumSituacao situacao)
-        //{
-        //    try
-        //    {
-        //        if (situacao == EnumSituacao.Todos)
-        //            return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino);
-        //        else
-        //            return ObterTodos().Where(x => x.Cadastro >= inicio && x.Cadastro <= termino && x.EnumSituacaoProprietario == situacao);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new List<Proprietario>();
-        //    }
-        //}
-
-        public void Deletar(Proprietario obj)
+        public async Task Deletar(Proprietario obj)
         {
-            _proprietarioRepository.Deletar(obj);
+            await _proprietarioRepository.Deletar(obj);
         }
 
-        public string Alterar(Proprietario obj)
+        public async Task<string> Alterar(Proprietario obj)
         {
             obj.FormatarEscritaDb();
             obj.Endereco.FormatarEscritaDb();
@@ -104,8 +90,8 @@ namespace PTC.Application.Services
                 try
                 {
                     obj.Endereco.ProprietarioId = obj.Id;
-                    _enderecoService.Alterar(obj.Endereco);
-                    _proprietarioRepository.Alterar(obj);
+                    await _enderecoService.Alterar(obj.Endereco);
+                    await _proprietarioRepository.Alterar(obj);
                     return "Alterado com sucesso!";
                 }
                 catch (Exception)
@@ -113,26 +99,32 @@ namespace PTC.Application.Services
                     return "Falha na alteração, revise seus dados";
                 }
             }
-            else
-            {
-                return "Documento inválido, informe um documento válido";
-            }
+            else return "Documento inválido, informe um documento válido";
         }
 
-        public Proprietario ObterPorId(int id)
+        public async Task<Proprietario> ObterPorId(int id)
         {
-            Proprietario proprietario = _proprietarioRepository.ObterPorId(id);
+            Proprietario proprietario = await _proprietarioRepository.ObterPorId(id);
             proprietario.FormatarLeituraDb();
             proprietario.Endereco.FormatarLeituraDb();
             return proprietario;
         }
 
-        public IEnumerable<Proprietario> Filtrar(string filtro)
+        public async Task<IEnumerable<Proprietario>> Filtrar(string filtro)
         {
+            var lista = await ObterTodos();
+
             if (!string.IsNullOrWhiteSpace(filtro) && !filtro.Contains("undefined"))
-                return ObterTodos().Where(x => x.Documento.Contains(filtro) || x.Email.Contains(filtro) || x.Endereco.Cep.Contains(filtro) || x.Nome.Contains(filtro) || x.WhatsApp.Contains(filtro));
-            else
-                return ObterTodos();
+            {
+                return lista
+                    .Where(x => x.Documento.Contains(filtro) 
+                        || x.Email.Contains(filtro) 
+                        || x.Endereco.Cep.Contains(filtro) 
+                        || x.Nome.Contains(filtro) 
+                        || x.WhatsApp.Contains(filtro))
+                    .ToList();
+
+            } else return lista.ToList();
         }
     }
 }

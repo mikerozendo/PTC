@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Enums;
@@ -10,13 +11,14 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class ProprietarioRepository : BaseRepository, IProprietarioRepository
     {
-        public bool Existe(Proprietario obj)
+        public async Task<bool> Existe(Proprietario obj)
         {
             AddParametro("Documento", obj.Documento);
-            return ExecutarProcedure("P_PROPRIETARIO_EXISTE").Rows.Count > 0;
+            var response = await ExecutarProcedureAsync("P_PROPRIETARIO_EXISTE");
+            return response.Rows.Count > 0;
         }
 
-        public dynamic Inserir(Proprietario obj)
+        public async Task<dynamic> Inserir(Proprietario obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
@@ -24,14 +26,14 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("IdEndereco", obj.Endereco.Id);
             AddParametro("WhatsApp", obj.WhatsApp);
             AddParametro("CaminhoImagem", obj.CaminhoImagem);
-            ExecutarProcedure("P_PROPRIETARIO_INCLUIR");
+            await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");
             return "Proprietário Cadastrado com sucesso!";
         }
 
-        public IEnumerable<Proprietario> ObterTodos()
+        public async Task<IEnumerable<Proprietario>> ObterTodos()
         {
             List<Proprietario> proprietarios = new();
-            var tabela = ExecutarProcedure("P_PROPRIETARIO_OBTER_TODOS");
+            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_OBTER_TODOS");
 
             foreach (DataRow sdr in tabela.Rows)
             {
@@ -61,7 +63,7 @@ namespace PTC.Infrastructure.Data.Respository
             return proprietarios;
         }
 
-        public void Alterar(Proprietario obj)
+        public async Task Alterar(Proprietario obj)
         {
             AddParametro("Id", obj.Id);
             AddParametro("Nome", obj.Nome);
@@ -69,19 +71,19 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Email", obj.Email);
             AddParametro("WhatsApp", obj.WhatsApp);
             AddParametro("CaminhoImagem", obj.CaminhoImagem);
-            ExecutarProcedure("P_PROPRIETARIO_ALTERAR");
+            await ExecutarProcedureAsync("P_PROPRIETARIO_ALTERAR");
         }
 
-        public void Deletar(Proprietario obj)
+        public async Task Deletar(Proprietario obj)
         {
             AddParametro("Id", obj.Id);
-            ExecutarProcedure("P_PROPRIETARIO_DELETAR");
+            await ExecutarProcedureAsync("P_PROPRIETARIO_DELETAR");
         }
 
-        public Proprietario ObterPorId(int id)
+        public async Task<Proprietario> ObterPorId(int id)
         {
             AddParametro("Id", id);
-            var tabela = ExecutarProcedure("P_PROPRIETARIO_OBTER_POR_ID");
+            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_OBTER_POR_ID");
 
             return new Proprietario
             {
