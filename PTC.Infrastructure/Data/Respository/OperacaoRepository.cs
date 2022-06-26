@@ -61,6 +61,11 @@ namespace PTC.Infrastructure.Data.Respository
                         Id = Convert.ToInt32(sdr["ProprietarioId"]),
                         Nome = (string)sdr["NomeProprietario"]
                     },
+                    Comprador = new Proprietario
+                    {
+                        Id = Convert.ToInt32(sdr["CompradorId"]),
+                        Nome = (string)sdr["NomeComprador"]
+                    },
                     Veiculo = new Veiculo
                     {
                         Id = (int)sdr["VeiculoId"],
@@ -74,12 +79,7 @@ namespace PTC.Infrastructure.Data.Respository
                         }
                     },
                     ValorCompra = (decimal)sdr["ValorCompra"],
-                    ValorRevenda = (decimal)sdr["ValorRevenda"],
-                    Comprador = new Proprietario
-                    {
-                        Id = Convert.ToInt32(sdr["CompradorId"]),
-                        Nome = (string)sdr["NomeComprador"]
-                    },
+                    ValorRevenda = (decimal)sdr["ValorRevenda"]
                 });
             }
 

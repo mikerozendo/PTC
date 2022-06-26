@@ -142,8 +142,14 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
             <p>${msgString}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
-            <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+            <div class="row modal-footer-row">
+                <div class="col-6 text-left">
+                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-6 text-right">
+                    <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-danger">Continuar</button>
+                </div>
+            </div>
           </div>
         </div>
       </div>
