@@ -52,14 +52,14 @@ namespace PTC.Infrastructure.Data.Respository
                 {
                     Id = (int)sdr["Id"],
                     Cadastro = (DateTime)sdr["DataCadastro"],
-                    DataRevenda = (DateTime)sdr["DataRevendas"],
+                    DataRevenda = (DateTime)sdr["DataRevenda"],
                     EnumSituacaoAquisicao = (EnumSituacaoAquisicao)sdr["SituacaoAquisicao"],
                     EnumTipoPagamentoAquisicao = (EnumFormaPagamento)sdr["TipoPagamentoAquisicao"],
                     EnumTipoPagamentoRevenda = (EnumFormaPagamento)sdr["TipoPagamentoRevenda"],
                     Proprietario = new Proprietario
                     {
                         Id = (int)sdr["ProprietarioId"],
-                        Nome = (string)sdr["NomeProprietarios"]
+                        Nome = (string)sdr["NomeProprietario"]
                     },
                     Veiculo = new Veiculo
                     {
@@ -71,7 +71,7 @@ namespace PTC.Infrastructure.Data.Respository
                     Comprador = new Proprietario
                     {
                         Id = (int)sdr["CompradorId"],
-                        Nome = (string)sdr["NomeCompradors"]
+                        Nome = (string)sdr["NomeComprador"]
                     },      
                 });
             }

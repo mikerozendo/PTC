@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
+using System.Collections.Generic;
 
 namespace PTC.Application.Services
 {
@@ -21,6 +22,11 @@ namespace PTC.Application.Services
         {
             await _veiculosService.Deletar(obj.Veiculo);
             await _operacaoRepository.Deletar(obj);
+        }
+
+        public Task<bool> Existe(Operacao obj)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<dynamic> Inserir(Operacao obj)
@@ -51,6 +57,11 @@ namespace PTC.Application.Services
         {
             await Task.CompletedTask;
             throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Operacao>> ObterTodos()
+        {
+            return _operacaoRepository.ObterTodos();
         }
     }
 }

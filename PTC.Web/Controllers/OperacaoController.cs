@@ -23,7 +23,7 @@ namespace PTC.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _veiculosService.ObterTodos());
+            return View(await _operacaoService.ObterTodos());
         }
 
         [HttpGet]

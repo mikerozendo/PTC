@@ -2,5 +2,5 @@
 
 namespace PTC.Domain.Interfaces.Services
 {
-    public interface IOperacaoService : IBaseService<Operacao> { }
+    public interface IOperacaoService : IBaseService<Operacao>, IBaseGetService<Operacao> { }
 }
