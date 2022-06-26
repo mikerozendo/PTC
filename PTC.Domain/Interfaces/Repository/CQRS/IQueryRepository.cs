@@ -1,8 +1,10 @@
-﻿namespace PTC.Domain.Interfaces.Repository.CQRS
+﻿using System.Threading.Tasks;
+
+namespace PTC.Domain.Interfaces.Repository.CQRS
 {
     public interface IQueryRepository<T> : IBaseQueryRepository<T> where T : class
     {
-        T ObterPorId(int id);
-        bool Existe(T obj);
+        Task<T> ObterPorId(int id);
+        Task<bool> Existe(T obj);
     }
 }

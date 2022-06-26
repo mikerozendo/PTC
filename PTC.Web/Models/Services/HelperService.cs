@@ -13,10 +13,10 @@ namespace PTC.Web.Models.Services
         {
             try
             {
-                if (mensagem.ToLower().Contains("sucesso"))
+                if (!(arquivo is null) && mensagem.ToLower().Contains("sucesso"))
                 {
                     string filePath = Path.Combine(path, "images", pasta.ToString(), arquivo.FileName);
-                    using var fileStream = new FileStream(filePath, FileMode.Create);
+                    using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
                     await arquivo.CopyToAsync(fileStream);
                 }
             }
@@ -37,7 +37,7 @@ namespace PTC.Web.Models.Services
                     {
                         File.Delete(antigaImagem);
                         string newFile = Path.Combine(path, "images", pasta.ToString(), arquivo.FileName);
-                        using var fileStream = new FileStream(newFile, FileMode.Create);
+                        using var fileStream = new FileStream(newFile, FileMode.Create, FileAccess.ReadWrite);
                         await arquivo.CopyToAsync(fileStream);
                     }
                 }

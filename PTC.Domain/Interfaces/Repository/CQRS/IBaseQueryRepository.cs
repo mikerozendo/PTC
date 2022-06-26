@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace PTC.Domain.Interfaces.Repository.CQRS
 {
     public interface IBaseQueryRepository<T> where T : class
     {
-        IEnumerable<T> ObterTodos();
+        Task<IEnumerable<T>> ObterTodos();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
@@ -7,28 +8,32 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class OperacaoRepository : BaseRepository, IOperacaoRepository
     {
-        public void Alterar(Operacao obj)
+        public OperacaoRepository(IConfiguration configuration) : base(configuration) { }
+
+        public Task Alterar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public void Deletar(Operacao obj)
+        public Task Deletar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public dynamic Inserir(Operacao obj)
+        public async Task<dynamic> Inserir(Operacao obj)
         {
-            AddParametro("IdVeiculo", obj.Veiculo.Id);
-            AddParametro("IdProprietario", obj.Proprietario.Id);
-            AddParametro("IdComprador", obj.Comprador.Id);
+            AddParametro("VeiculoId", obj.Veiculo.Id);
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
-            AddParametro("FormaPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
-            AddParametro("FormaPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
-            AddParametro("Compra", obj.Cadastro);
-            AddParametro("Revenda", obj.DataRevenda);
-            AddParametro("Cadastro", DateTime.Now);
-            var tabela = ExecutarProcedure("P_OPERACAO_INSERIR");
+            AddParametro("TipoPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
+            AddParametro("TipoPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
+            AddParametro("DataRevenda", obj.DataRevenda);
+            AddParametro("Vendido", obj.Vendido);
+            AddParametro("ValorCompra", obj.ValorCompra);
+            AddParametro("ValorTabela", obj.ValorTabela);
+            AddParametro("ValorRevenda", obj.ValorRevenda);
+            AddParametro("ProprietarioId", obj.Proprietario.Id);
+            AddParametro("CompradorId", obj.Comprador.Id);
+            var tabela = await ExecutarProcedureAsync("P_OPERACAO_INSERIR");
             return tabela.Rows.Count;
         }
     }

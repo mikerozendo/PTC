@@ -12,5 +12,9 @@ namespace PTC.Domain.Entities
         public EnumFormaPagamento EnumTipoPagamentoAquisicao { get; set; }
         public EnumFormaPagamento EnumTipoPagamentoRevenda { get; set; }
         public DateTime? DataRevenda { get; set; } = null;
+        public decimal ValorCompra { get; set; }
+        public decimal ValorTabela { get; set; }
+        public decimal ValorRevenda { get; set; }
+        public bool Vendido { get { return DataRevenda != null && ValorRevenda > 0; } }
     }
 }

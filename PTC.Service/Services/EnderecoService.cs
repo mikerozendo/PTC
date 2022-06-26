@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using PTC.Domain.Entities;
-using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
@@ -14,24 +15,24 @@ namespace PTC.Application.Services
             _enderecoRepository = enderecoRepository;
         }
 
-        public void Alterar(Endereco obj)
+        public async Task Alterar(Endereco obj)
         {
-            _enderecoRepository.Alterar(obj);
+           await _enderecoRepository.Alterar(obj);
         }
 
-        public void Deletar(Endereco obj)
+        public async Task Deletar(Endereco obj)
         {
-            _enderecoRepository.Deletar(obj);
+            await _enderecoRepository.Deletar(obj);
         }
 
-        public Endereco ObterPorId(int id)
+        public async Task<Endereco> ObterPorId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public dynamic Inserir(Endereco obj)
+        public async Task<dynamic> Inserir(Endereco obj)
         {
-            return _enderecoRepository.Inserir(obj);
+            return await _enderecoRepository.Inserir(obj);
         }
     }
 }
