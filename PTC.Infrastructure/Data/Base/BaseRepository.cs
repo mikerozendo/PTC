@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Base
 {
@@ -10,9 +11,9 @@ namespace PTC.Infrastructure.Data.Base
         private readonly string _connectionString;
         protected IList<Parametro> _parametros;
 
-        protected BaseRepository()
+        protected BaseRepository(IConfiguration configuration)
         {
-            _connectionString = "Server=127.0.0.1; Database=ptc; User=root; Password=@M1ke98!;";
+            _connectionString = configuration.GetConnectionString("DatataBase");
             _parametros = new List<Parametro>();
         }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PTC.Domain.Entities;
-using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {

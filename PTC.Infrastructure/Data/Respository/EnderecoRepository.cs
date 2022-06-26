@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
@@ -7,6 +8,7 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class EnderecoRepository : BaseRepository, IEnderecoRepository
     {
+        public EnderecoRepository(IConfiguration configuration) : base(configuration){ }
         public async Task<dynamic> Inserir(Endereco obj)
         {
             AddParametro("@Logradouro", obj.Logradouro);

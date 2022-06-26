@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Respository
 {
     public class MarcasRepository : BaseRepository, IMarcasRepository
     {
+        public MarcasRepository(IConfiguration configuration) : base(configuration) { }
+
         public async Task<IEnumerable<Marca>> ObterTodos()
         {
             List<Marca> marcas = new();

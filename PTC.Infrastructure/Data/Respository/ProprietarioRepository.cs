@@ -6,11 +6,14 @@ using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Infrastructure.Data.Base;
+using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Respository
 {
     public class ProprietarioRepository : BaseRepository, IProprietarioRepository
     {
+        public ProprietarioRepository(IConfiguration configuration) : base(configuration) { }
+
         public async Task<bool> Existe(Proprietario obj)
         {
             AddParametro("Documento", obj.Documento);

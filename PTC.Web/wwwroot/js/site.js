@@ -171,18 +171,16 @@ function Reload() {
 
 function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
-        e.stopImmediatePropagation();
         var value = "/images/" + pasta +"/"+ $("#inputImg").val().replace('C:\\fakepath\\', '');
         $("#caminhoImagem").val(value);
     });
 
     $("#btnImgUpload").on('click', function (e) {
-        e.stopImmediatePropagation();
         $("#inputImg").click();
     });
 }
 
-function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget) {
+function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget, Label) {
     fetch('https://localhost:44306/' + controller + '/' + action, {
         headers: {
             'Accept': 'application/json'
@@ -193,7 +191,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                 `
                     <div class="row">
                         <div class="col-6 text-left">
-                            <label class="lbl-inputs" for="${binder}">${binder}</label>
+                            <label class="lbl-inputs" for="${binder}">${Label}</label>
                         </div>
                 `;
             if (btnAdicionar) {

@@ -1,13 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Respository
 {
     public class OperacaoRepository : BaseRepository, IOperacaoRepository
     {
+        public OperacaoRepository(IConfiguration configuration) : base(configuration) { }
+
         public Task Alterar(Operacao obj)
         {
             return Task.CompletedTask;
@@ -20,15 +22,17 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<dynamic> Inserir(Operacao obj)
         {
-            AddParametro("IdVeiculo", obj.Veiculo.Id);
-            AddParametro("IdProprietario", obj.Proprietario.Id);
-            AddParametro("IdComprador", obj.Comprador.Id);
+            AddParametro("VeiculoId", obj.Veiculo.Id);
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
-            AddParametro("FormaPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
-            AddParametro("FormaPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
-            AddParametro("Compra", obj.Cadastro);
-            AddParametro("Revenda", obj.DataRevenda);
-            AddParametro("Cadastro", DateTime.Now);
+            AddParametro("TipoPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
+            AddParametro("TipoPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
+            AddParametro("DataRevenda", obj.DataRevenda);
+            AddParametro("Vendido", obj.Vendido);
+            AddParametro("ValorCompra", obj.ValorCompra);
+            AddParametro("ValorTabela", obj.ValorTabela);
+            AddParametro("ValorRevenda", obj.ValorRevenda);
+            AddParametro("ProprietarioId", obj.Proprietario.Id);
+            AddParametro("CompradorId", obj.Comprador.Id);
             var tabela = await ExecutarProcedureAsync("P_OPERACAO_INSERIR");
             return tabela.Rows.Count;
         }

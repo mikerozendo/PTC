@@ -29,7 +29,7 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Veiculo obj)
         {
-            await Task.CompletedTask; return;
+            await _veiculosRepository.Deletar(obj);
         }
 
         public async Task<Veiculo> ObterPorId(int id)

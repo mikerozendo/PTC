@@ -68,5 +68,6 @@ namespace PTC.Web.Controllers
             //await _helperService.AlterarImagem(obj.Imagem, pasta, _webHostEnvironment.WebRootPath, mensagem, obj.CaminhoImagem);
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

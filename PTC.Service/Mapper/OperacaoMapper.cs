@@ -12,17 +12,14 @@ namespace PTC.Application.Mapper
             {
                 Veiculo = new Veiculo
                 {
-                    AnoModelo = viewModel.AnoModeloVeiculo,
+                    Nome = viewModel.NomeVeiculo,
                     Cadastro = viewModel.Cadastro,
                     CaminhoImagem = viewModel.CaminhoImagem,
                     DataFabricacao = viewModel.DataFabricacaoVeiculo,
                     Exclusao = viewModel.DataFabricacaoVeiculo,
                     Id = viewModel.VeiculoId,
                     Km = viewModel.Km,
-                    ValorCompra = viewModel.ValorCompra,
                     Modelo = viewModel.ModeloVeiculo,
-                    ValorRevenda = viewModel.ValorRevenda,
-                    ValorTabela = viewModel.ValorTabela,
                     Renavam = viewModel.RenavamVeiculo,
                     MarcaVeiculo = new Marca
                     {
@@ -50,16 +47,16 @@ namespace PTC.Application.Mapper
         {
             return new OperacaoViewModel
             {
-                AnoModeloVeiculo = domain.Veiculo.AnoModelo,
+                AnoModeloVeiculo = domain.Veiculo.DataFabricacao,
                 Cadastro = domain.Veiculo.Cadastro,
                 CaminhoImagem = domain.Veiculo.CaminhoImagem,
                 DataFabricacaoVeiculo = domain.Veiculo.DataFabricacao,
                 VeiculoId = domain.Veiculo.Id,
                 Km = domain.Veiculo.Km,
-                ValorCompra = domain.Veiculo.ValorCompra,
+                ValorCompra = domain.ValorCompra,
                 ModeloVeiculo = domain.Veiculo.Modelo,
-                ValorRevenda = domain.Veiculo.ValorRevenda,
-                ValorTabela = domain.Veiculo.ValorTabela,
+                ValorRevenda = domain.ValorRevenda,
+                ValorTabela = domain.ValorTabela,
                 RenavamVeiculo = domain.Veiculo.Renavam,
                 MarcaVeiculoId = domain.Veiculo.MarcaVeiculo.Id,
                 ProprietarioId = domain.Comprador.Id,

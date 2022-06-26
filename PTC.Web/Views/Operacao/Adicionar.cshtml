@@ -14,10 +14,11 @@
                     <div class="col-6">
                         <div class="col-lg-6 containner-img-upload">
                             <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carromodelo.png" alt="Alternate Text" style=" width: auto;" />
-                            <input type="file" hidden name="Imagem" value="" id="inputImg" />
+                            <input type="file" hidden name="Imagem" value="" id="inputImg" accept="image/*" class="hide" />
+                            <input type="text" hidden name="CaminhoImagem" value="" class="hide" />
                         </div>
                         <div class="col-lg-6 containner-btn-img-upload">
-                            <button id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
+                            <button type="button" id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
                         </div>
                     </div>
                     <div class="col-6 text-left">
@@ -40,7 +41,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div id="selectProprietario"></div>
+                                <label class="lbl-inputs" for="km">Km</label>
+                                <input type="number" class="form-control" name="km" value="" />
                             </div>
                         </div>
                     </div>
@@ -60,31 +62,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Aquisição</label>
                         <select name="TipoPagamentoAquisicaoId" class="form-control form-select text-center">
                             @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
                             {
-                                <option value="@value">@value.ToString()</option>
+                                <option value="@((int) value)">@value.ToString()</option>
                             }
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 text-left">
                         <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Revenda</label>
                         <select name="TipoPagamentoRevendaId" class="form-control form-select text-center">
                             @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
                             {
-                                <option value="@value">@value.ToString()</option>
+                                <option value="@((int) value)">@value.ToString()</option>
                             }
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-4 text-left">
-                        <label class="lbl-inputs" for="km">Km</label>
-                        <input type="number" class="form-control" name="km" value="" />
-                    </div>
-                    <div class="col-4 text-left">
+                    <div class="col-3 text-left">
                         <label class="lbl-inputs" for="EnumSituacaoAquisicao">Situação</label>
                         <select name="SituacaoAquisicaoId" class="form-control form-select text-center">
                             <option value="none">-- Selecione --</option>
@@ -94,22 +92,23 @@
                             <option value="4">Vendido</option>
                         </select>
                     </div>
-                    <div class="col-4 text-left">
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="fabricacao">Fabricacao</label>
+                        <input id="fabricacao" type="date" name="DataFabricacaoVeiculo" value="" class="form-control" required />
+                    </div>
+                    <div class="col-3 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectProprietario"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 text-left">
                         <div class="row">
                             <div class="col-12">
                                 <div id="selectComprador"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 text-left">
-                        <label class="lbl-inputs" for="fabricacao">Fabricacao</label>
-                        <input id="fabricacao" type="date" name="fabricacao" value="" class="form-control" required />
-                    </div>
-                    <div class="col-6 text-left">
-                        <label class="lbl-inputs" for="Anomodelo">Modelo</label>
-                        <input id="Anomodelo" type="date" name="Anomodelo" value="" class="form-control" required />
                     </div>
                 </div>
             </div>
@@ -178,21 +177,16 @@
 
 
 @section scripts {
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $("#mdlAdicionarMarca").hide();
             ImagemEvent("Veiculos");
+            MontarSelectMarcas();
+            MontarSelectProprietarios();
+            MontarSelectCompradores();
             FormEventHandler('InserirVeiculo', 'Index', 'Proprietario');
-            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca', 'mdlAdicionarMarca');
-            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'ProprietarioId', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm');
-            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'CompradorId', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm');
             $(".row").css("padding-bottom", "10px");
         });
-
 
         function InserirNovaMarca() {
             fetch("@Url.Action("Inserir","Marcas")", {
@@ -203,7 +197,7 @@
                     .then(function (j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'Marca', true, 'btnAdicionarMarca', 'mdlAdicionarMarca');
+                        MontarSelectMarcas();
                     })
                     .catch(function (e) {
                         alert("Algo deu errado");
@@ -215,6 +209,16 @@
             window.location = "@Url.Action("Adicionar","Proprietario")";
         }
 
-    </script>
+        function MontarSelectMarcas() {
+            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'MarcaVeiculoId', true, 'btnAdicionarMarca', 'mdlAdicionarMarca', 'Marca');
+        }
 
+        function MontarSelectProprietarios() {
+            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'ProprietarioId', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm', 'Proprietario');
+        }
+
+        function MontarSelectCompradores() {
+            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'CompradorId', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm', 'Comprador');
+        }
+    </script>
 } 
