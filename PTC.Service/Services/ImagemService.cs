@@ -15,9 +15,17 @@ namespace PTC.Application.Services
             _imagemRepository = imagemRepository;
         }
 
-        public Task Deletar(Imagem obj)
+        public Task Alterar(Imagem obj)
         {
-            throw new System.NotImplementedException();
+            foreach (var item in collection)
+            {
+
+            }
+        }
+
+        public async Task Deletar(Imagem obj)
+        {
+            await _imagemRepository.Deletar(obj);          
         }
 
         public async Task<dynamic> Inserir(Imagem obj)

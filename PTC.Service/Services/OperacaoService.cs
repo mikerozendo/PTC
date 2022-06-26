@@ -4,20 +4,21 @@ using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
 using System.Collections.Generic;
+using PTC.Domain.Enums;
 
 namespace PTC.Application.Services
 {
-    public class OperacaoService : IOperacaoService
+    public class OperacaoService : Base, IOperacaoService
     {
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoRepository _operacaoRepository;
         private readonly IImagemService _imagemService;
 
-        public OperacaoService(IVeiculosService veiculosService, IOperacaoRepository operacaoRepository, IImagemService imagemService)
+        public OperacaoService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _veiculosService = veiculosService;
-            _operacaoRepository = operacaoRepository;
-            _imagemService = imagemService;
+            _veiculosService = (IVeiculosService)_serviceProvider.GetService(typeof(IVeiculosService));
+            _operacaoRepository = (IOperacaoRepository)_serviceProvider.GetService(typeof(IOperacaoRepository));
+            _imagemService = (IImagemService)_serviceProvider.GetService(typeof(IImagemService));
         }
 
         public async Task Deletar(Operacao obj)
@@ -33,8 +34,8 @@ namespace PTC.Application.Services
 
         public async Task<dynamic> Inserir(Operacao obj)
         {
-            List<string> ids = await InserirImagemDecorator(obj.Imagem);
-            if (ids.Count > 0)
+            List<string> idsImagens = await _imagemService.Inserir(obj.Imagem);
+            if (idsImagens.Count > 0)
             {
                 obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
 
@@ -44,33 +45,46 @@ namespace PTC.Application.Services
                     {
                         try
                         {
-                            return await _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
+                            int operacaoId = await _operacaoRepository.Inserir(obj);
+                            if (operacaoId > 0)
+                            {
+                                await _imagemService.Alterar(new(EnumIdentificadorPastaDeArquivos.Veiculos, operacaoId, idsImagens));
+                                return "sucesso";
+                            }
+                            else
+                            {
+                                await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                                return "falha";
+                            }
                         }
                         catch (Exception)
                         {
-                            await _veiculosService.Deletar(obj.Veiculo);
+                            await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
                             return "Erro ocorrido ao cadastro nova operação";
                         }
                     }
-
-                    else return "Informe um proprietario!";
+                    else
+                    {
+                        await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                        return "Informe um proprietario!";
+                    }
                 }
-                else return "Erro ao cadastrar veículo!";
+                else
+                {
+                    await RollBackBuilder(true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
+                    return "Erro ao cadastrar veículo!";
+                }
             }
             else return "Erro ao cadastrar imagens!";
         }
 
-        public async Task<List<string>> InserirImagemDecorator(Imagem imagem)
+        public async Task RollBackBuilder(bool imageService, bool veiculoService, Imagem imageObj = null, Veiculo veiculoObj = null)
         {
-            if (!(imagem is null))
-                return await _imagemService.Inserir(imagem);
+            if (imageService)
+                await _imagemService.Deletar(imageObj);
 
-            return new List<string>();
-        }
-
-        public async Task DeletarImagensDecorator(Imagem imagem)
-        {
-            await _imagemService.Deletar(imagem);
+            if (veiculoService)
+                await _veiculosService.Deletar(veiculoObj);
         }
 
         public async Task<Operacao> ObterPorId(int id)

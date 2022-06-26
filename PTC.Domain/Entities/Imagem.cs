@@ -9,6 +9,7 @@ namespace PTC.Domain.Entities
         public List<string> Caminhos { get; set; } = new();
         public int EntidadeDonaId { get; set; }
         public string CaminhoInsertHelper { get; set; }
+        public List<string> ImagensIds { get; set; } = new();
 
         public Imagem(EnumIdentificadorPastaDeArquivos identificador)
         {
@@ -19,6 +20,19 @@ namespace PTC.Domain.Entities
         {
             EnumIdentificadorPastaDeArquivos = identificador;
             CaminhoInsertHelper = caminhoInsert;
+        }
+
+        public Imagem(EnumIdentificadorPastaDeArquivos identificador, List<string> ids)
+        {
+            EnumIdentificadorPastaDeArquivos = identificador;
+            ImagensIds = ids;
+        }
+
+        public Imagem(EnumIdentificadorPastaDeArquivos idenficador, int entidadeId, List<string> ids)
+        {
+            EnumIdentificadorPastaDeArquivos = idenficador;
+            EntidadeDonaId = entidadeId;
+            ImagensIds = ids;
         }
     }
 }

@@ -2,5 +2,5 @@
 
 namespace PTC.Domain.Interfaces.Services
 {
-    public interface IImagemService : IBaseService<Imagem> { }
+    public interface IImagemService : IBaseService<Imagem>, IUpdateService<Imagem> { }
 }
