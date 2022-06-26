@@ -1,6 +1,9 @@
 ﻿using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
+using System;
+using System.Globalization;
+using PTC.Application.Extentions;
 
 namespace PTC.Application.Mapper
 {
@@ -39,7 +42,10 @@ namespace PTC.Application.Mapper
                 EnumTipoPagamentoRevenda = (EnumFormaPagamento)viewModel.TipoPagamentoRevendaId,
                 DataRevenda = viewModel.DataRevenda,
                 Cadastro = viewModel.Cadastro,
-                Exclusao = viewModel.Exclusao
+                Exclusao = viewModel.Exclusao,
+                ValorCompra = viewModel.ValorCompra,
+                ValorRevenda = viewModel.ValorRevenda,
+                ValorTabela = viewModel.ValorTabela
             };
         }
 
@@ -47,25 +53,29 @@ namespace PTC.Application.Mapper
         {
             return new OperacaoViewModel
             {
-                AnoModeloVeiculo = domain.Veiculo.DataFabricacao,
-                Cadastro = domain.Veiculo.Cadastro,
+                Cadastro = domain.Cadastro.DoFormat(),
+                DataRevenda = domain.DataRevenda.DoFormat(),
+                Exclusao = domain.Exclusao.DoFormat(),
+                Km = domain.Veiculo.Km,
+                ValorCompra = domain.ValorCompra,
+                ValorRevenda = domain.ValorRevenda,
+                ValorTabela = domain.ValorTabela,
                 CaminhoImagem = domain.Veiculo.CaminhoImagem,
                 DataFabricacaoVeiculo = domain.Veiculo.DataFabricacao,
                 VeiculoId = domain.Veiculo.Id,
-                Km = domain.Veiculo.Km,
-                ValorCompra = domain.ValorCompra,
                 ModeloVeiculo = domain.Veiculo.Modelo,
-                ValorRevenda = domain.ValorRevenda,
-                ValorTabela = domain.ValorTabela,
-                RenavamVeiculo = domain.Veiculo.Renavam,
+                RenavamVeiculo = String.IsNullOrEmpty(domain.Veiculo.Renavam) ? String.Empty : domain.Veiculo.Renavam,
                 MarcaVeiculoId = domain.Veiculo.MarcaVeiculo.Id,
                 ProprietarioId = domain.Comprador.Id,
                 CompradorId = domain.Proprietario.Id,
                 SituacaoAquisicaoId = (int)domain.EnumSituacaoAquisicao,
                 TipoPagamentoAquisicaoId = (int)domain.EnumTipoPagamentoAquisicao,
                 TipoPagamentoRevendaId = (int)domain.EnumTipoPagamentoRevenda,
-                DataRevenda = domain.DataRevenda,
-                Exclusao = domain.Exclusao
+                ProprietarioNome = domain.Proprietario.Nome,
+                CompradorNome = domain.Comprador.Nome,
+                NomeVeiculo = domain.Veiculo.Nome,
+                ValorCompraMoedaFormatada = domain.ValorCompra.DoFormat(),
+                ValorRevendaMoedaFormatada = domain.ValorRevenda.DoFormat()
             };
         }
     }

@@ -49,7 +49,7 @@ namespace PTC.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Operacao}/{action=Adicionar}");
+                    pattern: "{controller=Operacao}/{action=Index}");
             });
         }
     }

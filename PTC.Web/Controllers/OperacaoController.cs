@@ -6,6 +6,7 @@ using PTC.Application.Dtos;
 using PTC.Web.Models.Enums;
 using PTC.Application.Mapper;
 using PTC.Domain.Interfaces.Services;
+using System.Linq;
 
 namespace PTC.Web.Controllers
 {
@@ -23,7 +24,8 @@ namespace PTC.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _veiculosService.ObterTodos());
+            var lista = await _operacaoService.ObterTodos();
+            return View(lista.Select(OperacaoMapper.ToViewModel).ToList());
         }
 
         [HttpGet]
