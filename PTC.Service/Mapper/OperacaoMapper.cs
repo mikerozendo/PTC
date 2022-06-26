@@ -1,6 +1,7 @@
 ﻿using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
+using System;
 
 namespace PTC.Application.Mapper
 {
@@ -39,7 +40,10 @@ namespace PTC.Application.Mapper
                 EnumTipoPagamentoRevenda = (EnumFormaPagamento)viewModel.TipoPagamentoRevendaId,
                 DataRevenda = viewModel.DataRevenda,
                 Cadastro = viewModel.Cadastro,
-                Exclusao = viewModel.Exclusao
+                Exclusao = viewModel.Exclusao,
+                ValorCompra = viewModel.ValorCompra,
+                ValorRevenda = viewModel.ValorRevenda,
+                ValorTabela = viewModel.ValorTabela
             };
         }
 
@@ -47,8 +51,7 @@ namespace PTC.Application.Mapper
         {
             return new OperacaoViewModel
             {
-                AnoModeloVeiculo = domain.Veiculo.DataFabricacao,
-                Cadastro = domain.Veiculo.Cadastro,
+                Cadastro = domain.Cadastro,
                 CaminhoImagem = domain.Veiculo.CaminhoImagem,
                 DataFabricacaoVeiculo = domain.Veiculo.DataFabricacao,
                 VeiculoId = domain.Veiculo.Id,
@@ -57,7 +60,7 @@ namespace PTC.Application.Mapper
                 ModeloVeiculo = domain.Veiculo.Modelo,
                 ValorRevenda = domain.ValorRevenda,
                 ValorTabela = domain.ValorTabela,
-                RenavamVeiculo = domain.Veiculo.Renavam,
+                RenavamVeiculo = String.IsNullOrEmpty(domain.Veiculo.Renavam) ? String.Empty : domain.Veiculo.Renavam,
                 MarcaVeiculoId = domain.Veiculo.MarcaVeiculo.Id,
                 ProprietarioId = domain.Comprador.Id,
                 CompradorId = domain.Proprietario.Id,

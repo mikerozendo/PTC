@@ -52,27 +52,34 @@ namespace PTC.Infrastructure.Data.Respository
                 {
                     Id = (int)sdr["Id"],
                     Cadastro = (DateTime)sdr["DataCadastro"],
-                    DataRevenda = (DateTime)sdr["DataRevenda"],
+                    DataRevenda = sdr["DataRevenda"] is DBNull ? null : (DateTime)sdr["DataRevenda"],
                     EnumSituacaoAquisicao = (EnumSituacaoAquisicao)sdr["SituacaoAquisicao"],
                     EnumTipoPagamentoAquisicao = (EnumFormaPagamento)sdr["TipoPagamentoAquisicao"],
                     EnumTipoPagamentoRevenda = (EnumFormaPagamento)sdr["TipoPagamentoRevenda"],
                     Proprietario = new Proprietario
                     {
-                        Id = (int)sdr["ProprietarioId"],
+                        Id = Convert.ToInt32(sdr["ProprietarioId"]),
                         Nome = (string)sdr["NomeProprietario"]
                     },
                     Veiculo = new Veiculo
                     {
                         Id = (int)sdr["VeiculoId"],
                         Nome = (string)sdr["NomeVeiculo"],
-                        Modelo = (string)sdr["ModeloVeiculo"]
+                        Modelo = (string)sdr["ModeloVeiculo"],
+                        Km = (decimal)sdr["Km"],
+                        CaminhoImagem = sdr["CaminhoImagem"] is DBNull ? String.Empty : (string)sdr["CaminhoImagem"],
+                        MarcaVeiculo = new Marca
+                        {
+                            Id = Convert.ToInt32(sdr["MarcaVeiculoId"])
+                        }
                     },
                     ValorCompra = (decimal)sdr["ValorCompra"],
+                    ValorRevenda = (decimal)sdr["ValorRevenda"],
                     Comprador = new Proprietario
                     {
-                        Id = (int)sdr["CompradorId"],
+                        Id = Convert.ToInt32(sdr["CompradorId"]),
                         Nome = (string)sdr["NomeComprador"]
-                    },      
+                    },
                 });
             }
 
