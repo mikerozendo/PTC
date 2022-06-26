@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using PTC.Domain.Entities;
-using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Interfaces.Repository;
+using System.Collections.Generic;
 
 namespace PTC.Application.Services
 {
@@ -16,27 +18,32 @@ namespace PTC.Application.Services
             _operacaoRepository = operacaoRepository;
         }
 
-        public void Deletar(Operacao obj)
+        public async Task Deletar(Operacao obj)
         {
-            _veiculosService.Deletar(obj.Veiculo);
-            _operacaoRepository.Deletar(obj);
+            await _veiculosService.Deletar(obj.Veiculo);
+            await _operacaoRepository.Deletar(obj);
         }
 
-        public dynamic Inserir(Operacao obj)
+        public Task<bool> Existe(Operacao obj)
         {
-            obj.Veiculo.Id = _veiculosService.Inserir(obj.Veiculo);
+            throw new NotImplementedException();
+        }
 
-            if (obj.Veiculo.Id != 0)
+        public async Task<dynamic> Inserir(Operacao obj)
+        {
+            obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
+
+            if (obj.Veiculo.Id > 0)
             {
                 if (!(obj.Proprietario is null))
                 {
                     try
                     {
-                        return _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
+                        return await _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
                     }
                     catch (Exception)
                     {
-                        _veiculosService.Deletar(obj.Veiculo);
+                        await _veiculosService.Deletar(obj.Veiculo);
                         return "Erro ocorrido ao cadastro nova operação";
                     }
                 }
@@ -46,9 +53,15 @@ namespace PTC.Application.Services
             else return "Erro ao cadastrar veículo!";
         }
 
-        public Operacao ObterPorId(int id)
+        public async Task<Operacao> ObterPorId(int id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Operacao>> ObterTodos()
+        {
+            return _operacaoRepository.ObterTodos();
         }
     }
 }

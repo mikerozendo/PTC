@@ -142,8 +142,14 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
             <p>${msgString}</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="text-align:right;">Cancelar</button>
-            <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-primary btn-success" style="text-align: left;">Continuar</button>
+            <div class="row modal-footer-row">
+                <div class="col-6 text-left">
+                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-6 text-right">
+                    <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-danger">Continuar</button>
+                </div>
+            </div>
           </div>
         </div>
       </div>
@@ -171,18 +177,16 @@ function Reload() {
 
 function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
-        e.stopImmediatePropagation();
         var value = "/images/" + pasta +"/"+ $("#inputImg").val().replace('C:\\fakepath\\', '');
         $("#caminhoImagem").val(value);
     });
 
     $("#btnImgUpload").on('click', function (e) {
-        e.stopImmediatePropagation();
         $("#inputImg").click();
     });
 }
 
-function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget) {
+function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget, Label) {
     fetch('https://localhost:44306/' + controller + '/' + action, {
         headers: {
             'Accept': 'application/json'
@@ -193,7 +197,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                 `
                     <div class="row">
                         <div class="col-6 text-left">
-                            <label class="lbl-inputs" for="${binder}">${binder}</label>
+                            <label class="lbl-inputs" for="${binder}">${Label}</label>
                         </div>
                 `;
             if (btnAdicionar) {

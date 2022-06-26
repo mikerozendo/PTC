@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
@@ -17,34 +17,34 @@ namespace PTC.Application.Services
             _veiculosRepository = veiculosRepository;
         }
 
-        public void Alterar(Veiculo obj)
+        public async Task Alterar(Veiculo obj)
         {
-            _veiculosRepository.Alterar(obj);
+           await _veiculosRepository.Alterar(obj);
         }
 
-        public dynamic Inserir(Veiculo obj)
+        public async Task<dynamic> Inserir(Veiculo obj)
         {
-            return _veiculosRepository.Inserir(obj);
+            return await _veiculosRepository.Inserir(obj);
         }
 
-        public void Deletar(Veiculo obj)
+        public async Task Deletar(Veiculo obj)
         {
-            return;
+            await _veiculosRepository.Deletar(obj);
         }
 
-        public Veiculo ObterPorId(int id)
+        public async Task<Veiculo> ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask; return new();
         }
 
-        public IEnumerable<Veiculo> ObterTodos()
+        public async Task<IEnumerable<Veiculo>> ObterTodos()
         {
-            return _veiculosRepository.ObterTodos();
+            return await _veiculosRepository.ObterTodos();
         }
 
-        public bool Existe(Veiculo obj)
+        public async Task<bool> Existe(Veiculo obj)
         {
-            throw new NotImplementedException();
+            await Task.CompletedTask; return true;
         }
     }
 }

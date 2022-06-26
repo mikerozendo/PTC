@@ -1,9 +1,12 @@
-﻿namespace PTC.Domain.Interfaces.Services
+﻿using PTC.Domain.Entities;
+using System.Threading.Tasks;
+
+namespace PTC.Domain.Interfaces.Services
 {
-    public interface IBaseService<T> where T : class
+    public interface IBaseService<T> where T : Base
     {
-        dynamic Inserir(T obj);
-        void Deletar(T obj);
-        T ObterPorId(int id);
+        Task<dynamic> Inserir(T obj);
+        Task Deletar(T obj);
+        Task<T> ObterPorId(int id);
     }
 }

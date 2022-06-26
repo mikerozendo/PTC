@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Base
 {
@@ -9,17 +11,16 @@ namespace PTC.Infrastructure.Data.Base
         private readonly string _connectionString;
         protected IList<Parametro> _parametros;
 
-        protected BaseRepository()
+        protected BaseRepository(IConfiguration configuration)
         {
-            _connectionString = "Server=127.0.0.1; Database=ptc; User=root; Password=@M1ke98!;";
+            _connectionString = configuration.GetConnectionString("DatataBase");
             _parametros = new List<Parametro>();
         }
 
-        protected DataTable ExecutarProcedure(string procedure)
+        protected async Task<DataTable> ExecutarProcedureAsync(string procedure)
         {
             try
             {
-
                 using (var conn = new MySqlConnection(_connectionString))
                 using (var cmd = new MySqlCommand(procedure, conn)
                 {
@@ -31,12 +32,12 @@ namespace PTC.Infrastructure.Data.Base
                         cmd.Parameters.AddWithValue($@"{parametro.Nome}", parametro.Valor).Direction = ParameterDirection.Input;
 
                     _parametros.Clear();
-                    conn.Open();
+                    await conn.OpenAsync();
 
-                    using (var dataReader = cmd.ExecuteReader())
+                    using (var dataReader = cmd.ExecuteReaderAsync())
                     {
                         var tabela = new DataTable();
-                        tabela.Load(dataReader);
+                        tabela.Load(await dataReader);
                         return tabela;
                     }
                 }

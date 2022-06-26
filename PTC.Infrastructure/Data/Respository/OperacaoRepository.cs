@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Data;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
+using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
@@ -7,29 +12,78 @@ namespace PTC.Infrastructure.Data.Respository
 {
     public class OperacaoRepository : BaseRepository, IOperacaoRepository
     {
-        public void Alterar(Operacao obj)
+        public OperacaoRepository(IConfiguration configuration) : base(configuration) { }
+
+        public Task Alterar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public void Deletar(Operacao obj)
+        public Task Deletar(Operacao obj)
         {
-            throw new System.NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public dynamic Inserir(Operacao obj)
+        public async Task<dynamic> Inserir(Operacao obj)
         {
-            AddParametro("IdVeiculo", obj.Veiculo.Id);
-            AddParametro("IdProprietario", obj.Proprietario.Id);
-            AddParametro("IdComprador", obj.Comprador.Id);
+            AddParametro("VeiculoId", obj.Veiculo.Id);
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
-            AddParametro("FormaPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
-            AddParametro("FormaPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
-            AddParametro("Compra", obj.Cadastro);
-            AddParametro("Revenda", obj.DataRevenda);
-            AddParametro("Cadastro", DateTime.Now);
-            var tabela = ExecutarProcedure("P_OPERACAO_INSERIR");
+            AddParametro("TipoPagamentoAquisicao", obj.EnumTipoPagamentoAquisicao);
+            AddParametro("TipoPagamentoRevenda", obj.EnumTipoPagamentoRevenda);
+            AddParametro("DataRevenda", obj.DataRevenda);
+            AddParametro("Vendido", obj.Vendido);
+            AddParametro("ValorCompra", obj.ValorCompra);
+            AddParametro("ValorTabela", obj.ValorTabela);
+            AddParametro("ValorRevenda", obj.ValorRevenda);
+            AddParametro("ProprietarioId", obj.Proprietario.Id);
+            AddParametro("CompradorId", obj.Comprador.Id);
+            var tabela = await ExecutarProcedureAsync("P_OPERACAO_INSERIR");
             return tabela.Rows.Count;
+        }
+
+        public async Task<IEnumerable<Operacao>> ObterTodos()
+        {
+            List<Operacao> list = new();
+            var tabela = await ExecutarProcedureAsync("P_OPERACAO_OBTER");
+
+            foreach (DataRow sdr in tabela.Rows)
+            {
+                list.Add(new Operacao
+                {
+                    Id = (int)sdr["Id"],
+                    Cadastro = (DateTime)sdr["DataCadastro"],
+                    DataRevenda = sdr["DataRevenda"] is DBNull ? null : (DateTime)sdr["DataRevenda"],
+                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)sdr["SituacaoAquisicao"],
+                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)sdr["TipoPagamentoAquisicao"],
+                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)sdr["TipoPagamentoRevenda"],
+                    Proprietario = new Proprietario
+                    {
+                        Id = Convert.ToInt32(sdr["ProprietarioId"]),
+                        Nome = (string)sdr["NomeProprietario"]
+                    },
+                    Comprador = new Proprietario
+                    {
+                        Id = Convert.ToInt32(sdr["CompradorId"]),
+                        Nome = (string)sdr["NomeComprador"]
+                    },
+                    Veiculo = new Veiculo
+                    {
+                        Id = (int)sdr["VeiculoId"],
+                        Nome = (string)sdr["NomeVeiculo"],
+                        Modelo = (string)sdr["ModeloVeiculo"],
+                        Km = (decimal)sdr["Km"],
+                        CaminhoImagem = sdr["CaminhoImagem"] is DBNull ? String.Empty : (string)sdr["CaminhoImagem"],
+                        MarcaVeiculo = new Marca
+                        {
+                            Id = Convert.ToInt32(sdr["MarcaVeiculoId"])
+                        }
+                    },
+                    ValorCompra = (decimal)sdr["ValorCompra"],
+                    ValorRevenda = (decimal)sdr["ValorRevenda"]
+                });
+            }
+
+            return list;
         }
     }
 }

@@ -24,19 +24,7 @@ namespace PTC.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
-            services.AddScoped<IProprietarioService, ProprietarioService>();
-            services.AddScoped<IEnderecoService, EnderecoService>();
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-            services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
-            services.AddScoped<IDocumentoService, DocumentoService>();
-            services.AddScoped<IMarcasService, MarcasService>();
-            services.AddScoped<IMarcasRepository, MarcasRepository>();
-            services.AddScoped<IVeiculosRepository, VeiculosRepository>();
-            services.AddScoped<IVeiculosService, VeiculosService>();
-            services.AddScoped<IOperacaoService, OperacaoService>();
-            services.AddScoped<IOperacaoRepository, OperacaoRepository>();
-            services.AddScoped<IHelperService, HelperService>();
+            DependencyInjection.RegisterDependency(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -61,7 +49,7 @@ namespace PTC.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Operacao}/{action=Adicionar}");
+                    pattern: "{controller=Operacao}/{action=Index}");
             });
         }
     }
