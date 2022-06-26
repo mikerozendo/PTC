@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,24 @@ namespace PTC.Web.Models.Services
                 }
 
                 return;
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async Task GerarImagens(List<IFormFile> arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem)
+        {
+            try
+            {
+                if (mensagem.ToLower().Contains("sucesso"))
+                {
+                    foreach (IFormFile item in arquivos)
+                    {
+                        await GerarImagem(item, pasta, path, mensagem);
+                    }
+                }
             }
             catch (Exception)
             {

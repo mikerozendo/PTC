@@ -2,14 +2,15 @@
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
 using System;
-using System.Globalization;
 using PTC.Application.Extentions;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace PTC.Application.Mapper
 {
     public static class OperacaoMapper
     {
-        public static Operacao ToDomain(OperacaoViewModel viewModel)
+        public static Operacao ToDomain(OperacaoViewModel viewModel, string fileBasePath = "")
         {
             return new Operacao
             {
@@ -45,7 +46,11 @@ namespace PTC.Application.Mapper
                 Exclusao = viewModel.Exclusao,
                 ValorCompra = viewModel.ValorCompra,
                 ValorRevenda = viewModel.ValorRevenda,
-                ValorTabela = viewModel.ValorTabela
+                ValorTabela = viewModel.ValorTabela,
+                Imagem = new Imagem(EnumIdentificadorPastaDeArquivos.Veiculos)
+                {
+                    Caminhos = viewModel.Arquivos.Select(x => String.Concat(fileBasePath, @"\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName)).ToList(),
+                }
             };
         }
 

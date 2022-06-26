@@ -177,7 +177,9 @@ function Reload() {
 
 function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
-        var value = "/images/" + pasta +"/"+ $("#inputImg").val().replace('C:\\fakepath\\', '');
+        var value = "/images/" + pasta + "/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+        console.log($("#inputImg").length);
+        debugger;
         $("#caminhoImagem").val(value);
     });
 

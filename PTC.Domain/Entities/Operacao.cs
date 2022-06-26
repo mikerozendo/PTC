@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PTC.Domain.Enums;
 
 namespace PTC.Domain.Entities
@@ -16,5 +17,6 @@ namespace PTC.Domain.Entities
         public decimal ValorTabela { get; set; }
         public decimal ValorRevenda { get; set; }
         public bool Vendido { get { return DataRevenda != null && ValorRevenda > 0; } }
+        public Imagem Imagem { get; set; }
     }
 }

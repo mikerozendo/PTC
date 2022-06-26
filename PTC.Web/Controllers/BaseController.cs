@@ -12,7 +12,7 @@ namespace PTC.Web.Controllers
     {
         protected readonly IServiceProvider _serviceProvider;
         private readonly IHelperService _helperService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        protected readonly IWebHostEnvironment _webHostEnvironment;
 
         public BaseController(IServiceProvider serviceProvider)
         {

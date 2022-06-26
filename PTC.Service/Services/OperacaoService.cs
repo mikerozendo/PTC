@@ -11,11 +11,13 @@ namespace PTC.Application.Services
     {
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoRepository _operacaoRepository;
+        private readonly IImagemService _imagemService;
 
-        public OperacaoService(IVeiculosService veiculosService, IOperacaoRepository operacaoRepository)
+        public OperacaoService(IVeiculosService veiculosService, IOperacaoRepository operacaoRepository, IImagemService imagemService)
         {
             _veiculosService = veiculosService;
             _operacaoRepository = operacaoRepository;
+            _imagemService = imagemService;
         }
 
         public async Task Deletar(Operacao obj)
@@ -31,26 +33,44 @@ namespace PTC.Application.Services
 
         public async Task<dynamic> Inserir(Operacao obj)
         {
-            obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
-
-            if (obj.Veiculo.Id > 0)
+            List<string> ids = await InserirImagemDecorator(obj.Imagem);
+            if (ids.Count > 0)
             {
-                if (!(obj.Proprietario is null))
-                {
-                    try
-                    {
-                        return await _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
-                    }
-                    catch (Exception)
-                    {
-                        await _veiculosService.Deletar(obj.Veiculo);
-                        return "Erro ocorrido ao cadastro nova operação";
-                    }
-                }
+                obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
 
-                else return "Informe um proprietario!";
-            } 
-            else return "Erro ao cadastrar veículo!";
+                if (obj.Veiculo.Id > 0)
+                {
+                    if (!(obj.Proprietario is null))
+                    {
+                        try
+                        {
+                            return await _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
+                        }
+                        catch (Exception)
+                        {
+                            await _veiculosService.Deletar(obj.Veiculo);
+                            return "Erro ocorrido ao cadastro nova operação";
+                        }
+                    }
+
+                    else return "Informe um proprietario!";
+                }
+                else return "Erro ao cadastrar veículo!";
+            }
+            else return "Erro ao cadastrar imagens!";
+        }
+
+        public async Task<List<string>> InserirImagemDecorator(Imagem imagem)
+        {
+            if (!(imagem is null))
+                return await _imagemService.Inserir(imagem);
+
+            return new List<string>();
+        }
+
+        public async Task DeletarImagensDecorator(Imagem imagem)
+        {
+            await _imagemService.Deletar(imagem);
         }
 
         public async Task<Operacao> ObterPorId(int id)
