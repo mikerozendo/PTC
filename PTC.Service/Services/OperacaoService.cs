@@ -35,7 +35,7 @@ namespace PTC.Application.Services
                     {
                         return await _operacaoRepository.Inserir(obj) > 0 ? "sucesso" : "falha";
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         await _veiculosService.Deletar(obj.Veiculo);
                         return "Erro ocorrido ao cadastro nova operação";

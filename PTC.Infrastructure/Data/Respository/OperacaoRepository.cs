@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
-using Microsoft.Extensions.Configuration;
 
 namespace PTC.Infrastructure.Data.Respository
 {
