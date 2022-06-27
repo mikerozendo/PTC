@@ -1,10 +1,5 @@
-﻿using PTC.Application.Dtos;
-using PTC.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PTC.Domain.Entities;
+using PTC.Application.Dtos;
 
 namespace PTC.Application.Mapper
 {
@@ -15,7 +10,6 @@ namespace PTC.Application.Mapper
             return new Imagem
             {
                 CaminhoImagem = viewModel.CaminhoImagem,
-
             };
         }
     }

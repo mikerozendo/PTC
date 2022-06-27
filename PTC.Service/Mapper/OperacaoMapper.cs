@@ -2,9 +2,8 @@
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
 using System;
-using PTC.Application.Extentions;
 using System.Linq;
-using System.Collections.Generic;
+using PTC.Application.Extentions;
 
 namespace PTC.Application.Mapper
 {

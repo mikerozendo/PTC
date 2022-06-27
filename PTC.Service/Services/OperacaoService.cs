@@ -8,7 +8,7 @@ using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
-    public class OperacaoService : Base, IOperacaoService
+    public class OperacaoService : BaseService, IOperacaoService
     {
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoRepository _operacaoRepository;

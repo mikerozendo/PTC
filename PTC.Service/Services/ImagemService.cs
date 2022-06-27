@@ -4,15 +4,17 @@ using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
+using System;
 
 namespace PTC.Application.Services
 {
-    public class ImagemService : IImagemService
+    public class ImagemService : BaseService, IImagemService
     {
         private readonly IImagemRepository _imagemRepository;
-        public ImagemService(IImagemRepository imagemRepository)
+
+        public ImagemService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _imagemRepository = imagemRepository;
+            _imagemRepository = (IImagemRepository)serviceProvider.GetService(typeof(IImagemRepository));
         }
 
         public async Task Alterar(Imagem obj)

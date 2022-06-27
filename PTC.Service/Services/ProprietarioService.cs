@@ -8,17 +8,17 @@ using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
-    public class ProprietarioService : IProprietarioService
+    public class ProprietarioService : BaseService, IProprietarioService
     {
         private readonly IProprietarioRepository _proprietarioRepository;
         private readonly IEnderecoService _enderecoService;
         private readonly IDocumentoService _documentoService;
 
-        public ProprietarioService(IProprietarioRepository proprietarioRepository, IEnderecoService enderecoService, IDocumentoService documentoService)
+        public ProprietarioService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _proprietarioRepository = proprietarioRepository;
-            _enderecoService = enderecoService;
-            _documentoService = documentoService;
+            _proprietarioRepository = (IProprietarioRepository) serviceProvider.GetService(typeof(IProprietarioRepository));
+            _enderecoService = (IEnderecoService) serviceProvider.GetService(typeof(IEnderecoService));
+            _documentoService = (IDocumentoService) serviceProvider.GetService(typeof(IDocumentoService)); ;
         }
 
         public async Task<dynamic> Inserir(Proprietario obj)
@@ -26,7 +26,7 @@ namespace PTC.Application.Services
             obj.FormatarEscritaDb();
             obj.Endereco.FormatarEscritaDb();
 
-            if (! await Existe(obj))
+            if (!await Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
@@ -117,14 +117,15 @@ namespace PTC.Application.Services
             if (!string.IsNullOrWhiteSpace(filtro) && !filtro.Contains("undefined"))
             {
                 return lista
-                    .Where(x => x.Documento.Contains(filtro) 
-                        || x.Email.Contains(filtro) 
-                        || x.Endereco.Cep.Contains(filtro) 
-                        || x.Nome.Contains(filtro) 
+                    .Where(x => x.Documento.Contains(filtro)
+                        || x.Email.Contains(filtro)
+                        || x.Endereco.Cep.Contains(filtro)
+                        || x.Nome.Contains(filtro)
                         || x.WhatsApp.Contains(filtro))
                     .ToList();
 
-            } else return lista.ToList();
+            }
+            else return lista.ToList();
         }
     }
 }

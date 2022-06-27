@@ -1,20 +1,19 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
 
-
 namespace PTC.Application.Services
 {
-    public class VeiculosService : IVeiculosService
+    public class VeiculosService : BaseService, IVeiculosService
     {
-
         private readonly IVeiculosRepository _veiculosRepository;
 
-        public VeiculosService(IVeiculosRepository veiculosRepository)
+        public VeiculosService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _veiculosRepository = veiculosRepository;
+            _veiculosRepository = (IVeiculosRepository) serviceProvider.GetService(typeof(IVeiculosRepository));
         }
 
         public async Task Alterar(Veiculo obj)

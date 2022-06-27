@@ -2,11 +2,11 @@
 
 namespace PTC.Application.Services
 {
-    public class Base
+    public abstract class BaseService
     {
         protected readonly IServiceProvider _serviceProvider;
 
-        public Base(IServiceProvider serviceProvider)
+        public BaseService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
