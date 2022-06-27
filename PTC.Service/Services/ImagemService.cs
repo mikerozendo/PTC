@@ -1,9 +1,9 @@
-﻿using PTC.Domain.Entities;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
+using PTC.Domain.Entities;
 using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PTC.Application.Services
 {
@@ -15,17 +15,20 @@ namespace PTC.Application.Services
             _imagemRepository = imagemRepository;
         }
 
-        public Task Alterar(Imagem obj)
+        public async Task Alterar(Imagem obj)
         {
-            foreach (var item in collection)
+            foreach (int item in obj.ImagensIds)
             {
-
+                await _imagemRepository.Alterar(new(item, obj.EntidadeDonaId));
             }
         }
 
         public async Task Deletar(Imagem obj)
         {
-            await _imagemRepository.Deletar(obj);          
+            foreach (int item in obj.ImagensIds)
+            {
+                await _imagemRepository.Deletar(new(item, obj.EntidadeDonaId));
+            }
         }
 
         public async Task<dynamic> Inserir(Imagem obj)

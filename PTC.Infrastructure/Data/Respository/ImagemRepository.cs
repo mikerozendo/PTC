@@ -11,14 +11,17 @@ namespace PTC.Infrastructure.Data.Respository
     {
         public ImagemRepository(IConfiguration configuration) : base(configuration) { }
 
-        public Task Alterar(Imagem obj)
+        public async Task Alterar(Imagem obj)
         {
-            throw new NotImplementedException();
+            AddParametro("ImagemId", obj.IdImagemAtual);
+            AddParametro("OperacaoId", obj.EntidadeDonaId);
+            await ExecutarProcedureAsync("P_IMAGEM_ALTERAR_ID_ENTIDADE");
         }
 
-        public Task Deletar(Imagem obj)
+        public async Task Deletar(Imagem obj)
         {
-            throw new NotImplementedException();
+            AddParametro("ImagemId", obj.IdImagemAtual);
+            await ExecutarProcedureAsync("P_CAMINHO_IMAGEM_DELETAR");
         }
 
         public async Task<dynamic> Inserir(Imagem obj)

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
-using System.Collections.Generic;
-using PTC.Domain.Enums;
 
 namespace PTC.Application.Services
 {
@@ -34,7 +34,7 @@ namespace PTC.Application.Services
 
         public async Task<dynamic> Inserir(Operacao obj)
         {
-            List<string> idsImagens = await _imagemService.Inserir(obj.Imagem);
+            List<int> idsImagens = await _imagemService.Inserir(obj.Imagem);
             if (idsImagens.Count > 0)
             {
                 obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
