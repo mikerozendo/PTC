@@ -23,9 +23,6 @@ namespace PTC.Application.Services
 
         public async Task<dynamic> Inserir(Proprietario obj)
         {
-            obj.FormatarEscritaDb();
-            obj.Endereco.FormatarEscritaDb();
-
             if (!await Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
@@ -60,13 +57,6 @@ namespace PTC.Application.Services
             try
             {
                 var proprietarios = await _proprietarioRepository.ObterTodos();
-
-                foreach (Proprietario obj in proprietarios)
-                {
-                    obj.FormatarLeituraDb();
-                    obj.Endereco.FormatarLeituraDb();
-                }
-
                 return proprietarios.OrderByDescending(x => x.Cadastro).ToList();
             }
             catch (Exception)
@@ -82,9 +72,6 @@ namespace PTC.Application.Services
 
         public async Task<string> Alterar(Proprietario obj)
         {
-            obj.FormatarEscritaDb();
-            obj.Endereco.FormatarEscritaDb();
-
             if (_documentoService.ValidarDocumento(obj.Documento))
             {
                 try
@@ -104,10 +91,7 @@ namespace PTC.Application.Services
 
         public async Task<Proprietario> ObterPorId(int id)
         {
-            Proprietario proprietario = await _proprietarioRepository.ObterPorId(id);
-            proprietario.FormatarLeituraDb();
-            proprietario.Endereco.FormatarLeituraDb();
-            return proprietario;
+            return await _proprietarioRepository.ObterPorId(id);
         }
 
         public async Task<IEnumerable<Proprietario>> Filtrar(string filtro)

@@ -1,9 +1,9 @@
 using Xunit;
 using PTC.Application.Services;
 
-namespace PTC.Test.Tests
+namespace PTC.Test.Tests.Services
 {
-    public class DocumentoTestes
+    public class DocumentoTeste
     {
         [Theory]
         [InlineData("448.724.598-22")]

@@ -24,13 +24,13 @@ namespace PTC.Infrastructure.Data.Respository
             await ExecutarProcedureAsync("P_CAMINHO_IMAGEM_DELETAR");
         }
 
-        public async Task<dynamic> Inserir(Imagem obj)
+        public async Task<int> Inserir(Imagem obj)
         {
             AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
             AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
 
             var tabela = await ExecutarProcedureAsync("P_IMAGEM_INSERIR");
-            return int.TryParse(tabela.Rows[0]["Id"].ToString(), out int retorno) ? retorno : 0;
+            return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
         }
     }
 }

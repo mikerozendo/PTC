@@ -9,7 +9,7 @@ namespace PTC.Infrastructure.Data.Respository
     public class EnderecoRepository : BaseRepository, IEnderecoRepository
     {
         public EnderecoRepository(IConfiguration configuration) : base(configuration){ }
-        public async Task<dynamic> Inserir(Endereco obj)
+        public async Task<int> Inserir(Endereco obj)
         {
             AddParametro("@Logradouro", obj.Logradouro);
             AddParametro("@Numero", obj.Numero);

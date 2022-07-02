@@ -21,7 +21,7 @@ namespace PTC.Infrastructure.Data.Respository
             return response.Rows.Count > 0;
         }
 
-        public async Task<dynamic> Inserir(Proprietario obj)
+        public async Task<int> Inserir(Proprietario obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Documento", obj.Documento);
@@ -29,8 +29,11 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("IdEndereco", obj.Endereco.Id);
             AddParametro("WhatsApp", obj.WhatsApp);
             AddParametro("CaminhoImagem", obj.CaminhoImagem);
-            await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");
-            return "Proprietário Cadastrado com sucesso!";
+            AddParametro("IdTipoPessoa", (int)obj.EnumTipoPessoa);
+
+            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");
+
+            return int.TryParse(tabela.Rows[0]["IdProprietario"].ToString(), out int retorno) ? retorno : 0;
         }
 
         public async Task<IEnumerable<Proprietario>> ObterTodos()
@@ -44,7 +47,6 @@ namespace PTC.Infrastructure.Data.Respository
                 {
                     Documento = sdr["Documento"].ToString(),
                     Email = sdr["Email"].ToString(),
-                    EnumTipoPessoa = (EnumTipoPessoa)sdr["IdTipoPessoa"],
                     Id = Convert.ToInt32(sdr["Id"]),
                     Nome = sdr["Nome"].ToString(),
                     WhatsApp = sdr["WhatsApp"].ToString(),
@@ -92,7 +94,6 @@ namespace PTC.Infrastructure.Data.Respository
             {
                 Documento = tabela.Rows[0]["Documento"].ToString(),
                 Email = tabela.Rows[0]["Email"].ToString(),
-                EnumTipoPessoa = (EnumTipoPessoa)tabela.Rows[0]["IdTipoPessoa"],
                 Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
                 Nome = tabela.Rows[0]["Nome"].ToString(),
                 WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),

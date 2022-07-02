@@ -23,7 +23,7 @@ namespace PTC.Infrastructure.Data.Respository
             await ExecutarProcedureAsync("P_VEICULO_ALTERAR");
         }
 
-        public async Task<dynamic> Inserir(Veiculo obj)
+        public async Task<int> Inserir(Veiculo obj)
         {
             AddParametro("Km", obj.Km);
             AddParametro("Modelo", obj.Modelo);

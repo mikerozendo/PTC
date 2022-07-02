@@ -62,12 +62,15 @@ namespace PTC.Infrastructure.Data.Respository
             return response.Rows.Count > 0;
         }
 
-        public async Task<dynamic> Inserir(Marca obj)
+        public async Task<int> Inserir(Marca obj)
         {
             AddParametro("Nome", obj.Nome);
             AddParametro("Url", obj.UrlImagem);
-            await ExecutarProcedureAsync("P_MARCA_INSERIR");
-            return "Marca cadastrada com sucesso!";
+
+            var tabela = await ExecutarProcedureAsync("P_MARCA_INSERIR");
+
+            int.TryParse(tabela.Rows[0]["MarcaId"].ToString(), out int marcaId);
+            return marcaId;
         }
 
         public async Task Alterar(Marca obj)
