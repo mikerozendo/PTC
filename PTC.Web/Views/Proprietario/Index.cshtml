@@ -124,6 +124,7 @@
             $(".btn-danger").on('click', function (e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
+                debugger;
                 let mensagem = 'Tem certeza que deseja deletar o proprietário(a) ' + objValue.Nome + '?';
                 RenderizarModalTravaDelete("Proprietario", "Deletar", objValue.Id, mensagem);
             });

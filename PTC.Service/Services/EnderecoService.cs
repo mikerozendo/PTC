@@ -6,13 +6,13 @@ using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
-    public class EnderecoService : IEnderecoService
+    public class EnderecoService : BaseService, IEnderecoService
     {
         private readonly IEnderecoRepository _enderecoRepository;
 
-        public EnderecoService(IEnderecoRepository enderecoRepository)
+        public EnderecoService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _enderecoRepository = enderecoRepository;
+            _enderecoRepository = (IEnderecoRepository)serviceProvider.GetService(typeof(IEnderecoRepository));
         }
 
         public async Task Alterar(Endereco obj)

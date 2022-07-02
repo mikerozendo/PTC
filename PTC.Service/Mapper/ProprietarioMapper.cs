@@ -9,6 +9,7 @@ namespace PTC.Application.Mapper
         {
             return new Proprietario
             {
+                Id = viewModel.Id,
                 Endereco = new Endereco
                 {
                     Logradouro = viewModel.Logradouro,

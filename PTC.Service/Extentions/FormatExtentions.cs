@@ -11,7 +11,7 @@ namespace PTC.Application.Extentions
 
         public static DateTime? DoFormat(this DateTime? value)
         {
-            return !(value is null) ? Convert.ToDateTime(Convert.ToDateTime(value).ToString("dd/MM/yyyy")).Date : null; 
+            return !(value is null) ? Convert.ToDateTime(Convert.ToDateTime(value).ToString("dd/MM/yyyy")).Date : null;
         }
     }
 }
