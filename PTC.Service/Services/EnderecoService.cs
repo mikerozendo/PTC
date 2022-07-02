@@ -30,9 +30,10 @@ namespace PTC.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<dynamic> Inserir(Endereco obj)
+        public async Task<string> Inserir(Endereco obj)
         {
-            return await _enderecoRepository.Inserir(obj);
+            int result = await _enderecoRepository.Inserir(obj);
+            return result.ToString();
         }
     }
 }

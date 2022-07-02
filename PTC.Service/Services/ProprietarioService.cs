@@ -16,35 +16,54 @@ namespace PTC.Application.Services
 
         public ProprietarioService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _proprietarioRepository = (IProprietarioRepository) serviceProvider.GetService(typeof(IProprietarioRepository));
-            _enderecoService = (IEnderecoService) serviceProvider.GetService(typeof(IEnderecoService));
-            _documentoService = (IDocumentoService) serviceProvider.GetService(typeof(IDocumentoService)); ;
+            _proprietarioRepository = (IProprietarioRepository)serviceProvider.GetService(typeof(IProprietarioRepository));
+            _enderecoService = (IEnderecoService)serviceProvider.GetService(typeof(IEnderecoService));
+            _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService)); ;
         }
 
-        public async Task<dynamic> Inserir(Proprietario obj)
+        public async Task<string> Inserir(Proprietario obj)
         {
             if (!await Existe(obj))
             {
                 if (_documentoService.ValidarDocumento(obj.Documento))
                 {
-                    obj.Endereco.Id = await _enderecoService.Inserir(obj.Endereco);
-                    if (obj.Endereco.Id > 0)
+                    int.TryParse(await _enderecoService.Inserir(obj.Endereco), out int idEndereco);
+
+                    if (idEndereco > 0)
                     {
+                        obj.Endereco.Id = idEndereco;
+
                         try
                         {
-                            return _proprietarioRepository.Inserir(obj);
+                            int proprietarioId = await _proprietarioRepository.Inserir(obj);
+
+                            if (proprietarioId > 0)
+                            {
+                                return "Sucesso ao cadastrar Proprietario";
+                            }
+                            else
+                            {
+                                await RollBackBuilder(obj.Endereco);
+                                return "Erro ao cadastrar proprietário, tente novamente mais tarde";
+                            }
                         }
                         catch (Exception)
                         {
-                            await _enderecoService.Deletar(obj.Endereco);
+                            await RollBackBuilder(obj.Endereco);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
+
                     return "Proprietário cadastrado com sucesso!";
                 }
                 else return "Informe um documento válido!";
             }
             else return "Proprietário existente!";
+        }
+
+        public async Task RollBackBuilder(Endereco obj)
+        {
+            await _enderecoService.Deletar(obj);
         }
 
         public async Task<bool> Existe(Proprietario obj)

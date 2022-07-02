@@ -8,7 +8,7 @@ using System;
 
 namespace PTC.Application.Services
 {
-    public class ImagemService : BaseService, IImagemService
+    public class ImagemService : BaseService /*IImagemService*/
     {
         private readonly IImagemRepository _imagemRepository;
 

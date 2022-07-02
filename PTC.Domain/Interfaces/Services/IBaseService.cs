@@ -5,7 +5,7 @@ namespace PTC.Domain.Interfaces.Services
 {
     public interface IBaseService<T> where T : Base
     {
-        Task<dynamic> Inserir(T obj);
+        Task<string> Inserir(T obj);
         Task Deletar(T obj);
         Task<T> ObterPorId(int id);
     }

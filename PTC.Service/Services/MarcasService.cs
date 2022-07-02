@@ -6,7 +6,7 @@ using PTC.Domain.Interfaces.Services;
 
 namespace PTC.Application.Services
 {
-    public class MarcasService : IMarcasService
+    public class MarcasService /*IMarcasService*/
     {
         private readonly IMarcasRepository _marcasRepository;
 

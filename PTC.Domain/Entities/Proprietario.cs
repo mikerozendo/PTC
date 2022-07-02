@@ -1,4 +1,5 @@
 ﻿using PTC.Domain.Enums;
+using PTC.Domain.Extentitions;
 
 namespace PTC.Domain.Entities
 {
@@ -14,13 +15,20 @@ namespace PTC.Domain.Entities
 
         public EnumTipoPessoa DefiniTipoPessoa()
         {
-            if (Documento.Length == 18)
-                return EnumTipoPessoa.PessoaJuridica;
+            string documentoFormato = Documento.DocumentoValidFormat();
 
-            else if (Documento.Length == 13)
-                return EnumTipoPessoa.PessoaFisica;
+            if (!string.IsNullOrEmpty(documentoFormato))
+            {
+                if (documentoFormato.Length == 11)
+                    return EnumTipoPessoa.PessoaFisica;
 
-            else return EnumTipoPessoa.NaoIdentificado; 
+                else if (documentoFormato.Length == 14)
+                    return EnumTipoPessoa.PessoaJuridica;
+
+                else return EnumTipoPessoa.NaoIdentificado;
+            }
+            
+            return EnumTipoPessoa.NaoIdentificado;
         }
     }
 }

@@ -13,5 +13,6 @@ namespace PTC.Application.Extentions
         {
             return !(value is null) ? Convert.ToDateTime(Convert.ToDateTime(value).ToString("dd/MM/yyyy")).Date : null;
         }
+
     }
 }

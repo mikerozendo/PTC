@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Extentitions;
 
 namespace PTC.Application.Services
 {
@@ -9,7 +10,7 @@ namespace PTC.Application.Services
     {
         public bool ValidarDocumento(string documento)
         {
-            string documentoFormatado = FormatarDocumento(documento);
+            string documentoFormatado = documento.DocumentoValidFormat();
             if (!string.IsNullOrEmpty(documentoFormatado) && !ValidarCaracteresIguais(documentoFormatado))
             {
 

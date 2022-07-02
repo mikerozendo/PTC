@@ -8,5 +8,6 @@ namespace PTC.Domain.Interfaces.Services
     {
         Task<IEnumerable<Proprietario>> Filtrar(string filtro);
         Task<string> Alterar(Proprietario obj);
+        Task RollBackBuilder(Endereco obj);
     }
 }
