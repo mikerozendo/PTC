@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using PTC.Web.Models.Enums;
+﻿using Microsoft.AspNetCore.Mvc;
 using PTC.Application.Dtos;
 using PTC.Application.Mapper;
 using PTC.Domain.Interfaces.Services;
+using PTC.WEB.Models.Enums;
 
-namespace PTC.Web.Controllers
+namespace PTC.WEB.Controllers
 {
     public class ProprietarioController : BaseController
     {

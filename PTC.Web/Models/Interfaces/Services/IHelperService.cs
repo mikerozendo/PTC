@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using PTC.Web.Models.Enums;
+﻿using PTC.WEB.Models.Enums;
 
 namespace PTC.Web.Models.Interfaces.Services
 {

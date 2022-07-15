@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using PTC.Web.Models.Enums;
+﻿using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
 
-namespace PTC.Web.Models.Services
+namespace PTC.WEB.Models.Services
 {
     public class HelperService : IHelperService
     {
