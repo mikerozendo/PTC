@@ -54,7 +54,7 @@ namespace PTC.Application.Services
                         }
                     }
 
-                    return "Proprietário cadastrado com sucesso!";
+                    return "Falha ao cadastrar endereço, tente novamente";
                 }
                 else return "Informe um documento válido!";
             }
@@ -105,7 +105,7 @@ namespace PTC.Application.Services
                     return "Falha na alteração, revise seus dados";
                 }
             }
-            else return "Documento inválido, informe um documento válido";
+            else return "Informe um documento válido";
         }
 
         public async Task<Proprietario> ObterPorId(int id)

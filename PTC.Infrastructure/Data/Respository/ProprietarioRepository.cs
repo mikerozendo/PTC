@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Entities;
-using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Infrastructure.Data.Base;
 using Microsoft.Extensions.Configuration;
@@ -23,17 +22,26 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<int> Inserir(Proprietario obj)
         {
-            AddParametro("Nome", obj.Nome);
-            AddParametro("Documento", obj.Documento);
-            AddParametro("Email", obj.Email);
-            AddParametro("IdEndereco", obj.Endereco.Id);
-            AddParametro("WhatsApp", obj.WhatsApp);
-            AddParametro("CaminhoImagem", obj.CaminhoImagem);
-            AddParametro("IdTipoPessoa", (int)obj.EnumTipoPessoa);
+            try
+            {
+                AddParametro("Nome", obj.Nome);
+                AddParametro("Documento", obj.Documento);
+                AddParametro("Email", obj.Email);
+                AddParametro("IdEndereco", obj.Endereco.Id);
+                AddParametro("WhatsApp", obj.WhatsApp);
+                AddParametro("CaminhoImagem", obj.CaminhoImagem);
+                AddParametro("IdTipoPessoa", (int)obj.EnumTipoPessoa);
 
-            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");
+                var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");
 
-            return int.TryParse(tabela.Rows[0]["IdProprietario"].ToString(), out int retorno) ? retorno : 0;
+                return int.TryParse(tabela.Rows[0]["IdProprietario"].ToString(), out int retorno) ? retorno : 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         public async Task<IEnumerable<Proprietario>> ObterTodos()
@@ -51,7 +59,6 @@ namespace PTC.Infrastructure.Data.Respository
                     Nome = sdr["Nome"].ToString(),
                     WhatsApp = sdr["WhatsApp"].ToString(),
                     Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
-                    Exclusao = sdr["Exclusao"] is DBNull ? null : Convert.ToDateTime(sdr["Exclusao"]),
                     CaminhoImagem = sdr["CaminhoImagem"] is DBNull ? null : sdr["CaminhoImagem"].ToString(),
                     Endereco = new Endereco
                     {
@@ -60,7 +67,8 @@ namespace PTC.Infrastructure.Data.Respository
                         Logradouro = sdr["Logradouro"].ToString(),
                         Numero = sdr["Numero"].ToString(),
                         Uf = sdr["Uf"].ToString(),
-                        Cidade = sdr["Cidade"].ToString()                        
+                        Cidade = sdr["Cidade"].ToString(),
+                        PontoReferencia = sdr["PontoReferencia"].ToString()
                     }
                 });
             }
@@ -98,7 +106,6 @@ namespace PTC.Infrastructure.Data.Respository
                 Nome = tabela.Rows[0]["Nome"].ToString(),
                 WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),
                 Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
-                Exclusao = tabela.Rows[0]["Exclusao"] is DBNull ? null : Convert.ToDateTime(tabela.Rows[0]["Exclusao"]),
                 CaminhoImagem = tabela.Rows[0]["CaminhoImagem"] is DBNull ? null : tabela.Rows[0]["CaminhoImagem"].ToString(),
                 Endereco = new Endereco
                 {
@@ -108,6 +115,7 @@ namespace PTC.Infrastructure.Data.Respository
                     Numero = tabela.Rows[0]["Numero"].ToString(),
                     Uf = tabela.Rows[0]["Uf"].ToString(),
                     Cidade = tabela.Rows[0]["Cidade"].ToString(),
+                    PontoReferencia = tabela.Rows[0]["PontoReferencia"].ToString()
                 }
             };
         }

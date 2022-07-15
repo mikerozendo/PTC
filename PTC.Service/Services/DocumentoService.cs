@@ -10,14 +10,18 @@ namespace PTC.Application.Services
     {
         public bool ValidarDocumento(string documento)
         {
-            string documentoFormatado = documento.DocumentoValidFormat();
-            if (!string.IsNullOrEmpty(documentoFormatado) && !ValidarCaracteresIguais(documentoFormatado))
-            {
+            if (!String.IsNullOrEmpty(documento)) {
+                string documentoFormatado = documento.DocumentoValidFormat();
+                if (!string.IsNullOrEmpty(documentoFormatado) && !ValidarCaracteresIguais(documentoFormatado))
+                {
 
-                if (documentoFormatado.Length == 11)
-                    return ValidarCPF(documentoFormatado);
-                else
-                    return ValidarCnpj(documentoFormatado);
+                    if (documentoFormatado.Length == 11)
+                        return ValidarCPF(documentoFormatado);
+                    else
+                        return ValidarCnpj(documentoFormatado);
+                }
+
+                return false;
             }
 
             else return false;

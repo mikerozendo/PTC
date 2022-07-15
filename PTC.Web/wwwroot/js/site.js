@@ -73,17 +73,65 @@ function ColetarRespostaServidor(aspAction, aspController) {
         body: new FormData(event.target)
     }).then(function (serverPromise) {
         serverPromise.text()
-            .then(function (j) {
-                alert(j);
+            .then(function (j) {        
                 if (j.toString().includes("sucesso")) {
-                    window.location.href = "/" + aspController + "/" + aspAction
+                    return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true);
+                } else {
+                    return ModalMensagem('Falha', j.toString(), aspController, aspAction, false);
                 }
             })
             .catch(function (e) {
-                alert("Algo deu errado");
+                return ModalMensagem('Falha', j.toString(), aspController, aspAction, false);
             });
     });
+
+    return false;
 }
+
+function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
+    $(".mdlMensagem").html('');
+    let html =
+        `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">${titulo}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>${mensagem}</p>
+          </div>
+          <div class="modal-footer">
+            <div class="row modal-footer-row">
+                <div class="col-12 text-right">`;
+
+    debugger;
+
+    if (sucesso) {
+        html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
+    } else {
+        html += `<button onclick="FecharModalMensagem()" type="button" class="btn btn-primary btn-success">Ok</button>`;
+    }
+
+
+    html += '</div></div></div></div></div></div>';
+
+    $(".mdlMensagem").html(html);
+    $(".modal-mensagem").modal({ backdrop: 'static', keyboard: true }).show();
+}
+
+function RedirectToAction(controller, action) {
+    FecharModalMensagem();
+    window.location.href = "/" + controller + "/" + action
+}
+
+function FecharModalMensagem() {
+    $(".modal-mesangem").modal('hide');
+    $(".mdlMensagem").html('');
+}
+
 
 function CopiarConteudo() {
     var copyTextarea = document.createElement("textarea");
@@ -179,12 +227,12 @@ function ImagemEvent(pasta) {
     $("#inputImg").on('change', function (e) {
         var value = "/images/" + pasta + "/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
         console.log($("#inputImg").length);
-        debugger;
         $("#caminhoImagem").val(value);
     });
 
     $("#btnImgUpload").on('click', function (e) {
         $("#inputImg").click();
+        return false;
     });
 }
 
