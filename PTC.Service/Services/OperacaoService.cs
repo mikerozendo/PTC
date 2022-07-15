@@ -51,7 +51,7 @@ namespace PTC.Application.Services
 
                 if (obj.Veiculo.Id > 0)
                 {
-                    if (!(obj.Proprietario is null))
+                    if (obj.Proprietario is not null)
                     {
                         try
                         {
