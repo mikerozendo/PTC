@@ -7,7 +7,7 @@ using PTC.Domain.Interfaces.Services;
 
 namespace PTC.Application.Services
 {
-    public class VeiculosService : BaseService /*IVeiculosService*/
+    public class VeiculosService : BaseService, IVeiculosService
     {
         private readonly IVeiculosRepository _veiculosRepository;
 
@@ -44,6 +44,11 @@ namespace PTC.Application.Services
         public async Task<bool> Existe(Veiculo obj)
         {
             await Task.CompletedTask; return true;
+        }
+
+        Task<string> IBaseService<Veiculo>.Inserir(Veiculo obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

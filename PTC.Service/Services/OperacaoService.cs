@@ -8,7 +8,7 @@ using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
-    public class OperacaoService : BaseService /*IOperacaoService*/
+    public class OperacaoService : BaseService, IOperacaoService
     {
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoRepository _operacaoRepository;
@@ -97,6 +97,11 @@ namespace PTC.Application.Services
         public Task<IEnumerable<Operacao>> ObterTodos()
         {
             return _operacaoRepository.ObterTodos();
+        }
+
+        Task<string> IBaseService<Operacao>.Inserir(Operacao obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

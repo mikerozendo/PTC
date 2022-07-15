@@ -1,0 +1,224 @@
+﻿@using PTC.Domain.Enums;
+
+<div class="modal-content margin-modais">
+    <div class="modal-header">
+        <h3>
+            <span id="headerMarca">Novo Veículo</span>
+            <img class="img-logo" src="#" style="display:none" />
+        </h3>
+    </div>
+    <div class="modal-body">
+        <form id="InserirVeiculo" action="@Url.Action("Inserir","Operacao")" method="post">
+            <div class="form-group" style="text-align:center">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="col-lg-6 containner-img-upload">
+                            <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carromodelo.png" alt="Alternate Text" style=" width: auto;" />
+                            <input type="file" hidden name="Arquivos" value="" id="inputImg" accept="image/*" class="hide" multiple />
+                            <input type="text" hidden name="CaminhosArquivos" value="" class="hide" multiple />
+                        </div>
+                        <div class="col-lg-6 containner-btn-img-upload">
+                            <button type="button" id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
+                        </div>
+                    </div>
+                    <div class="col-6 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="lbl-inputs" for="NomeVeiculo">Nome</label>
+                                <input id="NomeVeiculo" type="text" name="NomeVeiculo" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="lbl-inputs" for="ModeloVeiculo">Modelo</label>
+                                <input id="ModeloVeiculo" type="text" name="ModeloVeiculo" value="" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectMarca"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="lbl-inputs" for="km">Km</label>
+                                <input type="number" class="form-control" name="km" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorCompra">Valor Compra</label>
+                        <input type="number" class="form-control" name="ValorCompra" value="" step=".1" />
+                    </div>
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorTabela">Valor Tabela</label>
+                        <input type="number" class="form-control" name="ValorTabela" value="" step=".1" />
+                    </div>
+                    <div class="col-4 text-left">
+                        <label class="lbl-inputs" for="ValorRevenda">Valor Revenda</label>
+                        <input type="number" class="form-control" name="ValorRevenda" value="" step=".1" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-left">
+                        <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Aquisição</label>
+                        <select name="TipoPagamentoAquisicaoId" class="form-control form-select text-center">
+                            @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
+                            {
+                                <option value="@((int) value)">@value.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-6 text-left">
+                        <label class="lbl-inputs" for="EnumTipoPagamentoAquisicao">Forma Pagamento Revenda</label>
+                        <select name="TipoPagamentoRevendaId" class="form-control form-select text-center">
+                            @foreach (EnumFormaPagamento value in Enum.GetValues(typeof(EnumFormaPagamento)))
+                            {
+                                <option value="@((int) value)">@value.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="EnumSituacaoAquisicao">Situação</label>
+                        <select name="SituacaoAquisicaoId" class="form-control form-select text-center">
+                            <option value="none">-- Selecione --</option>
+                            <option value="1">Negociação de compra</option>
+                            <option value="2">Estoque</option>
+                            <option value="3">Negociação de venda</option>
+                            <option value="4">Vendido</option>
+                        </select>
+                    </div>
+                    <div class="col-3 text-left">
+                        <label class="lbl-inputs" for="fabricacao">Fabricacao</label>
+                        <input id="fabricacao" type="date" name="DataFabricacaoVeiculo" value="" class="form-control" required />
+                    </div>
+                    <div class="col-3 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectProprietario"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 text-left">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="selectComprador"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12 div-btn-end" style="padding-top: 15px;">
+                    <a class="btn btn-danger" href="@Url.Action("Index","Veiculos")">Cancelar</a>
+                    &nbsp;|&nbsp;
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </div>
+        </form>
+        <div id="mdlAdicionarMarca" class="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button id="btnFecharMdlAdicionarMarca" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formInserirMarcas" action="@Url.Action("Inserir","Marcas")" method="post">
+                            <div class="row">
+                                <div class="col-12 text-left">
+                                    <label for="Nome">Nome</label>
+                                    <input id="inputMarca" type="text" name="Nome" value="" class="form-control" required />
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <button id="btnFormInserirMarcas" onclick="InserirNovaMarca()" type="button" class="btn btn-success">Salvar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mdlRedirectPessoaForm" class="modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button id="btnFecharMdlRedirectPessoaForm" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset>
+                            <p>Tem certeza que deseja ser redirecionado para a tela de inclusão de proprietário?</p>
+                        </fieldset>
+                        <hr />
+                        <div class="row">
+                            <div class="col-12 text-right">
+                                <button onclick="RedirecionarFormProprietario()" type="button" class="btn btn-success">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#mdlAdicionarMarca").hide();
+            ImagemEvent("Veiculos");
+            MontarSelectMarcas();
+            MontarSelectProprietarios();
+            MontarSelectCompradores();
+            FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
+            $(".row").css("padding-bottom", "10px");
+        });
+
+        function InserirNovaMarca() {
+            fetch("@Url.Action("Inserir","Marcas")", {
+                method: 'POST',
+                body: new FormData(document.querySelector("#formInserirMarcas"))
+            }).then(function (serverPromise) {
+                serverPromise.text()
+                    .then(function (j) {
+                        $("#btnFecharMdlAdicionarMarca").click();
+                        $("#selectMarca").html('');
+                        MontarSelectMarcas();
+                    })
+                    .catch(function (e) {
+                        alert("Algo deu errado");
+                    });
+            });
+        }
+
+        function RedirecionarFormProprietario() {
+            window.location = "@Url.Action("Adicionar","Proprietario")";
+        }
+
+        function MontarSelectMarcas() {
+            MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'MarcaVeiculoId', true, 'btnAdicionarMarca', 'mdlAdicionarMarca', 'Marca');
+        }
+
+        function MontarSelectProprietarios() {
+            MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'ProprietarioId', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm', 'Proprietario');
+        }
+
+        function MontarSelectCompradores() {
+            MontarSelect('ObterTodos', 'Proprietario', 'selectComprador', 'CompradorId', true, 'btnAdicionarComprador', 'mdlRedirectPessoaForm', 'Comprador');
+        }
+    </script>
+} 
