@@ -16,7 +16,7 @@ namespace PTC.WEB
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IProprietarioRepository, ProprietarioRepository>();
             services.AddScoped<IDocumentoService, DocumentoService>();
-            //services.AddScoped<IMarcasService, MarcasService>();
+            services.AddScoped<IMarcasService, MarcasService>();
             services.AddScoped<IMarcasRepository, MarcasRepository>();
             services.AddScoped<IVeiculosRepository, VeiculosRepository>();
             services.AddScoped<IVeiculosService, VeiculosService>();

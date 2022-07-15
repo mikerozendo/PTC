@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using PTC.Domain.Enums;
@@ -32,60 +33,71 @@ namespace PTC.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<dynamic> Inserir(Operacao obj)
+        public async Task<string> Inserir(Operacao obj)
         {
-            return "";
-            //List<int> idsImagens = await _imagemService.Inserir(obj.Imagem);
-            //if (idsImagens.Count > 0)
-            //{
-            //    obj.Veiculo.Id = await _veiculosService.Inserir(obj.Veiculo);
+            List<int> idsImagens =
+                _imagemService.Inserir(obj.Imagem)
+                .GetAwaiter()
+                .GetResult()
+                .Split(',')
+                .Select(x => int.Parse(x.ToString()))
+                .ToList();
 
-            //    if (obj.Veiculo.Id > 0)
-            //    {
-            //        if (!(obj.Proprietario is null))
-            //        {
-            //            try
-            //            {
-            //                int operacaoId = await _operacaoRepository.Inserir(obj);
-            //                if (operacaoId > 0)
-            //                {
-            //                    await _imagemService.Alterar(new(EnumIdentificadorPastaDeArquivos.Veiculos, operacaoId, idsImagens));
-            //                    return "sucesso";
-            //                }
-            //                else
-            //                {
-            //                    await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
-            //                    return "falha";
-            //                }
-            //            }
-            //            catch (Exception)
-            //            {
-            //                await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
-            //                return "Erro ocorrido ao cadastro nova operação";
-            //            }
-            //        }
-            //        else
-            //        {
-            //            await RollBackBuilder(true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
-            //            return "Informe um proprietario!";
-            //        }
-            //    }
-            //    else
-            //    {
-            //        await RollBackBuilder(true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
-            //        return "Erro ao cadastrar veículo!";
-            //    }
-            //}
-            //else return "Erro ao cadastrar imagens!";
+            if (idsImagens.Count > 0)
+            {
+                int.TryParse(_veiculosService.Inserir(obj.Veiculo).GetAwaiter().GetResult(), out int result);
+
+                obj.Veiculo.Id = result;
+
+                if (obj.Veiculo.Id > 0)
+                {
+                    if (!(obj.Proprietario is null))
+                    {
+                        try
+                        {
+                            int operacaoId = await _operacaoRepository.Inserir(obj);
+                            if (operacaoId > 0)
+                            {
+                                await _imagemService.Alterar(new(EnumIdentificadorPastaDeArquivos.Veiculos, operacaoId, idsImagens));
+                                return "sucesso";
+                            }
+                            else
+                            {
+                                await RollBackBuilder(true, true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                                return "falha";
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            await RollBackBuilder(true, true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo, obj);
+                            return "Erro ocorrido ao cadastro nova operação";
+                        }
+                    }
+                    else
+                    {
+                        await RollBackBuilder(true, true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                        return "Informe um proprietario!";
+                    }
+                }
+
+                await RollBackBuilder(true, false, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
+                return "Erro ao cadastrar veículo!";
+            }
+
+            return "Erro ao cadastrar imagens!";
         }
 
-        public async Task RollBackBuilder(bool imageService, bool veiculoService, Imagem imageObj = null, Veiculo veiculoObj = null)
+        public async Task RollBackBuilder(bool imageService, bool veiculoService, bool operacaoService,
+            Imagem imageObj = null, Veiculo veiculoObj = null, Operacao operacao = null)
         {
             if (imageService)
                 await _imagemService.Deletar(imageObj);
 
             if (veiculoService)
                 await _veiculosService.Deletar(veiculoObj);
+
+            if (operacaoService)
+                await Deletar(operacao);
         }
 
         public async Task<Operacao> ObterPorId(int id)
@@ -97,11 +109,6 @@ namespace PTC.Application.Services
         public Task<IEnumerable<Operacao>> ObterTodos()
         {
             return _operacaoRepository.ObterTodos();
-        }
-
-        Task<string> IBaseService<Operacao>.Inserir(Operacao obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }

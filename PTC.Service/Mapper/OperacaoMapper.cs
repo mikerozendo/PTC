@@ -1,9 +1,9 @@
-﻿using PTC.Domain.Enums;
-using PTC.Domain.Entities;
-using PTC.Application.Dtos;
-using System;
+﻿using System;
 using System.Linq;
 using PTC.Application.Extentions;
+using PTC.Domain.Enums;
+using PTC.Domain.Entities;
+using PTC.Application.Dtos;
 
 namespace PTC.Application.Mapper
 {

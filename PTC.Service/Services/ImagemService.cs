@@ -8,7 +8,7 @@ using System;
 
 namespace PTC.Application.Services
 {
-    public class ImagemService : BaseService /*IImagemService*/
+    public class ImagemService : BaseService, IImagemService
     {
         private readonly IImagemRepository _imagemRepository;
 
@@ -33,7 +33,7 @@ namespace PTC.Application.Services
             }
         }
 
-        public async Task<dynamic> Inserir(Imagem obj)
+        public async Task<string> Inserir(Imagem obj)
         {
             List<int> ids = new();
 
@@ -42,7 +42,7 @@ namespace PTC.Application.Services
                 ids.Add(await _imagemRepository.Inserir(new(EnumIdentificadorPastaDeArquivos.Veiculos, caminho)));
             }
 
-            return ids;
+            return String.Concat(ids);
         }
 
         public Task<Imagem> ObterPorId(int id)

@@ -21,9 +21,10 @@ namespace PTC.Application.Services
            await _veiculosRepository.Alterar(obj);
         }
 
-        public async Task<dynamic> Inserir(Veiculo obj)
+        public async Task<string> Inserir(Veiculo obj)
         {
-            return await _veiculosRepository.Inserir(obj);
+            int id = await _veiculosRepository.Inserir(obj);
+            return id.ToString();
         }
 
         public async Task Deletar(Veiculo obj)
@@ -44,11 +45,6 @@ namespace PTC.Application.Services
         public async Task<bool> Existe(Veiculo obj)
         {
             await Task.CompletedTask; return true;
-        }
-
-        Task<string> IBaseService<Veiculo>.Inserir(Veiculo obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }

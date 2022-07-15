@@ -237,7 +237,7 @@ function ImagemEvent(pasta) {
 }
 
 function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget, Label) {
-    fetch('https://localhost:44306/' + controller + '/' + action, {
+    fetch(window.location.origin + '/' + controller + '/' + action, {
         headers: {
             'Accept': 'application/json'
         }
