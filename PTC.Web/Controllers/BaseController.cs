@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PTC.Web.Models.Interfaces.Services;
 using PTC.WEB.Models.Enums;
+using PTC.Web.Models.Interfaces.Services;
 
 namespace PTC.WEB.Controllers
 {
@@ -24,6 +24,11 @@ namespace PTC.WEB.Controllers
                 await _helperService.GerarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem);
             else
                 await _helperService.AlterarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem, caminhoImagem);
+        }
+
+        protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, List<IFormFile> files, string mensagem, string caminhoImagem = "")
+        {
+            await _helperService.GerarImagens(files, pasta, _webHostEnvironment.WebRootPath, mensagem);
         }
     }
 }

@@ -5,6 +5,7 @@ using PTC.Domain.Enums;
 using PTC.Domain.Interfaces.Repository;
 using PTC.Domain.Interfaces.Services;
 using System;
+using System.Linq;
 
 namespace PTC.Application.Services
 {
@@ -42,7 +43,10 @@ namespace PTC.Application.Services
                 ids.Add(await _imagemRepository.Inserir(new(EnumIdentificadorPastaDeArquivos.Veiculos, caminho)));
             }
 
-            return String.Concat(ids);
+            if (ids.Count > 0)
+                return String.Concat(ids.Select(x => String.Concat(x.ToString(), ",")))[..^1];
+
+            return String.Empty;
         }
 
         public Task<Imagem> ObterPorId(int id)

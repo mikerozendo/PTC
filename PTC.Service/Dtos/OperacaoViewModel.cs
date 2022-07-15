@@ -28,6 +28,6 @@ namespace PTC.Application.Dtos
         public int TipoPagamentoRevendaId { get; set; }
         public int VeiculoId { get; set; }
         public List<ImagemViewModel> Imagens { get; set; } = new();
-        public List<IFormFile> Arquivos { get; set; } = new();
+        public List<IFormFile> ArquivosImagens { get; set; } = new();
     }
 }

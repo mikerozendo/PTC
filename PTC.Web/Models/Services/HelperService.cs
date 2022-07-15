@@ -9,7 +9,7 @@ namespace PTC.WEB.Models.Services
         {
             try
             {
-                if (!(arquivo is null) && mensagem.ToLower().Contains("sucesso"))
+                if (arquivo is not null && mensagem.ToLower().Contains("sucesso"))
                 {
                     string filePath = Path.Combine(path, "images", pasta.ToString(), arquivo.FileName);
                     using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
@@ -26,7 +26,7 @@ namespace PTC.WEB.Models.Services
         {
             try
             {
-                if (!string.IsNullOrEmpty(caminhoImagem) && !(arquivo is null))
+                if (!string.IsNullOrEmpty(caminhoImagem) && arquivo is not null)
                 {
                     string antigaImagem = Path.Combine(path, pasta.ToString(), caminhoImagem);
                     if (File.Exists(antigaImagem) && mensagem.ToLower().Contains("sucesso"))

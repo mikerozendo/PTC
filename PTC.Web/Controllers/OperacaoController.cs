@@ -35,7 +35,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
             var mensagem = await _operacaoService.Inserir(OperacaoMapper.ToDomain(obj, _webHostEnvironment.WebRootPath));
-            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.Imagem, mensagem);
+            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem);
             return Content(mensagem);
         }
 

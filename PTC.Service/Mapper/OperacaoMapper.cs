@@ -4,6 +4,7 @@ using PTC.Application.Extentions;
 using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
+using System.IO;
 
 namespace PTC.Application.Mapper
 {
@@ -48,7 +49,7 @@ namespace PTC.Application.Mapper
                 ValorTabela = viewModel.ValorTabela,
                 Imagem = new Imagem(EnumIdentificadorPastaDeArquivos.Veiculos)
                 {
-                    Caminhos = viewModel.Arquivos.Select(x => String.Concat(fileBasePath, @"\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName)).ToList(),
+                    Caminhos = viewModel.ArquivosImagens.Select(x => Path.Combine(String.Concat(fileBasePath, @"\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName))).ToList(),
                 }
             };
         }

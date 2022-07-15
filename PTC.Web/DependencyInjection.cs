@@ -24,7 +24,7 @@ namespace PTC.WEB
             services.AddScoped<IOperacaoRepository, OperacaoRepository>();
             services.AddScoped<IHelperService, HelperService>();
             services.AddScoped<IImagemRepository, ImagemRepository>();
-            /*ervices.AddScoped<IImagemService, ImagemService>();*/
+            services.AddScoped<IImagemService, ImagemService>();
         }
     }
 }
