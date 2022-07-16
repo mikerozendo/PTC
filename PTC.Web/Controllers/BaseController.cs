@@ -10,12 +10,17 @@ namespace PTC.WEB.Controllers
         private readonly IHelperService _helperService;
         protected readonly IWebHostEnvironment _webHostEnvironment;
 
-
         public BaseController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             _helperService = (IHelperService)serviceProvider.GetService(typeof(IHelperService));
             _webHostEnvironment = (IWebHostEnvironment)serviceProvider.GetService(typeof(IWebHostEnvironment));
+        }
+
+        protected object? GetServiceImplementation(Type service)
+        {
+            if (service is null) throw new Exception("Erro Interro ao requisitar serviço");
+            return _serviceProvider.GetService(service.GetType());
         }
 
         protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, IFormFile file, string mensagem, string caminhoImagem = "")

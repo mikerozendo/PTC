@@ -251,7 +251,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                         </div>
                 `;
             if (btnAdicionar) {
-                select += '<div class="col-6 text-right"><button type="button" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
+                select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget +')" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
             } 
 
             select += '</div><select name="' + binder + '" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
@@ -265,4 +265,10 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
             }
         });
     });
+}
+
+function AbrirModalRedirect(target) {
+    console.log(target);
+    let targetId = $(target).attr("id");
+    $("#" + targetId).modal('show');
 }
