@@ -1,61 +1,34 @@
-﻿using System;
-using PTC.Domain.Enums;
-using PTC.Domain.Interfaces.Entities;
+﻿using PTC.Domain.Enums;
+using PTC.Domain.Extentitions;
 
 namespace PTC.Domain.Entities
 {
-    public class Proprietario : Base, IFormato
+    public class Proprietario : Base
     {
         public string Nome { get; set; }
         public string Documento { get; set; }
         public string Email { get; set; }
         public string WhatsApp { get; set; }
         public Endereco Endereco { get; set; } = new();
-        public EnumTipoPessoa EnumTipoPessoa { get; set; }
+        public EnumTipoPessoa EnumTipoPessoa { get { return DefiniTipoPessoa(); } }
         public EnumTipoProprietario EnumTipoProprietario { get; set; }
 
-        public void FormatarEscritaDb()
+        public EnumTipoPessoa DefiniTipoPessoa()
         {
-            if (!string.IsNullOrEmpty(WhatsApp))
-                WhatsApp = WhatsApp.Replace("(", string.Empty).Replace(")", string.Empty).Replace("-", string.Empty).Replace(" ", string.Empty);
+            string documentoFormato = Documento.DocumentoValidFormat();
 
-            if (!string.IsNullOrEmpty(Documento))
+            if (!string.IsNullOrEmpty(documentoFormato))
             {
-                Documento = Documento.Replace(".", "").Replace("-", string.Empty);
-                if (Documento.Contains("/"))
-                    Documento = Documento.Replace("/", string.Empty);
-            }
-        }
+                if (documentoFormato.Length == 11)
+                    return EnumTipoPessoa.PessoaFisica;
 
-        public void FormatarLeituraDb()
-        {
-            if (!string.IsNullOrEmpty(WhatsApp))
-            {
-                var array = WhatsApp.AsSpan();
-                WhatsApp = $"({array.Slice(0, 2).ToString()}) {array[2]} {array.Slice(3, 4).ToString()}-{array.Slice(7, 4).ToString()}";
-            }
-            if (!string.IsNullOrEmpty(Documento))
-            {
-                var array = Documento.AsSpan();
+                else if (documentoFormato.Length == 14)
+                    return EnumTipoPessoa.PessoaJuridica;
 
-                if (Documento.Length == 11)
-                {
-                    Documento =
-                    $"{array.Slice(0, 3).ToString()}." +
-                    $"{array.Slice(3, 3).ToString()}." +
-                    $"{array.Slice(6, 3).ToString()}-" +
-                    $"{array.Slice(9, 2).ToString()}";
-                }
-                else
-                {
-                    Documento =
-                        $"{array.Slice(0, 2).ToString()}." +
-                        $"{array.Slice(2, 3).ToString()}." +
-                        $"{array.Slice(5, 3).ToString()}/" +
-                        $"{array.Slice(8, 4).ToString()}-" +
-                        $"{array.Slice(12, 2).ToString()}";
-                }
+                else return EnumTipoPessoa.NaoIdentificado;
             }
+            
+            return EnumTipoPessoa.NaoIdentificado;
         }
     }
 }

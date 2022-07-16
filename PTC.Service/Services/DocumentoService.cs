@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Extentitions;
 
 namespace PTC.Application.Services
 {
@@ -9,13 +10,20 @@ namespace PTC.Application.Services
     {
         public bool ValidarDocumento(string documento)
         {
-            if (!string.IsNullOrEmpty(documento) && !ValidarCaracteresIguais(documento))
-            {
-                if (documento.Length == 11)
-                    return ValidarCPF(documento);
-                else
-                    return ValidarCnpj(documento);
+            if (!String.IsNullOrEmpty(documento)) {
+                string documentoFormatado = documento.DocumentoValidFormat();
+                if (!string.IsNullOrEmpty(documentoFormatado) && !ValidarCaracteresIguais(documentoFormatado))
+                {
+
+                    if (documentoFormatado.Length == 11)
+                        return ValidarCPF(documentoFormatado);
+                    else
+                        return ValidarCnpj(documentoFormatado);
+                }
+
+                return false;
             }
+
             else return false;
         }
 
@@ -134,6 +142,22 @@ namespace PTC.Application.Services
             string firstItem = array[0].ToString();
             bool allEqual = array.Skip(1).All(s => string.Equals(firstItem, s.ToString(), StringComparison.InvariantCultureIgnoreCase));
             return allEqual;
+        }
+
+        public string FormatarDocumento(string documento)
+        {
+            string documentoFormatado = documento;
+
+            if (documentoFormatado.Contains("."))
+                documentoFormatado = documentoFormatado.Replace(".", String.Empty);
+
+            if (documentoFormatado.Contains("-"))
+                documentoFormatado = documentoFormatado.Replace("-", String.Empty);
+
+            if (documentoFormatado.Contains("/"))
+                documentoFormatado = documentoFormatado.Replace("/", String.Empty);
+
+            return documentoFormatado;
         }
     }
 }

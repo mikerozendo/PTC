@@ -30,10 +30,13 @@ namespace PTC.Application.Services
             return await _marcasRepository.Existe(obj);
         }
 
-        public async Task<dynamic> Inserir(Marca obj)
+        public async Task<string> Inserir(Marca obj)
         {
-            if (! await Existe(obj))
-                return await _marcasRepository.Inserir(obj);
+            if (!await Existe(obj))
+            {
+                await _marcasRepository.Inserir(obj);
+                return "Sucesso";
+            }
 
             else return "Marca já existente!";
         }

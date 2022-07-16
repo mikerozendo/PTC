@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PTC.Domain.Entities
+namespace PTC.Domain.Enums
 {
-    public class Documento
+    public enum EnumIdentificadorPastaDeArquivos
     {
-        public string MyProperty { get; set; }
+        Proprietarios = 1,
+        Veiculos = 2
     }
 }

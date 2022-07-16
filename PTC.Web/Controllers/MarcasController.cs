@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 
-namespace PTC.Web.Controllers
+namespace PTC.WEB.Controllers
 {
     public class Marcas : BaseController
     {

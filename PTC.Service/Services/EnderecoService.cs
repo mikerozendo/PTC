@@ -6,13 +6,13 @@ using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
-    public class EnderecoService : IEnderecoService
+    public class EnderecoService : BaseService, IEnderecoService
     {
         private readonly IEnderecoRepository _enderecoRepository;
 
-        public EnderecoService(IEnderecoRepository enderecoRepository)
+        public EnderecoService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _enderecoRepository = enderecoRepository;
+            _enderecoRepository = (IEnderecoRepository)serviceProvider.GetService(typeof(IEnderecoRepository));
         }
 
         public async Task Alterar(Endereco obj)
@@ -30,9 +30,10 @@ namespace PTC.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<dynamic> Inserir(Endereco obj)
+        public async Task<string> Inserir(Endereco obj)
         {
-            return await _enderecoRepository.Inserir(obj);
+            int result = await _enderecoRepository.Inserir(obj);
+            return result.ToString();
         }
     }
 }

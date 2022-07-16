@@ -1,14 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
-using PTC.Web.Models.Enums;
 using PTC.Application.Mapper;
 using PTC.Domain.Interfaces.Services;
-using System.Linq;
+using PTC.WEB.Models.Enums;
 
-namespace PTC.Web.Controllers
+namespace PTC.WEB.Controllers
 {
     public class OperacaoController : BaseController
     {
@@ -37,8 +34,8 @@ namespace PTC.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
-            var mensagem = await _operacaoService.Inserir(OperacaoMapper.ToDomain(obj));
-            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.Imagem, mensagem);
+            var mensagem = await _operacaoService.Inserir(OperacaoMapper.ToDomain(obj, _webHostEnvironment.WebRootPath));
+            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem);
             return Content(mensagem);
         }
 

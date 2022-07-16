@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using PTC.Web.Models.Enums;
+﻿using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
 
-namespace PTC.Web.Models.Services
+namespace PTC.WEB.Models.Services
 {
     public class HelperService : IHelperService
     {
@@ -13,7 +9,7 @@ namespace PTC.Web.Models.Services
         {
             try
             {
-                if (!(arquivo is null) && mensagem.ToLower().Contains("sucesso"))
+                if (arquivo is not null && mensagem.ToLower().Contains("sucesso"))
                 {
                     string filePath = Path.Combine(path, "images", pasta.ToString(), arquivo.FileName);
                     using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
@@ -30,7 +26,7 @@ namespace PTC.Web.Models.Services
         {
             try
             {
-                if (!string.IsNullOrEmpty(caminhoImagem) && !(arquivo is null))
+                if (!string.IsNullOrEmpty(caminhoImagem) && arquivo is not null)
                 {
                     string antigaImagem = Path.Combine(path, pasta.ToString(), caminhoImagem);
                     if (File.Exists(antigaImagem) && mensagem.ToLower().Contains("sucesso"))
@@ -43,6 +39,24 @@ namespace PTC.Web.Models.Services
                 }
 
                 return;
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        public async Task GerarImagens(List<IFormFile> arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem)
+        {
+            try
+            {
+                if (mensagem.ToLower().Contains("sucesso"))
+                {
+                    foreach (IFormFile item in arquivos)
+                    {
+                        await GerarImagem(item, pasta, path, mensagem);
+                    }
+                }
             }
             catch (Exception)
             {

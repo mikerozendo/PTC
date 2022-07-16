@@ -1,17 +1,18 @@
-﻿using PTC.Domain.Enums;
+﻿using System;
+using System.IO;
+using System.Linq;
+using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Application.Dtos;
-using System;
-using System.Globalization;
 using PTC.Application.Extentions;
 
 namespace PTC.Application.Mapper
 {
     public static class OperacaoMapper
     {
-        public static Operacao ToDomain(OperacaoViewModel viewModel)
+        public static Operacao ToDomain(OperacaoViewModel viewModel, string fileBasePath = "")
         {
-            return new Operacao
+            var domain = new Operacao
             {
                 Veiculo = new Veiculo
                 {
@@ -47,6 +48,16 @@ namespace PTC.Application.Mapper
                 ValorRevenda = viewModel.ValorRevenda,
                 ValorTabela = viewModel.ValorTabela
             };
+
+            if (viewModel.ArquivosImagens.Count > 0)
+            {
+                domain.Imagem = new Imagem(EnumIdentificadorPastaDeArquivos.Veiculos)
+                {
+                    Caminhos = viewModel.ArquivosImagens.Select(x => Path.Combine(String.Concat(fileBasePath, @"\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName))).ToList(),
+                };
+            }
+
+            return domain;
         }
 
         public static OperacaoViewModel ToViewModel(Operacao domain)

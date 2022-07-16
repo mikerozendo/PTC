@@ -1,4 +1,4 @@
-﻿namespace PTC.Web.Models.Enums
+﻿namespace PTC.WEB.Models.Enums
 {
     public enum EnumHelperType
     {

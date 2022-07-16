@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using PTC.Web.Models.Enums;
+﻿using PTC.WEB.Models.Enums;
 
 namespace PTC.Web.Models.Interfaces.Services
 {
     public interface IHelperService
     {
-        Task GerarImagem(IFormFile arquivo, EnumPastaArquivoIdentificador pasta, string caminho, string mensagem);
+        Task GerarImagem(IFormFile arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem);
         Task AlterarImagem(IFormFile arquivo, EnumPastaArquivoIdentificador pasta, string path, string mensagem, string caminhoImagem);
+        Task GerarImagens(List<IFormFile> arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem);
     }
 }
