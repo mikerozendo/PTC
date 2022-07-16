@@ -166,11 +166,6 @@ div.content {
     height: calc(1.5em + 0.5rem + 2px);
 }
 
-/*.margin-modais {
-    margin-top: 2%;
-}
-*/
-
 .containner-main-content {
     text-align: center;
     max-width: 1260px;
@@ -265,6 +260,11 @@ div.content {
 
 .btn-icon-pdf {
     background-color: darkred;
+}
+
+.modal-lg-custom {
+    max-height: 600px;
+    overflow-y: scroll;
 }
 
 

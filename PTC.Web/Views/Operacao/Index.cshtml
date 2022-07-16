@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<PTC.Application.Dtos.OperacaoViewModel>
+    <div id="mdlImagens"></div>
 
 <div class="modalContainner"></div>
-<div class="modal-content margin-modais">
-    <div id="mdlImagens"></div>
+<div class="modal-content">
     <div class="modal-body tbl-modal">
         <div class="row">
             <div class="col-6 div-btn-end div-btn-novo" style="text-align:start">
@@ -138,7 +138,7 @@
 
                         $("#containner-imgs").html(html);
                         $("#mdlImagens").find('.modal').modal('show');
-
+                        $(".modal-backdrop").remove();
                     }).catch(function(json) {
                         console.log(json);
                         console.log('deu merda');
