@@ -61,6 +61,8 @@ function ValidarDocumento() {
 }
 
 function FormEventHandler(form, aspAction, aspController) {
+    $('.containner-main-content').css("overflow-y", "scroll");
+
     document.forms[form].addEventListener('submit', (event) => {
         event.preventDefault();
         ColetarRespostaServidor(aspAction, aspController);
