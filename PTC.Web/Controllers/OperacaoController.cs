@@ -35,7 +35,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
             var mensagem = await _operacaoService.Inserir(OperacaoMapper.ToDomain(obj, _webHostEnvironment.WebRootPath));
-            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem);
+            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem, obj.CaminhoImagem);
             return Content(mensagem);
         }
 
@@ -60,5 +60,9 @@ namespace PTC.WEB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult ExibirImagensVeiculo()
+        {
+            return PartialView("_ImagensVeiculo");
+        }
     }
 }

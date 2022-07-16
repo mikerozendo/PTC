@@ -35,13 +35,23 @@ namespace PTC.Application.Services
 
         public async Task<string> Inserir(Operacao obj)
         {
-            List<int> idsImagens =
-                _imagemService.Inserir(obj.Imagem)
-                .GetAwaiter()
-                .GetResult()
-                .Split(',')
-                .Select(x => int.Parse(x.ToString()))
-                .ToList();
+            List<int> idsImagens = new(); 
+
+            try
+            {
+               idsImagens.AddRange(
+                    _imagemService.Inserir(obj.Imagem)
+                    .GetAwaiter()
+                    .GetResult()
+                    .Split(',')
+                    .Select(x => int.Parse(x.ToString()))
+                    .ToList());
+            }
+            catch (ApplicationException ex)
+            {
+                return ex.Message;
+            }
+
 
             if (idsImagens.Count > 0)
             {

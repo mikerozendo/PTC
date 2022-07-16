@@ -166,8 +166,10 @@ div.content {
     height: calc(1.5em + 0.5rem + 2px);
 }
 
-.margin-modais {
-    margin-top: 4%;
+.containner-main-content {
+    text-align: center;
+    max-width: 1260px;
+    max-height: 600px;
 }
 
 .btn-icon {
@@ -232,4 +234,38 @@ div.content {
 .text-right {
     text-align:right !important;
 }
+
+.span-close-modal {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.span-close-modal:hover {
+    cursor:grab;
+    
+}
+
+.modal-header-align {
+    display: block;
+    text-align: end;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.btn-icon-images {
+    background-color:deepskyblue;
+}
+
+.btn-icon-pdf {
+    background-color: darkred;
+}
+
+.modal-lg-custom {
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
+
 
