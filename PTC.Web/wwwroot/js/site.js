@@ -96,7 +96,7 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">${titulo}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -107,14 +107,11 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
             <div class="row modal-footer-row">
                 <div class="col-12 text-right">`;
 
-    debugger;
-
     if (sucesso) {
         html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
     } else {
         html += `<button onclick="FecharModalMensagem()" type="button" class="btn btn-primary btn-success">Ok</button>`;
     }
-
 
     html += '</div></div></div></div></div></div>';
 
@@ -182,7 +179,7 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cuidado!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -192,7 +189,7 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
           <div class="modal-footer">
             <div class="row modal-footer-row">
                 <div class="col-6 text-left">
-                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-success" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <div class="col-6 text-right">
                     <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-danger">Continuar</button>

@@ -64,7 +64,5 @@ namespace PTC.WEB.Controllers
         {
             return PartialView("_ImagensVeiculo");
         }
-
-
     }
 }

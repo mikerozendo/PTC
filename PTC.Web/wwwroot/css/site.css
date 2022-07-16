@@ -233,3 +233,18 @@ div.content {
     text-align:right !important;
 }
 
+.span-close-modal {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.span-close-modal:hover {
+    cursor:grab;
+    
+}
+
+.modal-header-align {
+    display: block;
+    text-align: end;
+}
+
