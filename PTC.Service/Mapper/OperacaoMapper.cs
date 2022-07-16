@@ -53,7 +53,7 @@ namespace PTC.Application.Mapper
             {
                 domain.Imagem = new Imagem(EnumIdentificadorPastaDeArquivos.Veiculos)
                 {
-                    Caminhos = viewModel.ArquivosImagens.Select(x => Path.Combine(String.Concat(fileBasePath, @"\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName))).ToList(),
+                    Caminhos = viewModel.ArquivosImagens.Select(x => Path.Combine(String.Concat(fileBasePath, @"\images\", EnumIdentificadorPastaDeArquivos.Veiculos.ToString(), @"\", x.FileName))).ToList(),
                 };
             }
 
@@ -64,6 +64,7 @@ namespace PTC.Application.Mapper
         {
             return new OperacaoViewModel
             {
+                Id = domain.Id,
                 Cadastro = domain.Cadastro.DoFormat(),
                 DataRevenda = domain.DataRevenda.DoFormat(),
                 Exclusao = domain.Exclusao.DoFormat(),

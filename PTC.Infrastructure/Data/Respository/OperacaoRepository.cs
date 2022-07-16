@@ -55,14 +55,14 @@ namespace PTC.Infrastructure.Data.Respository
                 {
                     Id = (int)sdr["Id"],
                     Cadastro = (DateTime)sdr["DataCadastro"],
-                    DataRevenda = sdr["DataRevenda"] is DBNull ? null : (DateTime)sdr["DataRevenda"],
-                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)sdr["SituacaoAquisicao"],
-                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)sdr["TipoPagamentoAquisicao"],
-                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)sdr["TipoPagamentoRevenda"],
+                    DataRevenda = sdr["DataRevenda"] is DBNull ? new DateTime().Date : (DateTime)sdr["DataRevenda"],
+                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)(int)sdr["SituacaoAquisicao"],
+                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)(int)sdr["TipoPagamentoAquisicao"],
+                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)(int)sdr["TipoPagamentoRevenda"],
                     Proprietario = new Proprietario
                     {
-                        Id = Convert.ToInt32(sdr["ProprietarioId"]),
-                        Nome = (string)sdr["NomeProprietario"]
+                        Id = sdr["ProprietarioId"] is DBNull ? 0 : Convert.ToInt32(sdr["ProprietarioId"].ToString()),
+                        Nome = sdr["ProprietarioId"] is DBNull ? String.Empty : (string)sdr["NomeProprietario"]
                     },
                     Comprador = new Proprietario
                     {

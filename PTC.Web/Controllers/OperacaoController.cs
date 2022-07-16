@@ -60,5 +60,11 @@ namespace PTC.WEB.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult ExibirImagensVeiculo()
+        {
+            return PartialView("_ImagensVeiculo");
+        }
+
+
     }
 }
