@@ -248,3 +248,17 @@ div.content {
     text-align: end;
 }
 
+.font-bold {
+    font-weight: bold;
+}
+
+.btn-icon-images {
+    background-color:deepskyblue;
+}
+
+.btn-icon-pdf {
+    background-color: darkred;
+}
+
+
+

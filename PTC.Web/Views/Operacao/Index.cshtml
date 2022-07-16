@@ -34,8 +34,12 @@
                         <td>@obj.NomeVeiculo</td>
 
                         <td>
-                            <button onclick="AbrirModalImagens(@obj.Id)" class="btn btn-sm btn-icon" type="button" data-target="#mdlImagens" data-toggle="modal">
+                            <button onclick="AbrirModalImagens(@obj.Id)" class="btn btn-sm btn-icon btn-icon-images" type="button" data-target="#mdlImagens" data-toggle="modal">
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                            </button>
+                            |
+                            <button onclick="" class="btn btn-sm btn-icon btn-icon-pdf" type="button">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>
                         </td>
 
@@ -99,11 +103,11 @@
             });
         });
 
-        function AbrirModalImagens(id) {         
+        function AbrirModalImagens(id) {
             fetch('@Url.Action("ExibirImagensVeiculo","Imagem")', {
                 method: 'GET',
-                headers:{
-                    accept:'text/html'
+                headers: {
+                    accept: 'text/html'
                 },
             }).then(function(response) {
                 response.text()
@@ -117,19 +121,19 @@
             });
         }
 
-        function CarregarCaminhosImagens(teste) { 
+        function CarregarCaminhosImagens(teste) {
             fetch('@Url.Action("ObterCaminhosImagensPorIdOperacao","Imagem")' + '?idOperacao=' + parseInt(teste), {
                 method: 'GET',
-                headers:{
-                    accept:'application/json'
+                headers: {
+                    accept: 'application/json'
                 },
             }).then(function(response) {
                 response.json()
-                    .then(function(json) {  
+                    .then(function(json) {
                         let html = '';
 
-                        for(let i = 0; i < json.length; i++){
-                            html += '<img class="img-fluid card-img" src="'+json[i]+'" width="30" height="40" /> <hr />';                   
+                        for (let i = 0; i < json.length; i++) {
+                            html += '<img class="img-fluid card-img" src="' + json[i] + '" width="30" height="40" /> <hr />';
                         }
 
                         $("#containner-imgs").html(html);

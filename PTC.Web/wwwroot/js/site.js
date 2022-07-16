@@ -91,14 +91,14 @@ function ColetarRespostaServidor(aspAction, aspController) {
 function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
     $(".mdlMensagem").html('');
     let html =
-        `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
+    `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">${titulo}</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title font-bold ${(sucesso ? "text-green" : "text-red")}">${titulo}</h5>
+            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-            </button>
+            </span>
           </div>
           <div class="modal-body">
             <p>${mensagem}</p>
@@ -179,9 +179,9 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cuidado!</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-            </button>
+            </span>
           </div>
           <div class="modal-body">
             <p>${msgString}</p>
