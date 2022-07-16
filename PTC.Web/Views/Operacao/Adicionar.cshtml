@@ -1,6 +1,6 @@
 ﻿@using PTC.Domain.Enums;
 
-<div class="modal-content margin-modais">
+<div class="modal-content">
     <div class="mdlMensagem"></div>
     <div class="modal-header">
         <h3>
@@ -124,10 +124,10 @@
         <div id="mdlAdicionarMarca" class="modal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button id="btnFecharMdlAdicionarMarca" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header modal-header-align">
+                        <span id="btnFecharMdlAdicionarMarca" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </span>
                     </div>
                     <div class="modal-body">
                         <form id="formInserirMarcas" action="@Url.Action("Inserir","Marcas")" method="post">
@@ -151,10 +151,10 @@
         <div id="mdlRedirectPessoaForm" class="modal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button id="btnFecharMdlRedirectPessoaForm" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header modal-header-align">
+                        <span id="btnFecharMdlRedirectPessoaForm" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button>
+                        </span>
                     </div>
                     <div class="modal-body">
                         <fieldset>

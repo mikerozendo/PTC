@@ -61,6 +61,8 @@ function ValidarDocumento() {
 }
 
 function FormEventHandler(form, aspAction, aspController) {
+    $('.containner-main-content').css("overflow-y", "scroll");
+
     document.forms[form].addEventListener('submit', (event) => {
         event.preventDefault();
         ColetarRespostaServidor(aspAction, aspController);
@@ -91,14 +93,14 @@ function ColetarRespostaServidor(aspAction, aspController) {
 function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
     $(".mdlMensagem").html('');
     let html =
-        `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
+    `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">${titulo}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title font-bold ${(sucesso ? "text-green" : "text-red")}">${titulo}</h5>
+            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-            </button>
+            </span>
           </div>
           <div class="modal-body">
             <p>${mensagem}</p>
@@ -107,14 +109,11 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
             <div class="row modal-footer-row">
                 <div class="col-12 text-right">`;
 
-    debugger;
-
     if (sucesso) {
         html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
     } else {
         html += `<button onclick="FecharModalMensagem()" type="button" class="btn btn-primary btn-success">Ok</button>`;
     }
-
 
     html += '</div></div></div></div></div></div>';
 
@@ -182,9 +181,9 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Cuidado!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-            </button>
+            </span>
           </div>
           <div class="modal-body">
             <p>${msgString}</p>
@@ -192,7 +191,7 @@ function RenderizarModalTravaDelete(controller, action, id, msgString) {
           <div class="modal-footer">
             <div class="row modal-footer-row">
                 <div class="col-6 text-left">
-                    <button type="button" class="btn btn-primary btn-success" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-success" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <div class="col-6 text-right">
                     <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-danger">Continuar</button>
@@ -251,7 +250,7 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                         </div>
                 `;
             if (btnAdicionar) {
-                select += '<div class="col-6 text-right"><button type="button" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
+                select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget +')" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
             } 
 
             select += '</div><select name="' + binder + '" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
@@ -265,4 +264,10 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
             }
         });
     });
+}
+
+function AbrirModalRedirect(target) {
+    console.log(target);
+    let targetId = $(target).attr("id");
+    $("#" + targetId).modal('show');
 }

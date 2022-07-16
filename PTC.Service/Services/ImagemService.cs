@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
-using PTC.Domain.Entities;
-using PTC.Domain.Enums;
-using PTC.Domain.Interfaces.Repository;
-using PTC.Domain.Interfaces.Services;
-using System;
+﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using PTC.Domain.Enums;
+using PTC.Domain.Entities;
+using PTC.Domain.Interfaces.Services;
+using PTC.Domain.Interfaces.Repository;
 
 namespace PTC.Application.Services
 {
@@ -36,6 +36,8 @@ namespace PTC.Application.Services
 
         public async Task<string> Inserir(Imagem obj)
         {
+            if (obj is null) throw new ApplicationException("Cadastre as imagens do veículo!");
+
             List<int> ids = new();
 
             foreach (string caminho in obj.Caminhos)
@@ -47,6 +49,17 @@ namespace PTC.Application.Services
                 return String.Concat(ids.Select(x => String.Concat(x.ToString(), ",")))[..^1];
 
             return String.Empty;
+        }
+
+        public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao)
+        {
+            var response = await _imagemRepository
+                .ObterImagensVeiculosPorIdOperacao(idOperacao);
+
+            return 
+                response
+                .Select(x => x.ToString()[x.IndexOf("wwwroot")..].Replace("wwwroot",String.Empty).Replace(@"\","/"))
+                .ToList();
         }
 
         public Task<Imagem> ObterPorId(int id)
