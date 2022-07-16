@@ -1,6 +1,7 @@
 ﻿@using PTC.Domain.Enums;
 
 <div class="modal-content margin-modais">
+    <div class="mdlMensagem"></div>
     <div class="modal-header">
         <h3>
             <span id="headerMarca">Novo Veículo</span>
@@ -181,14 +182,13 @@
     <script>
         $(document).ready(function() {
             $("#mdlAdicionarMarca").hide();
-            //ImagemEvent("Veiculos");
             MontarSelectMarcas();
             MontarSelectProprietarios();
             MontarSelectCompradores();
             FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
             $(".row").css("padding-bottom", "10px");
 
-            $("#btnImgUpload").on('click', function (e) {
+            $("#btnImgUpload").on('click', function(e) {
                 $("#inputImg").click();
                 return false;
             });
@@ -203,10 +203,11 @@
                     .then(function(j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelectMarcas();
+                        MontarSelectMarcas();                   
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", (j.toString().toLowerCase().includes("sucesso") ? true : false));
                     })
                     .catch(function(e) {
-                        alert("Algo deu errado");
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false);
                     });
             });
         }
