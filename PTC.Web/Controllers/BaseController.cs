@@ -1,18 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using PTC.Web.Models.Enums;
+﻿using Microsoft.AspNetCore.Mvc;
+using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
 
-namespace PTC.Web.Controllers
+namespace PTC.WEB.Controllers
 {
     public class BaseController : Controller
     {
         protected readonly IServiceProvider _serviceProvider;
         private readonly IHelperService _helperService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        protected readonly IWebHostEnvironment _webHostEnvironment;
+
 
         public BaseController(IServiceProvider serviceProvider)
         {
@@ -24,9 +21,14 @@ namespace PTC.Web.Controllers
         protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, IFormFile file, string mensagem, string caminhoImagem = "")
         {
             if (!string.IsNullOrEmpty(caminhoImagem))
-                await _helperService.GerarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem);           
+                await _helperService.GerarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem);
             else
                 await _helperService.AlterarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem, caminhoImagem);
+        }
+
+        protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, List<IFormFile> files, string mensagem, string caminhoImagem = "")
+        {
+            await _helperService.GerarImagens(files, pasta, _webHostEnvironment.WebRootPath, mensagem);
         }
     }
 }

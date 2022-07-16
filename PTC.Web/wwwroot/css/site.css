@@ -225,3 +225,11 @@ div.content {
     padding: 2px;
 }
 
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align:right !important;
+}
+

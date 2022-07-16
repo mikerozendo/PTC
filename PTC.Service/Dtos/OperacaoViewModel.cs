@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace PTC.Application.Dtos
 {
@@ -25,5 +27,7 @@ namespace PTC.Application.Dtos
         public int TipoPagamentoAquisicaoId { get; set; }
         public int TipoPagamentoRevendaId { get; set; }
         public int VeiculoId { get; set; }
+        public List<ImagemViewModel> Imagens { get; set; } = new();
+        public List<IFormFile> ArquivosImagens { get; set; } = new();
     }
 }

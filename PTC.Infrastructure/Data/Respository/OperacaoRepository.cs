@@ -24,7 +24,7 @@ namespace PTC.Infrastructure.Data.Respository
             return Task.CompletedTask;
         }
 
-        public async Task<dynamic> Inserir(Operacao obj)
+        public async Task<int> Inserir(Operacao obj)
         {
             AddParametro("VeiculoId", obj.Veiculo.Id);
             AddParametro("SituacaoAquisicao", obj.EnumSituacaoAquisicao);
@@ -37,8 +37,11 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("ValorRevenda", obj.ValorRevenda);
             AddParametro("ProprietarioId", obj.Proprietario.Id);
             AddParametro("CompradorId", obj.Comprador.Id);
+
             var tabela = await ExecutarProcedureAsync("P_OPERACAO_INSERIR");
-            return tabela.Rows.Count;
+
+            int.TryParse(tabela.Rows[0]["IdOperacao"].ToString(), out int idOperacao);
+            return idOperacao;
         }
 
         public async Task<IEnumerable<Operacao>> ObterTodos()

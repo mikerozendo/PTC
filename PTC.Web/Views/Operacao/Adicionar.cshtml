@@ -1,6 +1,7 @@
 ﻿@using PTC.Domain.Enums;
 
 <div class="modal-content margin-modais">
+    <div class="mdlMensagem"></div>
     <div class="modal-header">
         <h3>
             <span id="headerMarca">Novo Veículo</span>
@@ -13,9 +14,8 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="col-lg-6 containner-img-upload">
-                            <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carromodelo.png" alt="Alternate Text" style=" width: auto;" />
-                            <input type="file" hidden name="Imagem" value="" id="inputImg" accept="image/*" class="hide" />
-                            <input type="text" hidden name="CaminhoImagem" value="" class="hide" />
+                            <img id="imgVeiculo" class="img-fluid card-img" src="~/images/Veiculos/carrodefault.jpg" alt="Alternate Text" style=" width: auto;" />
+                            <input type="file" hidden name="ArquivosImagens" value="" id="inputImg" accept="image/*" class="hide" multiple />
                         </div>
                         <div class="col-lg-6 containner-btn-img-upload">
                             <button type="button" id="btnImgUpload" class="form-control-file btn btn-info">Upload</button>
@@ -178,29 +178,34 @@
 
 @section scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#mdlAdicionarMarca").hide();
-            ImagemEvent("Veiculos");
             MontarSelectMarcas();
             MontarSelectProprietarios();
             MontarSelectCompradores();
             FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
             $(".row").css("padding-bottom", "10px");
+
+            $("#btnImgUpload").on('click', function(e) {
+                $("#inputImg").click();
+                return false;
+            });
         });
 
         function InserirNovaMarca() {
             fetch("@Url.Action("Inserir","Marcas")", {
                 method: 'POST',
                 body: new FormData(document.querySelector("#formInserirMarcas"))
-            }).then(function (serverPromise) {
+            }).then(function(serverPromise) {
                 serverPromise.text()
-                    .then(function (j) {
+                    .then(function(j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelectMarcas();
+                        MontarSelectMarcas();                   
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", (j.toString().toLowerCase().includes("sucesso") ? true : false));
                     })
-                    .catch(function (e) {
-                        alert("Algo deu errado");
+                    .catch(function(e) {
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false);
                     });
             });
         }
