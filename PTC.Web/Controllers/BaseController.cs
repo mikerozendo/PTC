@@ -7,13 +7,13 @@ namespace PTC.WEB.Controllers
     public class BaseController : Controller
     {
         protected readonly IServiceProvider _serviceProvider;
-        private readonly IHelperService _helperService;
+        private readonly IGeracaoArquivoService _helperService;
         protected readonly IWebHostEnvironment _webHostEnvironment;
 
         public BaseController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _helperService = (IHelperService)serviceProvider.GetService(typeof(IHelperService));
+            _helperService = (IGeracaoArquivoService)serviceProvider.GetService(typeof(IGeracaoArquivoService));
             _webHostEnvironment = (IWebHostEnvironment)serviceProvider.GetService(typeof(IWebHostEnvironment));
         }
 

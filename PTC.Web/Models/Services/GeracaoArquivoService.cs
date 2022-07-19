@@ -3,7 +3,7 @@ using PTC.Web.Models.Interfaces.Services;
 
 namespace PTC.WEB.Models.Services
 {
-    public class HelperService : IHelperService
+    public class GeracaoArquivoService : IGeracaoArquivoService
     {
         public async Task GerarImagem(IFormFile arquivo, EnumPastaArquivoIdentificador pasta, string path, string mensagem)
         {
@@ -62,6 +62,21 @@ namespace PTC.WEB.Models.Services
             {
                 return;
             }
+        }
+
+        public async Task<MemoryStream> GerarImagensArquivoPDF(List<string> caminhosArquivos)
+        {
+            var filesQueue = new Queue<byte[]>();
+
+            foreach (var caminho in caminhosArquivos)
+            {
+                var bytes = await File.ReadAllBytesAsync(Path.Combine(caminho));
+                filesQueue.Enqueue(bytes);
+            }
+
+            using MemoryStream ms = new(filesQueue.Dequeue());
+
+            return ms;
         }
     }
 }
