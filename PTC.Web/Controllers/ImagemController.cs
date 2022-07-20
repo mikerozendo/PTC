@@ -40,7 +40,7 @@ namespace PTC.WEB.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);        
+                return BadRequest(ex.Message);        
             }
         }
     }
