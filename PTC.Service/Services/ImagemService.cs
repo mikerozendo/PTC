@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -51,15 +52,23 @@ namespace PTC.Application.Services
             return String.Empty;
         }
 
-        public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao)
+        public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao, bool download)
         {
             var response = await _imagemRepository
                 .ObterImagensVeiculosPorIdOperacao(idOperacao);
 
-            return 
-                response
-                .Select(x => x.ToString()[x.IndexOf("wwwroot")..].Replace("wwwroot",String.Empty).Replace(@"\","/"))
-                .ToList();
+            //Coletando caminhos de imagem formatados p/ ou exibição via geração de HTML dinâmico por request, ou geração de arquivo PFD
+            //Formatacoes de texto diferente para as duas situações
+
+            if (!download)
+            {
+                return
+                    response
+                    .Select(x => x.ToString()[x.IndexOf("wwwroot")..].Replace("wwwroot", String.Empty).Replace(@"\", "/"))
+                    .ToList();
+            }
+
+            return response.Select(x => Path.Combine(x)).ToList();
         }
 
         public Task<Imagem> ObterPorId(int id)

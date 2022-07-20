@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PTC.Application.Dtos.OperacaoViewModel>
-    <div id="mdlImagens"></div>
-
+<div id="mdlImagens"></div>
+<div class="mdlMensagem"></div>
 <div class="modalContainner"></div>
 <div class="modal-content">
     <div class="modal-body tbl-modal">
@@ -38,7 +38,7 @@
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
                             </button>
                             |
-                            <button onclick="" class="btn btn-sm btn-icon btn-icon-pdf" type="button">
+                            <button onclick="ExportarImagensPDF(@obj.Id)" class="btn btn-sm btn-icon btn-icon-pdf" type="button">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -139,14 +139,39 @@
                         $("#containner-imgs").html(html);
                         $("#mdlImagens").find('.modal').modal('show');
                         $(".modal-backdrop").remove();
-                    }).catch(function(json) {
-                        console.log(json);
-                        console.log('deu merda');
+                    }).catch(function(message) {
+                        ModalMensagem('Falha', message, null, false);
                     });
             });
         }
 
-
+        function ExportarImagensPDF(idOperacao) {
+            fetch('@Url.Action("DownloadImagensPorIdOperacao","Imagem")' + '?idOperacao=' + parseInt(idOperacao), {
+                method: 'GET',
+                headers: {
+                    accept: 'application/pdf'
+                },
+            }).then(function(response) {
+                if(response.status == 400){
+                    response.text().then(function(responseTxt) {
+                        debugger;
+                        ModalMensagem('Falha', responseTxt, null, false);
+                    });
+                }else {
+                    response.arrayBuffer()
+                    .then(function(buffer) {
+                        var a = document.createElement("a");
+                        var bynaryData = [];
+                        bynaryData.push(buffer);
+                        a.href = window.URL.createObjectURL(new Blob(bynaryData, {type: "application/pdf"}));
+                        a.download = `imagens-op${idOperacao}`;
+                        a.click();
+                    }).catch(function(errorMessage) {
+                        ModalMensagem('Falha', errorMessage, null, false);
+                    });               
+                }
+            });
+        }
     </script>
 
 }

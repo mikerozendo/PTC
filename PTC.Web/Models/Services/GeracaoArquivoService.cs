@@ -1,9 +1,15 @@
 ﻿using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
+using iText.Layout;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+
 
 namespace PTC.WEB.Models.Services
 {
-    public class HelperService : IHelperService
+    public class GeracaoArquivoService : IGeracaoArquivoService
     {
         public async Task GerarImagem(IFormFile arquivo, EnumPastaArquivoIdentificador pasta, string path, string mensagem)
         {
@@ -62,6 +68,32 @@ namespace PTC.WEB.Models.Services
             {
                 return;
             }
+        }
+
+        public byte[] GerarImagensArquivoPDF(List<string> caminhosArquivos)
+        {
+            if (caminhosArquivos.Count == 0 || caminhosArquivos is null) 
+                throw new Exception("Você esta tentando gerar o PDF porém o veículo não tem imagens registradas.");
+
+            var stream = new MemoryStream();
+            var writer = new PdfWriter(stream);
+            var pdf = new PdfDocument(writer);
+            var document = new Document(pdf);
+
+            document.Add(
+                new Paragraph("Imagens")
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .SetFontSize(15));
+
+            foreach (string caminho in caminhosArquivos)
+            {
+                document.Add(new Image(ImageDataFactory
+                   .Create(Path.Combine(caminho)))
+                   .SetTextAlignment(TextAlignment.CENTER));
+            }
+
+            document.Close();
+            return stream.ToArray();
         }
     }
 }

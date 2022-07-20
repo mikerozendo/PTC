@@ -22,7 +22,7 @@ namespace PTC.WEB
             services.AddScoped<IVeiculosService, VeiculosService>();
             services.AddScoped<IOperacaoService, OperacaoService>();
             services.AddScoped<IOperacaoRepository, OperacaoRepository>();
-            services.AddScoped<IHelperService, HelperService>();
+            services.AddScoped<IGeracaoArquivoService, GeracaoArquivoService>();
             services.AddScoped<IImagemRepository, ImagemRepository>();
             services.AddScoped<IImagemService, ImagemService>();
         }
