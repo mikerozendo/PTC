@@ -37,6 +37,17 @@ namespace PTC.Infrastructure.Data.Respository
             return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
         }
 
+        public async Task<int> InserirImagemProprietario(Imagem obj)
+        {
+            //FALTA CRIAR PROCEDURE
+            AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
+            AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
+
+            var tabela = await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_INSERIR");
+
+            return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
+        }
+
         public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao)
         {
             List<string> caminhosArquivos = new();

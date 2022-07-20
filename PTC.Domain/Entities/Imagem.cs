@@ -43,5 +43,11 @@ namespace PTC.Domain.Entities
             IdImagemAtual = idImagem;
             EntidadeDonaId = idOperacao;
         }
+
+        public Imagem(EnumIdentificadorPastaDeArquivos idenficador, List<string> caminhos)
+        {
+            EnumIdentificadorPastaDeArquivos = idenficador;
+            Caminhos = caminhos;
+        }
     }
 }

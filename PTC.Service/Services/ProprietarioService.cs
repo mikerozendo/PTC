@@ -13,12 +13,14 @@ namespace PTC.Application.Services
         private readonly IProprietarioRepository _proprietarioRepository;
         private readonly IEnderecoService _enderecoService;
         private readonly IDocumentoService _documentoService;
+        private readonly IImagemService _imagemService;
 
         public ProprietarioService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _proprietarioRepository = (IProprietarioRepository)serviceProvider.GetService(typeof(IProprietarioRepository));
             _enderecoService = (IEnderecoService)serviceProvider.GetService(typeof(IEnderecoService));
-            _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService)); ;
+            _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService));
+            _imagemService = (IImagemService)serviceProvider.GetService(typeof(IImagemService));
         }
 
         public async Task<string> Inserir(Proprietario obj)
@@ -31,7 +33,13 @@ namespace PTC.Application.Services
 
                     if (idEndereco > 0)
                     {
-                        obj.Endereco.Id = idEndereco;
+                        //obj.Endereco.Id = idEndereco;
+
+                        //string imagemId = await 
+                        //    _imagemService
+                        //    .Inserir(new(Domain.Enums.EnumIdentificadorPastaDeArquivos.Proprietarios, new List<string>() { obj.CaminhoImagem }));
+
+                        //int.TryParse(await _enderecoService.Inserir(obj.Endereco), out int idEndereco);
 
                         try
                         {
@@ -56,9 +64,9 @@ namespace PTC.Application.Services
 
                     return "Falha ao cadastrar endereço, tente novamente";
                 }
-                else return "Informe um documento válido!";
+                return "Informe um documento válido!";
             }
-            else return "Proprietário existente!";
+            return "Proprietário existente!";
         }
 
         public async Task RollBackBuilder(Endereco obj)

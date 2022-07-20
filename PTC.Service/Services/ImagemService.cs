@@ -43,13 +43,18 @@ namespace PTC.Application.Services
 
             foreach (string caminho in obj.Caminhos)
             {
-                ids.Add(await _imagemRepository.Inserir(new(EnumIdentificadorPastaDeArquivos.Veiculos, caminho)));
+                ids.Add(await _imagemRepository.Inserir(new(obj.EnumIdentificadorPastaDeArquivos, caminho)));
             }
 
             if (ids.Count > 0)
                 return String.Concat(ids.Select(x => String.Concat(x.ToString(), ",")))[..^1];
 
             return String.Empty;
+        }
+
+        public async Task<int> InserirImagemProprietario(Imagem obj)
+        {
+            return await _imagemRepository.InserirImagemProprietario(obj);
         }
 
         public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao, bool download)
