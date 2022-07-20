@@ -71,9 +71,9 @@ namespace PTC.WEB.Models.Services
             }
         }
 
-        public async Task<byte[]> GerarImagensArquivoPDF(List<string> caminhosArquivos)
+        public byte[] GerarImagensArquivoPDF(List<string> caminhosArquivos)
         {
-            if (caminhosArquivos.Count == 0) 
+            if (caminhosArquivos.Count == 0 || caminhosArquivos is null) 
                 throw new Exception("Você esta tentando gerar o PDF porém o veículo não tem imagens registradas.");
 
             var stream = new MemoryStream();

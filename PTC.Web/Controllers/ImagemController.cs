@@ -35,7 +35,7 @@ namespace PTC.WEB.Controllers
             try
             {
                 var caminhos = await _imagemService.ObterImagensVeiculosPorIdOperacao(idOperacao, true);
-                var fileStream = await _helperService.GerarImagensArquivoPDF(caminhos);
+                var fileStream = _helperService.GerarImagensArquivoPDF(caminhos);
                 return File(fileStream, "application/pdf", "pdf_file_name.pdf");
             }
             catch (Exception ex)

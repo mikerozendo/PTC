@@ -7,6 +7,6 @@ namespace PTC.Web.Models.Interfaces.Services
         Task GerarImagem(IFormFile arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem);
         Task AlterarImagem(IFormFile arquivo, EnumPastaArquivoIdentificador pasta, string path, string mensagem, string caminhoImagem);
         Task GerarImagens(List<IFormFile> arquivos, EnumPastaArquivoIdentificador pasta, string path, string mensagem);
-        Task<byte[]> GerarImagensArquivoPDF(List<string> caminhosArquivos);
+        byte[] GerarImagensArquivoPDF(List<string> caminhosArquivos);
     }
 }
