@@ -1,12 +1,11 @@
 ﻿using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
+using iText.Layout;
+using iText.IO.Image;
 using iText.Kernel.Pdf;
 using iText.Layout.Element;
-using iText.Layout;
 using iText.Layout.Properties;
-using iText.IO.Image;
-using iText.Kernel.Utils;
-using iText.Html2pdf;
+
 
 namespace PTC.WEB.Models.Services
 {
