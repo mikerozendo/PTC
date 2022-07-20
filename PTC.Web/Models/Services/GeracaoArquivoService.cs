@@ -1,5 +1,12 @@
 ﻿using PTC.WEB.Models.Enums;
 using PTC.Web.Models.Interfaces.Services;
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using iText.Layout;
+using iText.Layout.Properties;
+using iText.IO.Image;
+using iText.Kernel.Utils;
+using iText.Html2pdf;
 
 namespace PTC.WEB.Models.Services
 {
@@ -64,19 +71,30 @@ namespace PTC.WEB.Models.Services
             }
         }
 
-        public async Task<MemoryStream> GerarImagensArquivoPDF(List<string> caminhosArquivos)
+        public async Task<byte[]> GerarImagensArquivoPDF(List<string> caminhosArquivos)
         {
-            var filesQueue = new Queue<byte[]>();
+            if (caminhosArquivos.Count == 0) 
+                throw new Exception("Você esta tentando gerar o PDF porém o veículo não tem imagens registradas.");
 
-            foreach (var caminho in caminhosArquivos)
+            var stream = new MemoryStream();
+            var writer = new PdfWriter(stream);
+            var pdf = new PdfDocument(writer);
+            var document = new Document(pdf);
+
+            document.Add(
+                new Paragraph("Imagens")
+                   .SetTextAlignment(TextAlignment.CENTER)
+                   .SetFontSize(15));
+
+            foreach (string caminho in caminhosArquivos)
             {
-                var bytes = await File.ReadAllBytesAsync(Path.Combine(caminho));
-                filesQueue.Enqueue(bytes);
+                document.Add(new Image(ImageDataFactory
+                   .Create(Path.Combine(caminho)))
+                   .SetTextAlignment(TextAlignment.CENTER));
             }
 
-            using MemoryStream ms = new(filesQueue.Dequeue());
-
-            return ms;
+            document.Close();
+            return stream.ToArray();
         }
     }
 }

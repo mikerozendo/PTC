@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using PTC.Domain.Interfaces.Services;
 using PTC.Web.Models.Interfaces.Services;
+using System.Net.Http.Headers;
 
 namespace PTC.WEB.Controllers
 {
@@ -30,8 +32,16 @@ namespace PTC.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> DownloadImagensPorIdOperacao(int idOperacao)
         {
-            var caminhos = await _imagemService.ObterImagensVeiculosPorIdOperacao(idOperacao, true);
-            return new FileStreamResult(await _helperService.GerarImagensArquivoPDF(caminhos), "application/pdf");
+            try
+            {
+                var caminhos = await _imagemService.ObterImagensVeiculosPorIdOperacao(idOperacao, true);
+                var fileStream = await _helperService.GerarImagensArquivoPDF(caminhos);
+                return File(fileStream, "application/pdf", "pdf_file_name.pdf");
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);        
+            }
         }
     }
 }

@@ -38,7 +38,7 @@
                                 <i class="fa fa-file-image-o" aria-hidden="true"></i>
                             </button>
                             |
-                            <button onclick="" class="btn btn-sm btn-icon btn-icon-pdf" type="button">
+                            <button onclick="ExportarImagensPDF(@obj.Id)" class="btn btn-sm btn-icon btn-icon-pdf" type="button">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </button>
                         </td>
@@ -140,6 +140,34 @@
                         $("#mdlImagens").find('.modal').modal('show');
                         $(".modal-backdrop").remove();
                     }).catch(function(json) {
+                        console.log(json);
+                        console.log('deu merda');
+                    });
+            });
+        }
+
+        function ExportarImagensPDF(teste) {
+            fetch('@Url.Action("DownloadImagensPorIdOperacao","Imagem")' + '?idOperacao=' + parseInt(teste), {
+                method: 'GET',
+                headers: {
+                    accept: 'application/pdf'
+                },
+            }).then(function(response) {
+                debugger;
+                response.arrayBuffer()
+                    .then(function(buffer) {
+                        debugger;
+
+                          var a = document.createElement("a");
+                          var bynaryData = [];
+                        bynaryData.push(buffer);
+                          a.href = window.URL.createObjectURL(new Blob(bynaryData, {type: "application/pdf"}));
+                          a.download = "FILENAME";
+                          a.click();
+                        //var blob = buffer.blob();
+                        //return blob;
+                    }).catch(function(json) {
+                        debugger;
                         console.log(json);
                         console.log('deu merda');
                     });
