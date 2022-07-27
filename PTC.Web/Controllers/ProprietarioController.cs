@@ -45,7 +45,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> Inserir(ProprietarioViewModel proprietario)
         {
             var mensagem = await _proprietarioService.Inserir(ProprietarioMapper.ToDomain(proprietario));
-            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem);
+            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem, proprietario.CaminhoImagem);
             return Content(mensagem);
         }
 

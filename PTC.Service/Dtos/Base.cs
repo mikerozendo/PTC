@@ -9,6 +9,5 @@ namespace PTC.Application.Dtos
         public DateTime? Cadastro { get; set; }
         public DateTime? Exclusao { get; set; }
         public string CaminhoImagem { get; set; }
-        public IFormFile Imagem { get; set; }
     }
 }

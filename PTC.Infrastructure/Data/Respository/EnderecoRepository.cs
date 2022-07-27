@@ -16,7 +16,7 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("@Bairro", obj.Bairro);
             AddParametro("@Cep", obj.Cep);
             AddParametro("@Uf", obj.Uf);
-            AddParametro("@PontoRefencia", obj.Numero);
+            AddParametro("@PontoRefencia", obj.PontoReferencia);
             AddParametro("@Cidade", obj.Cidade);
             var tabela = await ExecutarProcedureAsync("P_ENDERECO_INCLUIR");
             return int.TryParse(tabela.Rows[0]["Id"].ToString(), out int retorno) ? retorno : 0;
