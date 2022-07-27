@@ -14,8 +14,8 @@ namespace PTC.WEB.Controllers
 
         public OperacaoController(IServiceProvider services) : base(services)
         {
-            _veiculosService = (IVeiculosService)_serviceProvider.GetService(typeof(IVeiculosService));
-            _operacaoService = (IOperacaoService)_serviceProvider.GetService(typeof(IOperacaoService));
+            _veiculosService = (IVeiculosService)GetAppService(typeof(IVeiculosService));
+            _operacaoService = (IOperacaoService)GetAppService(typeof(IOperacaoService));
         }
 
         [HttpGet]

@@ -7,43 +7,32 @@ namespace PTC.WEB.Controllers
     public class BaseController : Controller
     {
         protected readonly IServiceProvider _serviceProvider;
-        private readonly IGeracaoArquivoService? _geracaoArquivoService;
-        protected readonly IWebHostEnvironment? _webHostEnvironment;
+        protected readonly IWebHostEnvironment _webHostEnvironment;
+        protected readonly IGeracaoArquivoService _geracaoArquivoService;
 
         public BaseController(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _geracaoArquivoService = (IGeracaoArquivoService?)serviceProvider.GetService(typeof(IGeracaoArquivoService));
-            _webHostEnvironment = (IWebHostEnvironment?)serviceProvider.GetService(typeof(IWebHostEnvironment));
+            _webHostEnvironment = (IWebHostEnvironment)GetAppService(typeof(IWebHostEnvironment));
+            _geracaoArquivoService = (IGeracaoArquivoService)GetAppService(typeof(IGeracaoArquivoService));
         }
 
-        private IGeracaoArquivoService GeracaoArquivoServiceDecorator
+        protected object GetAppService(Type requestedServiceType)
         {
-            get
-            {
-                return _geracaoArquivoService ?? throw new ArgumentNullException("Erro interno ao requisitar serviços de aplicação");
-            }
-        }
-
-        private IWebHostEnvironment WebHostEnvironmentDecorator
-        {
-            get
-            {
-                return _webHostEnvironment ?? throw new ArgumentNullException("Erro interno ao requisitar serviços de aplicação");
-            }
+            return _serviceProvider.GetService(requestedServiceType) ?? throw new ArgumentNullException("Erro interno ao requisitar serviços de aplicação");
         }
 
         protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, IFormFile file, string mensagem, string caminhoImagem = "")
         {
             if (!string.IsNullOrEmpty(caminhoImagem))
-                await GeracaoArquivoServiceDecorator.GerarImagem(file, pasta, WebHostEnvironmentDecorator.WebRootPath, mensagem);
+                await _geracaoArquivoService.GerarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem);
             else
-                await GeracaoArquivoServiceDecorator.AlterarImagem(file, pasta, WebHostEnvironmentDecorator.WebRootPath, mensagem, caminhoImagem);
+                await _geracaoArquivoService.AlterarImagem(file, pasta, _webHostEnvironment.WebRootPath, mensagem, caminhoImagem);
         }
 
         protected async Task ImagemService(EnumPastaArquivoIdentificador pasta, List<IFormFile> files, string mensagem, string caminhoImagem = "")
         {
-            await GeracaoArquivoServiceDecorator.GerarImagens(files, pasta, WebHostEnvironmentDecorator.WebRootPath, mensagem);
+            await _geracaoArquivoService.GerarImagens(files, pasta, _webHostEnvironment.WebRootPath, mensagem);
         }
     }
 }
