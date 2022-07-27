@@ -33,13 +33,9 @@ namespace PTC.Application.Services
 
                     if (idEndereco > 0)
                     {
-                        //obj.Endereco.Id = idEndereco;
-
-                        //string imagemId = await 
-                        //    _imagemService
-                        //    .Inserir(new(Domain.Enums.EnumIdentificadorPastaDeArquivos.Proprietarios, new List<string>() { obj.CaminhoImagem }));
-
-                        //int.TryParse(await _enderecoService.Inserir(obj.Endereco), out int idEndereco);
+                        int idImagem = await
+                            _imagemService
+                            .InserirImagemProprietario(new(Domain.Enums.EnumIdentificadorPastaDeArquivos.Proprietarios, obj.CaminhoImagem));
 
                         try
                         {
@@ -47,6 +43,7 @@ namespace PTC.Application.Services
 
                             if (proprietarioId > 0)
                             {
+                                _imagemService.Alterar(new());
                                 return "Sucesso ao cadastrar Proprietario";
                             }
                             else
@@ -60,6 +57,7 @@ namespace PTC.Application.Services
                             await RollBackBuilder(obj.Endereco);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
+
                     }
 
                     return "Falha ao cadastrar endereço, tente novamente";

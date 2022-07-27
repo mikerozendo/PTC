@@ -54,7 +54,12 @@ namespace PTC.Application.Services
 
         public async Task<int> InserirImagemProprietario(Imagem obj)
         {
-            return await _imagemRepository.InserirImagemProprietario(obj);
+            return await _imagemRepository.AlterarImagemProprietarioId(obj);
+        }
+
+        public async Task<int> AlterarImagemProprietarioId(Imagem obj)
+        {
+            return await _imagemRepository.AlterarImagemProprietarioId(obj);
         }
 
         public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao, bool download)

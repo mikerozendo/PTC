@@ -21,6 +21,11 @@ namespace PTC.Infrastructure.Data.Respository
             await ExecutarProcedureAsync("P_IMAGEM_ALTERAR_ENTIDADE_DONA");
         }
 
+        public Task<int> AlterarImagemProprietarioId(object value)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Deletar(Imagem obj)
         {
             AddParametro("ImagemId", obj.IdImagemAtual);

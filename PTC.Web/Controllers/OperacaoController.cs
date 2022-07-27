@@ -59,10 +59,5 @@ namespace PTC.WEB.Controllers
             //await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.Imagem, mensagem, obj.CaminhoImagem);
             return RedirectToAction(nameof(Index));
         }
-
-        public IActionResult ExibirImagensVeiculo()
-        {
-            return PartialView("_ImagensVeiculo");
-        }
     }
 }

@@ -44,10 +44,10 @@ namespace PTC.Domain.Entities
             EntidadeDonaId = idOperacao;
         }
 
-        public Imagem(EnumIdentificadorPastaDeArquivos idenficador, List<string> caminhos)
-        {
-            EnumIdentificadorPastaDeArquivos = idenficador;
-            Caminhos = caminhos;
-        }
+        //public Imagem(EnumIdentificadorPastaDeArquivos idenficador, List<string> caminhos)
+        //{
+        //    EnumIdentificadorPastaDeArquivos = idenficador;
+        //    Caminhos = caminhos;
+        //}
     }
 }
