@@ -29,7 +29,6 @@ namespace PTC.Infrastructure.Data.Respository
                 AddParametro("Email", obj.Email);
                 AddParametro("IdEndereco", obj.Endereco.Id);
                 AddParametro("WhatsApp", obj.WhatsApp);
-                AddParametro("CaminhoImagem", obj.CaminhoImagem);
                 AddParametro("IdTipoPessoa", (int)obj.EnumTipoPessoa);
 
                 var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_INCLUIR");

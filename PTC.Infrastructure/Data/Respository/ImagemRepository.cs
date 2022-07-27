@@ -24,9 +24,9 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task Deletar(Imagem obj)
         {
-            //Alteando imagens Veiculo
+            //Alteando imagens Veiculo || PROPRIETARIO
             AddParametro("ImagemId", obj.IdImagemAtual);
-            await ExecutarProcedureAsync("P_CAMINHO_IMAGEM_DELETAR");
+            await ExecutarProcedureAsync("P_IMAGEM_DELETAR");
         }
 
         public async Task<int> Inserir(Imagem obj)

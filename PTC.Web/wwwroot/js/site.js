@@ -76,7 +76,7 @@ function ColetarRespostaServidor(aspAction, aspController) {
     }).then(function (serverPromise) {
         serverPromise.text()
             .then(function (j) {
-                if (j.toString().includes("sucesso")) {
+                if (j.toString().toLowerCase().includes("sucesso")) {
                     return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true, true);
                 } else {
                     return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
@@ -109,7 +109,6 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso, redirect) 
             <div class="row modal-footer-row">
                 <div class="col-12 text-right">`;
 
-    debugger;
     if (redirect) {
         html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
     } else {

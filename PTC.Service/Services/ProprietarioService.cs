@@ -33,6 +33,8 @@ namespace PTC.Application.Services
 
                     if (idEndereco > 0)
                     {
+                        obj.Endereco.Id = idEndereco;
+
                         int idImagem = await
                             _imagemService
                             .InserirImagemProprietario(new(Domain.Enums.EnumIdentificadorPastaDeArquivos.Proprietarios, obj.CaminhoImagem));
