@@ -43,7 +43,7 @@ namespace PTC.Application.Services
 
                             if (proprietarioId > 0)
                             {
-                                _imagemService.Alterar(new());
+                                await _imagemService.Alterar(new());
                                 return "Sucesso ao cadastrar Proprietario";
                             }
                             else
@@ -57,9 +57,7 @@ namespace PTC.Application.Services
                             await RollBackBuilder(obj.Endereco);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
-
                     }
-
                     return "Falha ao cadastrar endereço, tente novamente";
                 }
                 return "Informe um documento válido!";

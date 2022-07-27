@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 using PTC.Domain.Interfaces.Repository;
@@ -21,6 +20,7 @@ namespace PTC.Application.Services
 
         public async Task Alterar(Imagem obj)
         {
+            //Alterando imagens Veiculo
             foreach (int item in obj.ImagensIds)
             {
                 await _imagemRepository.Alterar(new(item, obj.EntidadeDonaId));
@@ -29,6 +29,7 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Imagem obj)
         {
+            //Deletando imagens Veiculo
             foreach (int item in obj.ImagensIds)
             {
                 await _imagemRepository.Deletar(new(item, obj.EntidadeDonaId));
@@ -37,6 +38,7 @@ namespace PTC.Application.Services
 
         public async Task<string> Inserir(Imagem obj)
         {
+            //Inserindo imagens Veiculo
             if (obj is null) throw new ApplicationException("Cadastre as imagens do veículo!");
 
             List<int> ids = new();
@@ -50,16 +52,6 @@ namespace PTC.Application.Services
                 return String.Concat(ids.Select(x => String.Concat(x.ToString(), ",")))[..^1];
 
             return String.Empty;
-        }
-
-        public async Task<int> InserirImagemProprietario(Imagem obj)
-        {
-            return await _imagemRepository.AlterarImagemProprietarioId(obj);
-        }
-
-        public async Task<int> AlterarImagemProprietarioId(Imagem obj)
-        {
-            return await _imagemRepository.AlterarImagemProprietarioId(obj);
         }
 
         public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao, bool download)
@@ -79,6 +71,17 @@ namespace PTC.Application.Services
             }
 
             return response.Select(x => Path.Combine(x)).ToList();
+        }
+
+        public async Task<int> InserirImagemProprietario(Imagem obj)
+        {
+            return await _imagemRepository.InserirImagemProprietario(obj);
+        }
+
+        public async Task<int> AlterarImagemProprietarioId(Imagem obj)
+        {
+            throw new NotImplementedException();
+            //return await _imagemRepository.AlterarImagemProprietarioId(obj);
         }
 
         public Task<Imagem> ObterPorId(int id)

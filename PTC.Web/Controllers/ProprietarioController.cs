@@ -12,7 +12,7 @@ namespace PTC.WEB.Controllers
 
         public ProprietarioController(IServiceProvider services) : base(services)
         {
-            _proprietarioService = (IProprietarioService)_serviceProvider.GetService(typeof(IProprietarioService));
+            _proprietarioService = (IProprietarioService)GetAppService(typeof(IProprietarioService));
         }
 
         [HttpGet]

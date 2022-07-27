@@ -7,6 +7,7 @@ namespace PTC.Domain.Interfaces.Repository
     public interface IImagemRepository : ICommandRepository<Imagem>
     {
         Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao);
-        Task<int> AlterarImagemProprietarioId(object value);
+        Task AlterarImagemProprietarioId(object value);
+        Task<int> InserirImagemProprietario(Imagem obj);
     }
 }
