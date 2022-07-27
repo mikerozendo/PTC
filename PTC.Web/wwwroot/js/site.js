@@ -93,7 +93,7 @@ function ColetarRespostaServidor(aspAction, aspController) {
 function ModalMensagem(titulo, mensagem, controller, action, sucesso, redirect) {
     $(".mdlMensagem").html('');
     let html =
-        `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
+    `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -109,6 +109,7 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso, redirect) 
             <div class="row modal-footer-row">
                 <div class="col-12 text-right">`;
 
+    debugger;
     if (redirect) {
         html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
     } else {
@@ -127,7 +128,7 @@ function RedirectToAction(controller, action) {
 }
 
 function FecharModalMensagem() {
-    $(".modal-mesangem").modal('hide');
+    $(".modal-mensagem").modal('hide');
     $(".mdlMensagem").html('');
 }
 

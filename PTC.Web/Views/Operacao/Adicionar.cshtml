@@ -201,7 +201,8 @@
                     .then(function(j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelectMarcas();                   
+                        MontarSelectMarcas();              
+                        debugger;
                         return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", true, false);
                     })
                     .catch(function(e) {
