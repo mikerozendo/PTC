@@ -8,5 +8,7 @@ namespace PTC.Domain.Interfaces.Services
     {
         Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao, bool download);
         Task<int> InserirImagemProprietario(Imagem obj);
+        Task AlterarImagemProprietarioId(Imagem obj);
+        Task DeletarImagemProprietario(Imagem obj);
     }
 }

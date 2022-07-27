@@ -65,22 +65,11 @@ namespace PTC.Infrastructure.Data.Respository
             return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
         }
 
-        public Task<int> AlterarImagemProprietarioId(Imagem value)
+        public async Task AlterarImagemProprietarioId(Imagem obj)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task AlterarImagemProprietarioId(object value)
-        {
-            //FALTA PROCEDURE
-
-            //AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
-            //AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
-
-            //var tabela = await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_ALTERAR_ENTIDADE_DONA");
-
-            //return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
-            throw new NotImplementedException();
+            AddParametro("ImagemId", obj.IdImagemAtual);
+            AddParametro("ProprietarioId", obj.EntidadeDonaId);
+            await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_ALTERAR_ENTIDADE_DONA");
         }
     }
 }

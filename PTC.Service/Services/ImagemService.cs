@@ -78,10 +78,14 @@ namespace PTC.Application.Services
             return await _imagemRepository.InserirImagemProprietario(obj);
         }
 
-        public async Task<int> AlterarImagemProprietarioId(Imagem obj)
+        public async Task AlterarImagemProprietarioId(Imagem obj)
         {
-            throw new NotImplementedException();
-            //return await _imagemRepository.AlterarImagemProprietarioId(obj);
+            await _imagemRepository.AlterarImagemProprietarioId(obj);
+        }
+
+        public async Task DeletarImagemProprietario(Imagem obj)
+        {
+            await _imagemRepository.Deletar(obj);
         }
 
         public Task<Imagem> ObterPorId(int id)

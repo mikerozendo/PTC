@@ -43,18 +43,19 @@ namespace PTC.Application.Services
 
                             if (proprietarioId > 0)
                             {
-                                await _imagemService.Alterar(new());
+                                if (idImagem > 0)
+                                    await _imagemService.AlterarImagemProprietarioId(new() {Id = idImagem, EntidadeDonaId = proprietarioId });
                                 return "Sucesso ao cadastrar Proprietario";
                             }
                             else
                             {
-                                await RollBackBuilder(obj.Endereco);
+                                await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem,0) : null);
                                 return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                             }
                         }
                         catch (Exception)
                         {
-                            await RollBackBuilder(obj.Endereco);
+                            await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem, 0) : null);
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
@@ -65,9 +66,13 @@ namespace PTC.Application.Services
             return "Proprietário existente!";
         }
 
-        public async Task RollBackBuilder(Endereco obj)
+        public async Task RollBackBuilder(Endereco endereco = null, Imagem imagem = null)
         {
-            await _enderecoService.Deletar(obj);
+            if (endereco is not null)
+                await _enderecoService.Deletar(endereco);
+
+            if (imagem is not null)
+                await _imagemService.DeletarImagemProprietario(imagem);
         }
 
         public async Task<bool> Existe(Proprietario obj)
