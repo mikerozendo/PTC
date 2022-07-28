@@ -15,7 +15,7 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<bool> Existe(Proprietario obj)
         {
-            AddParametro("Documento", obj.Documento);
+            AddParametro("Documento", obj.Documento.Numero);
             var response = await ExecutarProcedureAsync("P_PROPRIETARIO_EXISTE");
             return response.Rows.Count > 0;
         }
@@ -25,7 +25,7 @@ namespace PTC.Infrastructure.Data.Respository
             try
             {
                 AddParametro("Nome", obj.Nome);
-                AddParametro("Documento", obj.Documento);
+                AddParametro("Documento", obj.Documento.Numero);
                 AddParametro("Email", obj.Email);
                 AddParametro("IdEndereco", obj.Endereco.Id);
                 AddParametro("WhatsApp", obj.WhatsApp);
@@ -50,9 +50,8 @@ namespace PTC.Infrastructure.Data.Respository
 
             foreach (DataRow sdr in tabela.Rows)
             {
-                proprietarios.Add(new Proprietario
+                proprietarios.Add(new(sdr["Documento"].ToString())
                 {
-                    Documento = sdr["Documento"].ToString(),
                     Email = sdr["Email"].ToString(),
                     Id = Convert.ToInt32(sdr["Id"]),
                     Nome = sdr["Nome"].ToString(),
@@ -79,7 +78,7 @@ namespace PTC.Infrastructure.Data.Respository
         {
             AddParametro("Id", obj.Id);
             AddParametro("Nome", obj.Nome);
-            AddParametro("Documento", obj.Documento);
+            AddParametro("Documento", obj.Documento.Numero);
             AddParametro("Email", obj.Email);
             AddParametro("WhatsApp", obj.WhatsApp);
             AddParametro("CaminhoImagem", obj.CaminhoImagem);
@@ -97,9 +96,8 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Id", id);
             var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_OBTER_POR_ID");
 
-            return new Proprietario
+            return new (tabela.Rows[0]["Documento"].ToString())
             {
-                Documento = tabela.Rows[0]["Documento"].ToString(),
                 Email = tabela.Rows[0]["Email"].ToString(),
                 Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
                 Nome = tabela.Rows[0]["Nome"].ToString(),

@@ -27,7 +27,7 @@ namespace PTC.Application.Services
         {
             if (!await Existe(obj))
             {
-                if (_documentoService.ValidarDocumento(obj.Documento))
+                if (_documentoService.ValidarDocumento(obj.Documento.Numero))
                 {
                     int.TryParse(await _enderecoService.Inserir(obj.Endereco), out int idEndereco);
 
@@ -102,7 +102,7 @@ namespace PTC.Application.Services
 
         public async Task<string> Alterar(Proprietario obj)
         {
-            if (_documentoService.ValidarDocumento(obj.Documento))
+            if (_documentoService.ValidarDocumento(obj.Documento.Numero))
             {
                 try
                 {
@@ -131,7 +131,7 @@ namespace PTC.Application.Services
             if (!string.IsNullOrWhiteSpace(filtro) && !filtro.Contains("undefined"))
             {
                 return lista
-                    .Where(x => x.Documento.Contains(filtro)
+                    .Where(x => x.Documento.Numero.Contains(filtro)
                         || x.Email.Contains(filtro)
                         || x.Endereco.Cep.Contains(filtro)
                         || x.Nome.Contains(filtro)

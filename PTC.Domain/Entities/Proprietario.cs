@@ -1,34 +1,34 @@
 ﻿using PTC.Domain.Enums;
-using PTC.Domain.Extentitions;
+using System.Collections.Generic;
 
 namespace PTC.Domain.Entities
 {
     public class Proprietario : Base
     {
         public string Nome { get; set; }
-        public string Documento { get; set; }
         public string Email { get; set; }
         public string WhatsApp { get; set; }
+        public Documento Documento { get; set; }
         public Endereco Endereco { get; set; } = new();
-        public EnumTipoPessoa EnumTipoPessoa { get { return DefiniTipoPessoa(); } }
-        public EnumTipoProprietario EnumTipoProprietario { get; set; }
+        public EnumTipoPessoa EnumTipoPessoa { get; private set; } = EnumTipoPessoa.NaoIdentificado;
+        public EnumTipoProprietario EnumTipoProprietario { get; set; }//remover??
+        public List<Operacao> Operacoes { get; set; } = new();
 
-        public EnumTipoPessoa DefiniTipoPessoa()
+
+        public Proprietario(string numeroDocumento)
         {
-            string documentoFormato = Documento.DocumentoValidFormat();
+            Documento = new Documento(numeroDocumento);
 
-            if (!string.IsNullOrEmpty(documentoFormato))
-            {
-                if (documentoFormato.Length == 11)
-                    return EnumTipoPessoa.PessoaFisica;
+            if (Documento.EnumTipoDocumento == EnumTipoDocumento.CPF)
+                EnumTipoPessoa = EnumTipoPessoa.PessoaFisica;
 
-                else if (documentoFormato.Length == 14)
-                    return EnumTipoPessoa.PessoaJuridica;
-
-                else return EnumTipoPessoa.NaoIdentificado;
-            }
-            
-            return EnumTipoPessoa.NaoIdentificado;
+            else if (Documento.EnumTipoDocumento == EnumTipoDocumento.CNPJ)
+                EnumTipoPessoa = EnumTipoPessoa.PessoaJuridica;
         }
+        public Proprietario(int id)
+        {
+            Id = id;
+        }
+        public Proprietario(){}
     }
 }
