@@ -2,7 +2,7 @@
 
 namespace PTC.Domain.Extentitions
 {
-    public static class FormatExtentions
+    public static class DomainFormatExtentions
     {
         public static string DocumentoValidFormat(this string documento)
         {
