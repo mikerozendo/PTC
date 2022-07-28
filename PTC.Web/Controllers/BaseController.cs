@@ -6,7 +6,7 @@ namespace PTC.WEB.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
         protected readonly IWebHostEnvironment _webHostEnvironment;
         protected readonly IGeracaoArquivoService _geracaoArquivoService;
 
