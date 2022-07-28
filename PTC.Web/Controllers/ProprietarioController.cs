@@ -18,8 +18,8 @@ namespace PTC.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var lista = await _proprietarioService.ObterTodos();
-            return View(lista.Select(ProprietarioMapper.ToViewModel).ToList());
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
+            return View(proprietarios.Select(ProprietarioMapper.ToViewModel).ToList());
         }
 
         [HttpGet]
@@ -68,6 +68,13 @@ namespace PTC.WEB.Controllers
         {
             var proprietarios = await _proprietarioService.ObterTodos();
             return Json(proprietarios.Select(ProprietarioMapper.ToViewModel).ToList());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
+        {
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(dataInicio, dataTermino, pagina);
+            return View(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x,pagina)).ToList());
         }
     }
 }

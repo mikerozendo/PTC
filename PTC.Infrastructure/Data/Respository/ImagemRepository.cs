@@ -67,7 +67,7 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task AlterarImagemProprietarioId(Imagem obj)
         {
-            AddParametro("ImagemId", obj.IdImagemAtual);
+            AddParametro("ImagemId", obj.Id);
             AddParametro("ProprietarioId", obj.EntidadeDonaId);
             await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_ALTERAR_ENTIDADE_DONA");
         }

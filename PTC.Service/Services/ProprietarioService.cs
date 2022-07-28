@@ -41,23 +41,23 @@ namespace PTC.Application.Services
 
                         try
                         {
-                            int proprietarioId = await _proprietarioRepository.Inserir(obj);
+                            obj.Id = await _proprietarioRepository.Inserir(obj);
 
-                            if (proprietarioId > 0)
+                            if (obj.Id > 0)
                             {
                                 if (idImagem > 0)
-                                    await _imagemService.AlterarImagemProprietarioId(new() {Id = idImagem, EntidadeDonaId = proprietarioId });
+                                    await _imagemService.AlterarImagemProprietarioId(new() { Id = idImagem, EntidadeDonaId = obj.Id });
                                 return "Sucesso ao cadastrar Proprietario";
                             }
                             else
                             {
-                                await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem,0) : null);
+                                await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem, 0) : null);
                                 return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem, 0) : null);
+                            await RollBackBuilder(obj.Endereco, (idImagem > 0 ? new(idImagem, 0) : null), (obj.Id > 0 ? obj : null));
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
@@ -68,13 +68,16 @@ namespace PTC.Application.Services
             return "Proprietário existente!";
         }
 
-        public async Task RollBackBuilder(Endereco endereco = null, Imagem imagem = null)
+        public async Task RollBackBuilder(Endereco endereco = null, Imagem imagem = null, Proprietario proprietario = null)
         {
             if (endereco is not null)
                 await _enderecoService.Deletar(endereco);
 
             if (imagem is not null)
                 await _imagemService.DeletarImagemProprietario(imagem);
+
+            if (proprietario is not null)
+                await Deletar(proprietario);
         }
 
         public async Task<bool> Existe(Proprietario obj)
@@ -89,7 +92,7 @@ namespace PTC.Application.Services
                 var proprietarios = await _proprietarioRepository.ObterTodos();
                 return proprietarios.OrderByDescending(x => x.Cadastro).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new List<Proprietario>();
             }
@@ -140,6 +143,18 @@ namespace PTC.Application.Services
 
             }
             else return lista.ToList();
+        }
+
+        public async Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
+        {
+            var lista = await _proprietarioRepository.ObterPorPeriodo(dataInicio, dataTermino);
+            int quantidade = lista.Count();
+            int quantiadePorPagina = quantidade > 30 ? (int)Decimal.Truncate(quantidade / 30) : 1;
+
+            return lista
+                .Skip((quantiadePorPagina <= 30 ? 0 : quantiadePorPagina) * pagina)
+                .Take(30)
+                .ToList();
         }
     }
 }

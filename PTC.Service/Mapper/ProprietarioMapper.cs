@@ -29,7 +29,7 @@ namespace PTC.Application.Mapper
             };
         }
 
-        public static ProprietarioViewModel ToViewModel(Proprietario domain)
+        public static ProprietarioViewModel ToViewModel(Proprietario domain, int numeradorPagina = 1)
         {
             return new ProprietarioViewModel
             {
@@ -47,7 +47,8 @@ namespace PTC.Application.Mapper
                 Email = domain.Email,
                 Documento = domain.Documento.Numero,
                 CaminhoImagem = domain.CaminhoImagem,
-                Id = domain.Id
+                Id = domain.Id,
+                NumeradorPagina = numeradorPagina
             };
         }
     }

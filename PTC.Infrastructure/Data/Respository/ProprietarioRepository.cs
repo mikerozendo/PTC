@@ -116,5 +116,39 @@ namespace PTC.Infrastructure.Data.Respository
                 }
             };
         }
+
+        public async Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
+        {
+            AddParametro("@DataInicio", dataInicio);
+            AddParametro("@DataTermino", dataTermino);
+
+            List<Proprietario> proprietarios = new();
+            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_OBTER_POR_PERIODO");
+
+            foreach (DataRow sdr in tabela.Rows)
+            {
+                proprietarios.Add(new(sdr["Documento"].ToString())
+                {
+                    Email = sdr["Email"].ToString(),
+                    Id = Convert.ToInt32(sdr["Id"]),
+                    Nome = sdr["Nome"].ToString(),
+                    WhatsApp = sdr["WhatsApp"].ToString(),
+                    Cadastro = Convert.ToDateTime(sdr["Cadastro"]),
+                    CaminhoImagem = sdr["CaminhoImagem"].ToString(),
+                    Endereco = new Endereco
+                    {
+                        Bairro = sdr["Bairro"].ToString(),
+                        Cep = sdr["Cep"].ToString(),
+                        Logradouro = sdr["Logradouro"].ToString(),
+                        Numero = sdr["Numero"].ToString(),
+                        Uf = sdr["Uf"].ToString(),
+                        Cidade = sdr["Cidade"].ToString(),
+                        PontoReferencia = sdr["PontoReferencia"].ToString()
+                    }
+                });
+            }
+
+            return proprietarios;
+        }
     }
 }
