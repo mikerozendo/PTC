@@ -75,22 +75,22 @@ function ColetarRespostaServidor(aspAction, aspController) {
         body: new FormData(event.target)
     }).then(function (serverPromise) {
         serverPromise.text()
-            .then(function (j) {        
-                if (j.toString().includes("sucesso")) {
-                    return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true);
+            .then(function (j) {
+                if (j.toString().toLowerCase().includes("sucesso")) {
+                    return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true, true);
                 } else {
-                    return ModalMensagem('Falha', j.toString(), aspController, aspAction, false);
+                    return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
                 }
             })
             .catch(function (e) {
-                return ModalMensagem('Falha', j.toString(), aspController, aspAction, false);
+                return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
             });
     });
 
     return false;
 }
 
-function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
+function ModalMensagem(titulo, mensagem, controller, action, sucesso, redirect) {
     $(".mdlMensagem").html('');
     let html =
     `<div class="modal modal-mensagem" tabindex="-1" role="dialog">
@@ -109,7 +109,7 @@ function ModalMensagem(titulo, mensagem, controller, action, sucesso) {
             <div class="row modal-footer-row">
                 <div class="col-12 text-right">`;
 
-    if (sucesso) {
+    if (redirect) {
         html += `<button onclick="RedirectToAction('${controller}','${action}')" type="button" class="btn btn-primary btn-success">Ok</button>`;
     } else {
         html += `<button onclick="FecharModalMensagem()" type="button" class="btn btn-primary btn-success">Ok</button>`;
@@ -127,7 +127,7 @@ function RedirectToAction(controller, action) {
 }
 
 function FecharModalMensagem() {
-    $(".modal-mesangem").modal('hide');
+    $(".modal-mensagem").modal('hide');
     $(".mdlMensagem").html('');
 }
 
@@ -176,7 +176,7 @@ function LinkFiltroDinamico(stringFiltro) {
 function RenderizarModalTravaDelete(controller, action, id, msgString) {
     $(".modalContainner").html('');
     let html =
-    `<div class="modal mdl-trava-delete" tabindex="-1" role="dialog">
+        `<div class="modal mdl-trava-delete" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -250,8 +250,8 @@ function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdic
                         </div>
                 `;
             if (btnAdicionar) {
-                select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget +')" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget +'">Novo</button></div>';
-            } 
+                select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget + ')" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget + '">Novo</button></div>';
+            }
 
             select += '</div><select name="' + binder + '" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
             if (value.length >= 0) {
@@ -270,4 +270,5 @@ function AbrirModalRedirect(target) {
     console.log(target);
     let targetId = $(target).attr("id");
     $("#" + targetId).modal('show');
+    $(".modal-backdrop").remove();
 }

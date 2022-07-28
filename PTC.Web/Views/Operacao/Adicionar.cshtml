@@ -201,11 +201,12 @@
                     .then(function(j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelectMarcas();                   
-                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", (j.toString().toLowerCase().includes("sucesso") ? true : false));
+                        MontarSelectMarcas();              
+                        debugger;
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", true, false);
                     })
                     .catch(function(e) {
-                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false);
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false, false);
                     });
             });
         }

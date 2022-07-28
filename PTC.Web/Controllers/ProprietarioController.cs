@@ -12,14 +12,14 @@ namespace PTC.WEB.Controllers
 
         public ProprietarioController(IServiceProvider services) : base(services)
         {
-            _proprietarioService = (IProprietarioService)_serviceProvider.GetService(typeof(IProprietarioService));
+            _proprietarioService = (IProprietarioService)GetAppService(typeof(IProprietarioService));
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var lista = await _proprietarioService.ObterTodos();
-            return View(lista.Select(ProprietarioMapper.ToViewModel).ToList());
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
+            return View(proprietarios.Select(ProprietarioMapper.ToViewModel).ToList());
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> Inserir(ProprietarioViewModel proprietario)
         {
             var mensagem = await _proprietarioService.Inserir(ProprietarioMapper.ToDomain(proprietario));
-            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem);
+            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem, proprietario.CaminhoImagem);
             return Content(mensagem);
         }
 
@@ -68,6 +68,13 @@ namespace PTC.WEB.Controllers
         {
             var proprietarios = await _proprietarioService.ObterTodos();
             return Json(proprietarios.Select(ProprietarioMapper.ToViewModel).ToList());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
+        {
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(dataInicio, dataTermino, pagina);
+            return View(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x,pagina)).ToList());
         }
     }
 }

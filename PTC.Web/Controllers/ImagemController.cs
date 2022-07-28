@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using PTC.Domain.Interfaces.Services;
 using PTC.Web.Models.Interfaces.Services;
-using System.Net.Http.Headers;
 
 namespace PTC.WEB.Controllers
 {

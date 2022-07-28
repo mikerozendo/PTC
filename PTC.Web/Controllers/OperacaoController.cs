@@ -14,8 +14,8 @@ namespace PTC.WEB.Controllers
 
         public OperacaoController(IServiceProvider services) : base(services)
         {
-            _veiculosService = (IVeiculosService)_serviceProvider.GetService(typeof(IVeiculosService));
-            _operacaoService = (IOperacaoService)_serviceProvider.GetService(typeof(IOperacaoService));
+            _veiculosService = (IVeiculosService)GetAppService(typeof(IVeiculosService));
+            _operacaoService = (IOperacaoService)GetAppService(typeof(IOperacaoService));
         }
 
         [HttpGet]
@@ -58,11 +58,6 @@ namespace PTC.WEB.Controllers
             await _veiculosService.Alterar(obj);
             //await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.Imagem, mensagem, obj.CaminhoImagem);
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult ExibirImagensVeiculo()
-        {
-            return PartialView("_ImagensVeiculo");
         }
     }
 }
