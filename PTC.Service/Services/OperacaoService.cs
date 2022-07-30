@@ -120,5 +120,10 @@ namespace PTC.Application.Services
         {
             return _operacaoRepository.ObterTodos();
         }
+
+        public async Task<IEnumerable<Operacao>> ObterOperacoesPorIdProprietario(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

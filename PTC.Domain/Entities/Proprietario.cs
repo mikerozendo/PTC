@@ -14,21 +14,25 @@ namespace PTC.Domain.Entities
         public EnumTipoProprietario EnumTipoProprietario { get; set; }//remover??
         public List<Operacao> Operacoes { get; set; } = new();
 
-
         public Proprietario(string numeroDocumento)
         {
             Documento = new Documento(numeroDocumento);
+            DefiniTipoPessoa();
+        }
+        public Proprietario(int id)
+        {
+            Id = id;
+        }
+        public Proprietario() { }
 
+
+        private void DefiniTipoPessoa()
+        {
             if (Documento.EnumTipoDocumento == EnumTipoDocumento.CPF)
                 EnumTipoPessoa = EnumTipoPessoa.PessoaFisica;
 
             else if (Documento.EnumTipoDocumento == EnumTipoDocumento.CNPJ)
                 EnumTipoPessoa = EnumTipoPessoa.PessoaJuridica;
         }
-        public Proprietario(int id)
-        {
-            Id = id;
-        }
-        public Proprietario(){}
     }
 }

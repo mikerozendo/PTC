@@ -8,5 +8,6 @@ namespace PTC.Domain.Interfaces.Repository
     public interface IProprietarioRepository : IQueryRepository<Proprietario>, ICommandRepository<Proprietario> 
     {
         Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataCadastro);
+        Task<bool> PossuiOperacao(int proprietarioId);
     }
 }

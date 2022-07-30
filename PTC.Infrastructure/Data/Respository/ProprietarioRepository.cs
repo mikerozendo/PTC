@@ -150,5 +150,15 @@ namespace PTC.Infrastructure.Data.Respository
 
             return proprietarios;
         }
+
+        public async Task<bool> PossuiOperacao(int proprietarioId)
+        {
+            AddParametro("@proprietarioId", proprietarioId);
+            var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_POSSUI_OPERACAO");
+
+            if (tabela.Rows.Count > 0) return true;
+
+            return false;
+        }
     }
 }
