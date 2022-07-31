@@ -10,11 +10,14 @@ namespace PTC.Application.Services
 {
     public class ProprietarioService : BaseService, IProprietarioService
     {
+        #region interfaces
+
         private readonly IProprietarioRepository _proprietarioRepository;
         private readonly IEnderecoService _enderecoService;
         private readonly IDocumentoService _documentoService;
         private readonly IImagemService _imagemService;
 
+        #endregion
         public ProprietarioService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _proprietarioRepository = (IProprietarioRepository)serviceProvider.GetService(typeof(IProprietarioRepository));
@@ -100,6 +103,8 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Proprietario obj)
         {
+            if (await PossuiOperacao(obj.Id)) throw new Exception("Não pode Deletar um proprietario vinculado à uma operação!");
+
             await _proprietarioRepository.Deletar(obj);
         }
 
@@ -155,6 +160,11 @@ namespace PTC.Application.Services
                 .Skip((quantiadePorPagina <= 30 ? 0 : quantiadePorPagina) * pagina)
                 .Take(30)
                 .ToList();
+        }
+
+        public async Task<bool> PossuiOperacao(int id)
+        {
+            return await _proprietarioRepository.PossuiOperacao(id);
         }
     }
 }

@@ -11,5 +11,6 @@ namespace PTC.Domain.Interfaces.Services
         Task<IEnumerable<Proprietario>> Filtrar(string filtro);
         Task<string> Alterar(Proprietario obj);
         Task RollBackBuilder(Endereco endereco = null, Imagem imagem = null, Proprietario proprietario = null);
+        Task<bool> PossuiOperacao(int id);
     }
 }

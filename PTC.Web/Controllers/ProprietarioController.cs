@@ -49,10 +49,23 @@ namespace PTC.WEB.Controllers
             return Content(mensagem);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Deletar(ProprietarioViewModel proprietario)
+        [HttpDelete]
+        public async Task<IActionResult> Deletar([FromRoute]int id)
         {
-            await _proprietarioService.Deletar(ProprietarioMapper.ToDomain(proprietario)); return Ok();
+            try
+            {
+                var proprietario = await  _proprietarioService.ObterPorId(id);
+                if (proprietario is null) return BadRequest("Proprietario inexistente");
+
+                await _proprietarioService
+                    .Deletar(proprietario); 
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -74,7 +87,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
         {
             var proprietarios = await _proprietarioService.ObterPorPeriodo(dataInicio, dataTermino, pagina);
-            return View(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x,pagina)).ToList());
+            return Json(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x,pagina)).ToList());
         }
     }
 }
