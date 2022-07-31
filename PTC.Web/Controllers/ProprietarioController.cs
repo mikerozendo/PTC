@@ -50,12 +50,15 @@ namespace PTC.WEB.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Deletar(ProprietarioViewModel proprietario)
+        public async Task<IActionResult> Deletar([FromRoute]int id)
         {
             try
             {
+                var proprietario = await  _proprietarioService.ObterPorId(id);
+                if (proprietario is null) return BadRequest("Proprietario inexistente");
+
                 await _proprietarioService
-                    .Deletar(ProprietarioMapper.ToDomain(proprietario)); 
+                    .Deletar(proprietario); 
 
                 return NoContent();
             }

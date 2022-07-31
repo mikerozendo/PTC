@@ -96,25 +96,30 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Id", id);
             var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_OBTER_POR_ID");
 
-            return new (tabela.Rows[0]["Documento"].ToString())
+            if (tabela.Rows.Count > 0)
             {
-                Email = tabela.Rows[0]["Email"].ToString(),
-                Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
-                Nome = tabela.Rows[0]["Nome"].ToString(),
-                WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),
-                Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
-                CaminhoImagem = tabela.Rows[0]["CaminhoImagem"] is DBNull ? null : tabela.Rows[0]["CaminhoImagem"].ToString(),
-                Endereco = new Endereco
+                return new(tabela.Rows[0]["Documento"].ToString())
                 {
-                    Bairro = tabela.Rows[0]["Bairro"].ToString(),
-                    Cep = tabela.Rows[0]["Cep"].ToString(),
-                    Logradouro = tabela.Rows[0]["Logradouro"].ToString(),
-                    Numero = tabela.Rows[0]["Numero"].ToString(),
-                    Uf = tabela.Rows[0]["Uf"].ToString(),
-                    Cidade = tabela.Rows[0]["Cidade"].ToString(),
-                    PontoReferencia = tabela.Rows[0]["PontoReferencia"].ToString()
-                }
-            };
+                    Email = tabela.Rows[0]["Email"].ToString(),
+                    Id = Convert.ToInt32(tabela.Rows[0]["Id"]),
+                    Nome = tabela.Rows[0]["Nome"].ToString(),
+                    WhatsApp = tabela.Rows[0]["WhatsApp"].ToString(),
+                    Cadastro = Convert.ToDateTime(tabela.Rows[0]["Cadastro"]),
+                    CaminhoImagem = tabela.Rows[0]["CaminhoImagem"].ToString(),
+                    Endereco = new Endereco
+                    {
+                        Bairro = tabela.Rows[0]["Bairro"].ToString(),
+                        Cep = tabela.Rows[0]["Cep"].ToString(),
+                        Logradouro = tabela.Rows[0]["Logradouro"].ToString(),
+                        Numero = tabela.Rows[0]["Numero"].ToString(),
+                        Uf = tabela.Rows[0]["Uf"].ToString(),
+                        Cidade = tabela.Rows[0]["Cidade"].ToString(),
+                        PontoReferencia = tabela.Rows[0]["PontoReferencia"].ToString()
+                    }
+                };
+            }
+
+            else return null;          
         }
 
         public async Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
@@ -153,7 +158,7 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<bool> PossuiOperacao(int proprietarioId)
         {
-            AddParametro("@proprietarioId", proprietarioId);
+            AddParametro("IdProprietario", proprietarioId);
             var tabela = await ExecutarProcedureAsync("P_PROPRIETARIO_POSSUI_OPERACAO");
 
             if (tabela.Rows.Count > 0) return true;

@@ -24,7 +24,6 @@ namespace PTC.Application.Services
             _enderecoService = (IEnderecoService)serviceProvider.GetService(typeof(IEnderecoService));
             _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService));
             _imagemService = (IImagemService)serviceProvider.GetService(typeof(IImagemService));
-            _operacaoService = (IOperacaoService)serviceProvider.GetService(typeof(IOperacaoService));
         }
 
         public async Task<string> Inserir(Proprietario obj)
