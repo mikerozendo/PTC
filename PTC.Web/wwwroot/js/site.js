@@ -173,51 +173,6 @@ function LinkFiltroDinamico(stringFiltro) {
     $(".filtro-dinamico-link").attr("href", urlAction + stringFiltro);
 }
 
-function RenderizarModalTravaDelete(controller, action, id, msgString) {
-    $(".modalContainner").html('');
-    let html =
-        `<div class="modal mdl-trava-delete" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Cuidado!</h5>
-            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </span>
-          </div>
-          <div class="modal-body">
-            <p>${msgString}</p>
-          </div>
-          <div class="modal-footer">
-            <div class="row modal-footer-row">
-                <div class="col-6 text-left">
-                    <button type="button" class="btn btn-primary btn-success" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <div class="col-6 text-right">
-                    <button onclick="Deletar('${controller}','${action}',${id})" type="button" class="btn btn-danger">Continuar</button>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-
-    $(".modalContainner").html(html);
-    $(".mdl-trava-delete").modal({ backdrop: 'static', keyboard: true });
-}
-
-function Deletar(controller, action, id) {
-    let url = "/" + controller + "/" + action;
-    $(".mdl-trava-delete").modal('hide');
-
-    var form = new FormData();
-    form.append("Id", id);
-    var request = new XMLHttpRequest();
-    request.onload = Reload;
-    request.open("POST", url);
-    request.send(form);
-}
-
 function Reload() {
     window.location.href = window.location.href;
 }
