@@ -24,7 +24,7 @@ Próximas features
 * Mais testes unitários.
 
 Técnologias utilizadas<br />
- * C# <br /> ,
+ * C#, <br />
  * ASP.NET CORE 6,<br />
  * Html,<br />
  * Css,<br />
