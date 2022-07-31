@@ -7,7 +7,7 @@ namespace PTC.Application.Mapper
     {
         public static Proprietario ToDomain(ProprietarioViewModel viewModel)
         {
-            return new Proprietario
+            return new Proprietario(viewModel.Documento)
             {
                 Id = viewModel.Id,
                 Endereco = new Endereco
@@ -25,12 +25,11 @@ namespace PTC.Application.Mapper
                 Cadastro = viewModel.Cadastro,
                 Exclusao = viewModel.Exclusao,
                 Email = viewModel.Email,
-                Documento = viewModel.Documento,
                 CaminhoImagem = viewModel.CaminhoImagem
             };
         }
 
-        public static ProprietarioViewModel ToViewModel(Proprietario domain)
+        public static ProprietarioViewModel ToViewModel(Proprietario domain, int numeradorPagina = 1)
         {
             return new ProprietarioViewModel
             {
@@ -46,9 +45,10 @@ namespace PTC.Application.Mapper
                 Cadastro = domain.Cadastro,
                 Exclusao = domain.Exclusao,
                 Email = domain.Email,
-                Documento = domain.Documento,
+                Documento = domain.Documento.Numero,
                 CaminhoImagem = domain.CaminhoImagem,
-                Id = domain.Id
+                Id = domain.Id,
+                NumeradorPagina = numeradorPagina
             };
         }
     }

@@ -16,6 +16,7 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task Alterar(Imagem obj)
         {
+            //Alteando imagens Veiculo
             AddParametro("ImagemId", obj.IdImagemAtual);
             AddParametro("OperacaoId", obj.EntidadeDonaId);
             await ExecutarProcedureAsync("P_IMAGEM_ALTERAR_ENTIDADE_DONA");
@@ -23,12 +24,14 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task Deletar(Imagem obj)
         {
+            //Alteando imagens Veiculo || PROPRIETARIO
             AddParametro("ImagemId", obj.IdImagemAtual);
-            await ExecutarProcedureAsync("P_CAMINHO_IMAGEM_DELETAR");
+            await ExecutarProcedureAsync("P_IMAGEM_DELETAR");
         }
 
         public async Task<int> Inserir(Imagem obj)
         {
+            //Alteando imagens Veiculo
             AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
             AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
 
@@ -50,6 +53,23 @@ namespace PTC.Infrastructure.Data.Respository
             }
 
             return caminhosArquivos;
+        }
+
+        public async Task<int> InserirImagemProprietario(Imagem obj)
+        {
+            AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
+            AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
+
+            var tabela = await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_INSERIR");
+
+            return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
+        }
+
+        public async Task AlterarImagemProprietarioId(Imagem obj)
+        {
+            AddParametro("ImagemId", obj.Id);
+            AddParametro("ProprietarioId", obj.EntidadeDonaId);
+            await ExecutarProcedureAsync("P_IMAGEM_PROPRIETARIO_ALTERAR_ENTIDADE_DONA");
         }
     }
 }

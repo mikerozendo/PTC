@@ -14,7 +14,6 @@ namespace PTC.Application.Services
                 string documentoFormatado = documento.DocumentoValidFormat();
                 if (!string.IsNullOrEmpty(documentoFormatado) && !ValidarCaracteresIguais(documentoFormatado))
                 {
-
                     if (documentoFormatado.Length == 11)
                         return ValidarCPF(documentoFormatado);
                     else
@@ -142,22 +141,6 @@ namespace PTC.Application.Services
             string firstItem = array[0].ToString();
             bool allEqual = array.Skip(1).All(s => string.Equals(firstItem, s.ToString(), StringComparison.InvariantCultureIgnoreCase));
             return allEqual;
-        }
-
-        public string FormatarDocumento(string documento)
-        {
-            string documentoFormatado = documento;
-
-            if (documentoFormatado.Contains("."))
-                documentoFormatado = documentoFormatado.Replace(".", String.Empty);
-
-            if (documentoFormatado.Contains("-"))
-                documentoFormatado = documentoFormatado.Replace("-", String.Empty);
-
-            if (documentoFormatado.Contains("/"))
-                documentoFormatado = documentoFormatado.Replace("/", String.Empty);
-
-            return documentoFormatado;
         }
     }
 }

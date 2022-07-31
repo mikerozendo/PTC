@@ -1,7 +1,13 @@
-﻿using PTC.Domain.Entities;
-using PTC.Domain.Interfaces.Repository.CQRS;
+﻿using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using PTC.Domain.Entities;
 
 namespace PTC.Domain.Interfaces.Repository
 {
-    public interface IProprietarioRepository : IQueryRepository<Proprietario>, ICommandRepository<Proprietario> { }
+    public interface IProprietarioRepository : IQueryRepository<Proprietario>, ICommandRepository<Proprietario> 
+    {
+        Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataCadastro);
+        Task<bool> PossuiOperacao(int proprietarioId);
+    }
 }

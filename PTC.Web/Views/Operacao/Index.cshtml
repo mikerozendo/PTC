@@ -15,14 +15,14 @@
         <table class="table table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Codigo Operacao</th>
+                    <th>Codigo<br />Operacao</th>
                     <th>Carro</th>
                     <th>Imagens</th>
                     <th>Proprietario</th>
                     <th>Comprador</th>
                     <th>Cadastro</th>
-                    <th>Valor Compra</th>
-                    <th>Valor Revenda</th>
+                    <th>Valor <br /> Compra</th>
+                    <th>Valor <br /> Revenda</th>
                     <th></th>
                 </tr>
             </thead>
@@ -70,19 +70,17 @@
                             <a href="@Url.Action("Editar", "Operacao", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>
-                            @if (obj.Exclusao is null)
-                            {
-                                <span>|</span>
-                                <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            }
+                            <span>|</span>
+                            <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+    <div id="mdlNotificaDelete" class="modal" tabindex="-1" role="dialog"></div>
 </div>
 
 
@@ -98,10 +96,18 @@
             $(".btn-danger").on('click', function(e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
-                let mensagem = 'Tem certeza que deseja deletar a operação de número: ' + objValue.Id + '?';
-                RenderizarModalTravaDelete("Operacao", "Deletar", objValue.Id, mensagem);
+                travaDelete(objValue);
             });
         });
+
+        function travaDelete(id) {
+            $('#mdlNotificaDelete').html('');
+            let mensagem = "Cuidado você esta prestes à deletar um proprietário! Tem certeza que deseja continuar?";
+            console.log('@Url.Action("RenderizarMensagemTrava","Notifica")');
+            let url = '@Url.Action("RenderizarMensagemTrava","Notifica")' + "?action=" + encodeURI("Deletar") + "&controller=" + encodeURI("Proprietario") + "&titulo=" + encodeURI("Cuidado!") + "&mensagem=" + encodeURI(mensagem) + "&trava=" + encodeURI(true) + "&modelId=" + encodeURI(id);
+            $('#mdlNotificaDelete').load(url.replace(/amp%3B/g, ""));
+            $('#mdlNotificaDelete').modal({ backdrop: 'static', keyboard: true }).show();
+        }
 
         function AbrirModalImagens(id) {
             fetch('@Url.Action("ExibirImagensVeiculo","Imagem")', {
@@ -152,23 +158,23 @@
                     accept: 'application/pdf'
                 },
             }).then(function(response) {
-                if(response.status == 400){
+                if (response.status == 400) {
                     response.text().then(function(responseTxt) {
                         debugger;
                         ModalMensagem('Falha', responseTxt, null, false);
                     });
-                }else {
+                } else {
                     response.arrayBuffer()
-                    .then(function(buffer) {
-                        var a = document.createElement("a");
-                        var bynaryData = [];
-                        bynaryData.push(buffer);
-                        a.href = window.URL.createObjectURL(new Blob(bynaryData, {type: "application/pdf"}));
-                        a.download = `imagens-op${idOperacao}`;
-                        a.click();
-                    }).catch(function(errorMessage) {
-                        ModalMensagem('Falha', errorMessage, null, false);
-                    });               
+                        .then(function(buffer) {
+                            var a = document.createElement("a");
+                            var bynaryData = [];
+                            bynaryData.push(buffer);
+                            a.href = window.URL.createObjectURL(new Blob(bynaryData, { type: "application/pdf" }));
+                            a.download = `imagens-op${idOperacao}`;
+                            a.click();
+                        }).catch(function(errorMessage) {
+                            ModalMensagem('Falha', errorMessage, null, false);
+                        });
                 }
             });
         }

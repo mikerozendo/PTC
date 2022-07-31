@@ -201,11 +201,12 @@
                     .then(function(j) {
                         $("#btnFecharMdlAdicionarMarca").click();
                         $("#selectMarca").html('');
-                        MontarSelectMarcas();                   
-                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", (j.toString().toLowerCase().includes("sucesso") ? true : false));
+                        MontarSelectMarcas();              
+                        debugger;
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", true, false);
                     })
                     .catch(function(e) {
-                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false);
+                        return ModalMensagem("Notificação", j.toString(), "Operacao", "Index", false, false);
                     });
             });
         }
@@ -218,6 +219,41 @@
             MontarSelect('ObterTodos', 'Marcas', 'selectMarca', 'MarcaVeiculoId', true, 'btnAdicionarMarca', 'mdlAdicionarMarca', 'Marca');
         }
 
+        function MontarSelectProprietarios() {
+            let dataInicio = "?DataInicio=" + encodeURIComponent('@DateTime.Now.AddDays(-90).Date.ToString("yyyyMMdd")');
+            let dataTermino = "&DataTermino=" + encodeURIComponent('@DateTime.Now.AddDays(1).Date.ToString("yyyyMMdd")');
+            let parametrosQueryString = dataInicio + dataTermino;
+
+            fetch('@Url.Action("ObterPorPeriodo","Proprietario")' + parametrosQueryString , {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(data => {
+                data.json().then(value => {
+                    let select =
+                        `
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <label class="lbl-inputs" for="${binder}">${Label}</label>
+                                </div>
+                        `;
+
+                    if (btnAdicionar) {
+                        select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget + ')" class="btn btn-success btn-sm btnAdicionarProprietario" data-toggle="modal" data-target="#mdlRedirectPessoaForm">Novo</button></div>';
+                    }
+
+                    select += '</div><select name="selectProprietario" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
+                    if (value.length >= 0) {
+                        select += '<option value="none">- selecione -</option >';
+                        for (var i = 0; i < value.length; i++) {
+                            select += '<option value="' + value[i].id + '">' + value[i].nome + '</option>';
+                        }
+                        select += '</select>';
+                        $("#" + element).html(select);
+                    }
+                });
+            });
+        }
         function MontarSelectProprietarios() {
             MontarSelect('ObterTodos', 'Proprietario', 'selectProprietario', 'ProprietarioId', true, 'btnAdicionarProprietario', 'mdlRedirectPessoaForm', 'Proprietario');
         }

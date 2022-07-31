@@ -71,7 +71,7 @@
                             }
                             else
                             {
-                                <img class="rounded-circle img-fluid" src="~/images/profiledefaultimg.png" width="40" height="60" />
+                                <img class="rounded-circle img-fluid" src="~/images/Proprietarios/profiledefaultimg.png" width="40" height="60" />
                             }
                         </td>
                         <td>@obj.Nome</td>
@@ -96,20 +96,20 @@
                             <a href="@Url.Action("Editar", "Proprietario", new { id = obj.Id} )" class="btn btn-sm btn-warning btn-icon">
                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             </a>
-                            @if (obj.Exclusao is null)
-                            {
-                                <span>|</span>
-                                <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            }
+                            <span>|</span>
+                            <button class="btn btn-sm btn-danger btn-icon" data-id="@System.Text.Json.JsonSerializer.Serialize(obj)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+    <div id="mdlNotificaDelete" class="modal" tabindex="-1" role="dialog"></div>
 </div>
+
+
 
 
 @section Scripts {
@@ -117,23 +117,31 @@
         var objValue = null;
         var objAlterar = null;
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             LinkFiltroDinamico();
             EventoFiltro();
 
-            $(".btn-danger").on('click', function (e) {
+            $(".btn-danger").on('click',function(e){
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
-                debugger;
-                let mensagem = 'Tem certeza que deseja deletar o proprietário(a) ' + objValue.Nome + '?';
-                RenderizarModalTravaDelete("Proprietario", "Deletar", objValue.Id, mensagem);
+                travaDelete(objValue.Id);
             });
         });
+
+        function travaDelete(id) {
+            $('#mdlNotificaDelete').html('');
+            let mensagem = "Cuidado você esta prestes à deletar um proprietário! Tem certeza que deseja continuar?";
+            console.log('@Url.Action("RenderizarMensagemTrava","Notifica")');
+            let url = '@Url.Action("RenderizarMensagemTrava","Notifica")' + "?action=" + encodeURI("Deletar") + "&controller=" + encodeURI("Proprietario") + "&titulo=" + encodeURI("Cuidado!") + "&mensagem=" + encodeURI(mensagem) + "&trava=" + encodeURI(true) + "&modelId=" + encodeURI(id);
+            $('#mdlNotificaDelete').load(url.replace(/amp%3B/g, ""));
+            $('#mdlNotificaDelete').modal({backdrop:'static',keyboard:true}).show();
+        }
 
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link, "_blank");
         }
+
     </script>
 
 }

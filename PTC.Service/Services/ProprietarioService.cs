@@ -10,22 +10,27 @@ namespace PTC.Application.Services
 {
     public class ProprietarioService : BaseService, IProprietarioService
     {
+        #region interfaces
+
         private readonly IProprietarioRepository _proprietarioRepository;
         private readonly IEnderecoService _enderecoService;
         private readonly IDocumentoService _documentoService;
+        private readonly IImagemService _imagemService;
 
+        #endregion
         public ProprietarioService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _proprietarioRepository = (IProprietarioRepository)serviceProvider.GetService(typeof(IProprietarioRepository));
             _enderecoService = (IEnderecoService)serviceProvider.GetService(typeof(IEnderecoService));
-            _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService)); ;
+            _documentoService = (IDocumentoService)serviceProvider.GetService(typeof(IDocumentoService));
+            _imagemService = (IImagemService)serviceProvider.GetService(typeof(IImagemService));
         }
 
         public async Task<string> Inserir(Proprietario obj)
         {
             if (!await Existe(obj))
             {
-                if (_documentoService.ValidarDocumento(obj.Documento))
+                if (_documentoService.ValidarDocumento(obj.Documento.Numero))
                 {
                     int.TryParse(await _enderecoService.Inserir(obj.Endereco), out int idEndereco);
 
@@ -33,37 +38,49 @@ namespace PTC.Application.Services
                     {
                         obj.Endereco.Id = idEndereco;
 
+                        int idImagem = await
+                            _imagemService
+                            .InserirImagemProprietario(new(Domain.Enums.EnumIdentificadorPastaDeArquivos.Proprietarios, obj.CaminhoImagem));
+
                         try
                         {
-                            int proprietarioId = await _proprietarioRepository.Inserir(obj);
+                            obj.Id = await _proprietarioRepository.Inserir(obj);
 
-                            if (proprietarioId > 0)
+                            if (obj.Id > 0)
                             {
+                                if (idImagem > 0)
+                                    await _imagemService.AlterarImagemProprietarioId(new() { Id = idImagem, EntidadeDonaId = obj.Id });
                                 return "Sucesso ao cadastrar Proprietario";
                             }
                             else
                             {
-                                await RollBackBuilder(obj.Endereco);
+                                await RollBackBuilder(obj.Endereco, idImagem > 0 ? new(idImagem, 0) : null);
                                 return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                             }
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
-                            await RollBackBuilder(obj.Endereco);
+                            await RollBackBuilder(obj.Endereco, (idImagem > 0 ? new(idImagem, 0) : null), (obj.Id > 0 ? obj : null));
                             return "Erro ao cadastrar proprietário, tente novamente mais tarde";
                         }
                     }
-
                     return "Falha ao cadastrar endereço, tente novamente";
                 }
-                else return "Informe um documento válido!";
+                return "Informe um documento válido!";
             }
-            else return "Proprietário existente!";
+            return "Proprietário existente!";
         }
 
-        public async Task RollBackBuilder(Endereco obj)
+        public async Task RollBackBuilder(Endereco endereco = null, Imagem imagem = null, Proprietario proprietario = null)
         {
-            await _enderecoService.Deletar(obj);
+            if (endereco is not null)
+                await _enderecoService.Deletar(endereco);
+
+            if (imagem is not null)
+                await _imagemService.DeletarImagemProprietario(imagem);
+
+            if (proprietario is not null)
+                await Deletar(proprietario);
         }
 
         public async Task<bool> Existe(Proprietario obj)
@@ -78,7 +95,7 @@ namespace PTC.Application.Services
                 var proprietarios = await _proprietarioRepository.ObterTodos();
                 return proprietarios.OrderByDescending(x => x.Cadastro).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new List<Proprietario>();
             }
@@ -86,12 +103,14 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Proprietario obj)
         {
+            if (await PossuiOperacao(obj.Id)) throw new Exception("Não pode Deletar um proprietario vinculado à uma operação!");
+
             await _proprietarioRepository.Deletar(obj);
         }
 
         public async Task<string> Alterar(Proprietario obj)
         {
-            if (_documentoService.ValidarDocumento(obj.Documento))
+            if (_documentoService.ValidarDocumento(obj.Documento.Numero))
             {
                 try
                 {
@@ -120,7 +139,7 @@ namespace PTC.Application.Services
             if (!string.IsNullOrWhiteSpace(filtro) && !filtro.Contains("undefined"))
             {
                 return lista
-                    .Where(x => x.Documento.Contains(filtro)
+                    .Where(x => x.Documento.Numero.Contains(filtro)
                         || x.Email.Contains(filtro)
                         || x.Endereco.Cep.Contains(filtro)
                         || x.Nome.Contains(filtro)
@@ -129,6 +148,23 @@ namespace PTC.Application.Services
 
             }
             else return lista.ToList();
+        }
+
+        public async Task<IEnumerable<Proprietario>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
+        {
+            var lista = await _proprietarioRepository.ObterPorPeriodo(dataInicio, dataTermino);
+            int quantidade = lista.Count();
+            int quantiadePorPagina = quantidade > 30 ? (int)Decimal.Truncate(quantidade / 30) : 1;
+
+            return lista
+                .Skip((quantiadePorPagina <= 30 ? 0 : quantiadePorPagina) * pagina)
+                .Take(30)
+                .ToList();
+        }
+
+        public async Task<bool> PossuiOperacao(int id)
+        {
+            return await _proprietarioRepository.PossuiOperacao(id);
         }
     }
 }

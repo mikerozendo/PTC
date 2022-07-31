@@ -30,14 +30,8 @@ namespace PTC.Application.Mapper
                         Id = viewModel.MarcaVeiculoId
                     }
                 },
-                Comprador = new Proprietario
-                {
-                    Id = viewModel.ProprietarioId,
-                },
-                Proprietario = new Proprietario
-                {
-                    Id = viewModel.CompradorId
-                },
+                Comprador = new Proprietario(viewModel.CompradorId),
+                Proprietario = new Proprietario(viewModel.ProprietarioId),
                 EnumSituacaoAquisicao = (EnumSituacaoAquisicao)viewModel.SituacaoAquisicaoId,
                 EnumTipoPagamentoAquisicao = (EnumFormaPagamento)viewModel.TipoPagamentoAquisicaoId,
                 EnumTipoPagamentoRevenda = (EnumFormaPagamento)viewModel.TipoPagamentoRevendaId,

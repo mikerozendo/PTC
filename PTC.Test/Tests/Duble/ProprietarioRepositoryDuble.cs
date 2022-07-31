@@ -11,11 +11,11 @@ namespace PTC.Test.Tests.Duble
     {
         public List<Proprietario> proprietarios = new()
         {
-            new Proprietario { Id = 34, Nome = "Teste1", Documento = "44.436.599/0001-86" },
-            new Proprietario { Id = 35, Nome = "Teste2", Documento = "44.436.599/0001-82" },
-            new Proprietario { Id = 37, Nome = "Teste3", Documento = "44.436.599/0001-82" },
-            new Proprietario { Id = 38, Nome = "Teste4", Documento = "44.436.499/0001-82" },
-            new Proprietario { Id = 39, Nome = "Teste5", Documento = "44.436.699/0001-82" }
+            //new Proprietario { Id = 34, Nome = "Teste1", Documento = "44.436.599/0001-86" },
+            //new Proprietario { Id = 35, Nome = "Teste2", Documento = "44.436.599/0001-82" },
+            //new Proprietario { Id = 37, Nome = "Teste3", Documento = "44.436.599/0001-82" },
+            //new Proprietario { Id = 38, Nome = "Teste4", Documento = "44.436.499/0001-82" },
+            //new Proprietario { Id = 39, Nome = "Teste5", Documento = "44.436.699/0001-82" }
         };
 
         public Task Alterar(Proprietario obj)

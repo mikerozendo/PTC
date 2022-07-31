@@ -6,7 +6,6 @@ using iText.Kernel.Pdf;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 
-
 namespace PTC.WEB.Models.Services
 {
     public class GeracaoArquivoService : IGeracaoArquivoService
