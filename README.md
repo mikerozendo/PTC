@@ -20,7 +20,7 @@ Próximas features
  da notificação à ser aberto como modal.
 * Alteração da estrutura de comportamentos das interfaces p/ descontinuação de métodos desnecessários.
 * Implementação de dashboard de tela home com estatísticas em gráfico de acordo com informações retornadas do DB.
-* Login feature com autentificação e refatoração.
+* Login feature com autentificação e autorização.
 * Mais testes unitários.
 
 Técnologias utilizadas<br />
