@@ -73,40 +73,39 @@ namespace PTC.Application.Services
                             }
                             else
                             {
-                                await RollBackBuilder(true, true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                                await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
                                 return "falha";
                             }
                         }
                         catch (Exception)
                         {
-                            await RollBackBuilder(true, true, true, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo, obj);
+                            await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo, obj);
                             return "Erro ocorrido ao cadastro nova operação";
                         }
                     }
                     else
                     {
-                        await RollBackBuilder(true, true, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                        await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
                         return "Informe um proprietario!";
                     }
                 }
 
-                await RollBackBuilder(true, false, false, new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
+                await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
                 return "Erro ao cadastrar veículo!";
             }
 
             return "Erro ao cadastrar imagens!";
         }
 
-        public async Task RollBackBuilder(bool imageService, bool veiculoService, bool operacaoService,
-            Imagem imageObj = null, Veiculo veiculoObj = null, Operacao operacao = null)
+        public async Task RollBackBuilder(Imagem imageObj = null, Veiculo veiculoObj = null, Operacao operacao = null)
         {
-            if (imageService)
+            if (imageObj is not null)
                 await _imagemService.Deletar(imageObj);
 
-            if (veiculoService)
+            if (veiculoObj is not null)
                 await _veiculosService.Deletar(veiculoObj);
 
-            if (operacaoService)
+            if (operacao is not null)
                 await Deletar(operacao);
         }
 
@@ -121,9 +120,9 @@ namespace PTC.Application.Services
             return _operacaoRepository.ObterTodos();
         }
 
-        public async Task<IEnumerable<Operacao>> ObterOperacoesPorIdProprietario(int id)
+        public async Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
         {
-            throw new NotImplementedException();
+            return await _operacaoRepository.ObterPorPeriodo(dataInicio, dataTermino);
         }
     }
 }

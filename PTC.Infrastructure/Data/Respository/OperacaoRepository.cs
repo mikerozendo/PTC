@@ -44,6 +44,12 @@ namespace PTC.Infrastructure.Data.Respository
             return idOperacao;
         }
 
+        public Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
+        {
+            //falta montar query obter por periodo, descontinuar obtertodos e alterar estrutura de codigo base de servicos e repositorio
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Operacao>> ObterTodos()
         {
             List<Operacao> list = new();
