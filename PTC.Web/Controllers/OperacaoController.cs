@@ -21,7 +21,7 @@ namespace PTC.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var lista = await _operacaoService.ObterTodos();
+            var lista = await _operacaoService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
             return View(lista.Select(OperacaoMapper.ToViewModel).ToList());
         }
 

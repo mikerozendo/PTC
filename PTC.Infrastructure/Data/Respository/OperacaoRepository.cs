@@ -44,10 +44,56 @@ namespace PTC.Infrastructure.Data.Respository
             return idOperacao;
         }
 
-        public Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
+        public async Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
         {
-            //falta montar query obter por periodo, descontinuar obtertodos e alterar estrutura de codigo base de servicos e repositorio
-            throw new NotImplementedException();
+            List<Operacao> list = new();
+            AddParametro("DataInicio", dataInicio);
+            AddParametro("DataTermino", dataTermino);
+
+            var tabela = await ExecutarProcedureAsync("P_OPERACAO_OBTER_POR_PERIODO");
+
+            foreach (DataRow sdr in tabela.Rows)
+            {
+                list.Add(new Operacao
+                {
+                    Id = (int)sdr["Id"],
+                    Cadastro = (DateTime)sdr["DataCadastro"],
+                    DataRevenda = sdr["DataRevenda"] is DBNull ? new DateTime().Date : (DateTime)sdr["DataRevenda"],
+                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)(int)sdr["SituacaoAquisicao"],
+                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)(int)sdr["TipoPagamentoAquisicao"],
+                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)(int)sdr["TipoPagamentoRevenda"],
+                    Proprietario = new()
+                    {
+                        Id = Convert.ToInt32(sdr["ProprietarioId"].ToString()),
+                        Nome = (string)sdr["NomeProprietario"],
+                        Documento = new(sdr["DocumentoProprietario"].ToString())
+                    },
+                    Comprador = new()
+                    {
+                        Id = Convert.ToInt32(sdr["CompradorId"]),
+                        Nome = (string)sdr["NomeComprador"],
+                        //Nem toda operacao começa com um comprador cadastrado, o que pode lançar um exception
+                        // uma vez que a procedure pega o comprador por leftjoin
+                        //Documento = new(sdr["DocumentoComprador"].ToString()) 
+                    },
+                    Veiculo = new Veiculo
+                    {
+                        Id = (int)sdr["VeiculoId"],
+                        Nome = (string)sdr["NomeVeiculo"],
+                        Modelo = (string)sdr["ModeloVeiculo"],
+                        Km = (decimal)sdr["Km"],
+                        CaminhoImagem = (string)sdr["CaminhoImagem"],
+                        MarcaVeiculo = new Marca
+                        {
+                            Id = Convert.ToInt32(sdr["MarcaVeiculoId"])
+                        }
+                    },
+                    ValorCompra = (decimal)sdr["ValorCompra"],
+                    ValorRevenda = (decimal)sdr["ValorRevenda"]
+                });
+            }
+
+            return list;
         }
 
         public async Task<IEnumerable<Operacao>> ObterTodos()
