@@ -7,18 +7,30 @@ O projeto ainda não esta finalizado!!
 Estrutura do projeto<br />
 Arquitetura baseada em DOMAIN DRIVEN DESIGN(DDD).<br />
 
-Camada WEB => Recebe requisições AJAX e Injecões de Depêndencia p/ outras camadas da aplicação no Startup; <br />
-Camada de Domínio (PTC.Domain) => Contém entidades, enums e Interfaces que apontam p/ camada de Service e Repository; <br />
-Camada de Serviço (PTC.Application) => Contém toda lógica de negócio, validações, DTOS e Mappers à serem requisitados pela camada WEB, aplicações de regras e tratamento de possíveis exceptions visando chamar a camada de repository passando valores limpos p/ escrita no banco;<br />
-Camada de Dados (PTC.Repository) => Recebe paramêtros passados pela camada de serviço e inicia fluxo de leitura ou escrita no banco por meio de Stored Procedures;<br />
+Aplicando conceitos de DTO e Mapper feito de forma manual mascarando estrutura do de DB's, 
 
- 
+Modelando uma camada simples porém rica com dversos tratamentos e lançamento de exceptions em violações à regra.
+
+Fluxos extensos de insert envolvendo diversas tabelas do banco, onde é aplicado o conceito de rollback chamando camadas de serviços de específicas entidades e gerando notificação do status do fluxo solicitado pelo cliente.
+
+Atendendo à responses com Status code's específicos para fornecer uma melhor padronização dentro dos modelo REST. 
+
+Próximas features 
+* Refatoração de abertura de modais por arquivo JS para repassar todas notificações de fluxo ao Controller QNotfica que por sua vez devolverá HTML limpo <br />
+ da notificação à ser aberto como modal.
+* Alteração da estrutura de comportamentos das interfaces p/ descontinuação de métodos desnecessários.
+* Implementação de dashboard de tela home com estatísticas em gráfico de acordo com informações retornadas do DB.
+* Login feature com autentificação e refatoração.
+* Mais testes unitários.
+
 Técnologias utilizadas<br />
-  C# / .NET 5,<br />
-  Html,<br />
-  Css,<br />
-  JavaScript,<br />
-  MySQL
-<br />
+ * C# <br /> ,
+ * ASP.NET CORE 6,<br />
+ * Html,<br />
+ * Css,<br />
+ * JavaScript,<br />
+ * MySQL,<br />
+ * IText7 <br />
+ * XUnit <br />
 
 
