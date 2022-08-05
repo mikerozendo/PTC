@@ -227,3 +227,8 @@ function AbrirModalRedirect(target) {
     $("#" + targetId).modal('show');
     $(".modal-backdrop").remove();
 }
+
+function GerarNotificacao(url, modalId) {
+    $(`#${modalId}`).load(url.replace(/amp%3B/g, ""));
+    $(`#${modalId}`).modal({ backdrop: 'static', keyboard: true }).show();
+}
