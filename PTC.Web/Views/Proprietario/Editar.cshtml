@@ -6,14 +6,7 @@
         <div class="row">
             <div class="col-12" style="text-align:start">
                 <h3>
-                    @if (!string.IsNullOrEmpty(Model.CaminhoImagem))
-                    {
-                        <img class="rounded-circle img-fluid" src="@Model.CaminhoImagem" width="40" height="60" />
-                    }
-                    else
-                    {
-                        <img class="rounded-circle img-fluid" src="~/images/Proprietarios/profiledefaultimg.png" width="40" height="60" />
-                    }
+                    <img class="rounded-circle img-fluid" src="~/images/Proprietarios/profiledefaultimg.png" width="40" height="60"  />
                     @Model.Nome
                 </h3>
                 <sub>
@@ -23,101 +16,51 @@
         </div>
     </div>
     <div class="modal-body">
-        <form id="AlterarProprietario" action="@Url.Action("Alterar","Proprietario")" method="post">
-            <div class="form-group">
-                <input type="hidden" name="Id" value="@Model.Id" />
-                <div class="row" style="height: 50vh;">
-                    <div class="col-6">
-                        <div class="col-lg-6 container-img-proprietario ">
-                            <img id="imgProprietario" class="img-fluid card-img btn-img-proprietario" src="~/images/Proprietarios/profiledefaultimg.png" alt="Alternate Text"/>
-                            <input type="file" hidden name="Imagem" value="" id="inputImg" />
-                        </div>
-                        <div class="col-lg-6 container-btn-img-proprietario">
-                            <button type="button" id="btnImgUpload" class="form-control-file btn btn-info btn-img-proprietario">Upload</button>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
-                        <label for="tipoDocumento">Tipo Documento</label>
-                        <select id="tipoDocumento" class="form-control" required>
-                            <option value="none">Selecione</option>
-                            <option value="0">CPF</option>
-                            <option value="1">CNPJ</option>
-                        </select>
-                        <label for="documento">Documento</label>
-                        <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
-                    </div>
-                </div>
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-2">
-                        <label for="Cep">CEP</label>
-                        <input id="Cep" type="text" name="Cep" value="@Model.Cep" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
-                    </div>
-                    <div class="col-3">
-                        <label for="Bairro">Bairro</label>
-                        <input id="Bairro" type="text" name="Bairro" value="@Model.Bairro" class="form-control" readonly />
-                    </div>
-                    <div class="col-2">
-                        <label for="Uf">Estado</label>
-                        <input id="Uf" type="text" name="Uf" value="@Model.Uf" class="form-control" readonly />
-                    </div>
-                    <div class="col-3">
-                        <label for="Cidade">Cidade</label>
-                        <input id="Cidade" type="text" name="Cidade" value="@Model.Cidade" class="form-control" readonly />
-                    </div>
-                    <div class="col-2">
-                        <label for="Numero">Numero</label>
-                        <input id="Numero" type="text" name="Numero" value="@Model.Numero" class="form-control" required />
-                    </div>
-                </div>
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-6">
-                        <label for="Logradouro">Logradouro</label>
-                        <input id="Logradouro" type="text" name="Logradouro" value="@Model.Logradouro" class="form-control" readonly />
-                    </div>
-                    <div class="col-6">
-                        <label for="pontoReferencia">Ponto de referência</label>
-                        <input id="pontoReferencia" type="text" name="pontoReferencia" value="@Model.PontoReferencia" class="form-control" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <label for="Email">E-mail</label>
-                        <input id="Email" type="text" name="Email" value="@Model.Email" class="form-control" required />
-                    </div>
-                    <div class="col-6">
-                        <label for="WhatsApp">WhatsApp</label>
-                        <input id="WhatsApp" type="text" name="WhatsApp" value="@Model.WhatsApp" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <input id="caminhoImagem" type="text" name="CaminhoImagem" value="@Model.CaminhoImagem" hidden />
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-12 div-btn-end" style="padding-top: 15px;">
-                    <a class="btn btn-danger" href="@Url.Action("Index","Proprietario")">Cancelar</a>
-                    &nbsp;|&nbsp;
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
-            </div>
-        </form>
+        <div class="form-group">
+            <partial name="../Proprietario/_Formulario.cshtml" />
+        </div>
     </div>
+    <div id="mdlMensagem" class="modal" tabindex="-1" role="dialog"></div>
 </div>
 
 
 @section scripts {
-    <script>
+    <script src="~/js/Proprietario.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        var idProprietario = 0;
         $(document).ready(function() {
-            ImagemEvent();
-            ValidarCep();
-            ValidarDocumento();
-            FormEventHandler('AlterarProprietario', 'Index', 'Proprietario');
+            $("#formProprietario").attr('action', '@Url.Action("Alterar","Proprietario")').attr('method', 'post');
+            Bind();
+            factory();
         });
+
+        function Bind() {
+            var form = [];
+            var object = JSON.parse("@System.Text.Json.JsonSerializer.Serialize(Model)".replace(/&quot;/g, '"'));
+            var form = document.forms[0];
+
+            $(form.querySelector('input[name="Nome"]')).val(object.Nome);
+            $(form.querySelector('input[name="documento"]')).val(object.documento);
+            $(form.querySelector('input[name="Cep"]')).val(object.Cep);
+            $(form.querySelector('input[name="Bairro"]')).val(object.Bairro);
+            $(form.querySelector('input[name="Uf"]')).val(object.Uf);
+            $(form.querySelector('input[name="Cidade"]')).val(object.Cidade);
+            $(form.querySelector('input[name="Numero"]')).val(object.Numero);
+            $(form.querySelector('input[name="Logradouro"]')).val(object.Logradouro);
+            $(form.querySelector('input[name="PontoReferencia"]')).val(object.PontoReferencia);
+            $(form.querySelector('input[name="Email"]')).val(object.Email);
+            $(form.querySelector('input[name="WhatsApp"]')).val(object.WhatsApp);
+        }
     </script>
 
+    @if (!System.String.IsNullOrEmpty(Model.CaminhoImagem))
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#imgProprietario").attr('src', '~/'+ '"@Model.CaminhoImagem"');
+                $("#img-header").attr('src', '~/'+ '"@Model.CaminhoImagem"');
+            });
+        </script>
+    }
 } 

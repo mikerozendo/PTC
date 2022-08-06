@@ -1,0 +1,83 @@
+﻿@model PTC.Application.Dtos.ProprietarioViewModel
+
+<form id="formProprietario">
+    <div class="row" style="padding-bottom: 3%;">
+        <div class="col-6">
+            <div class="col-lg-6 container-img-proprietario ">
+                <img id="imgProprietario" class="img-fluid card-img btn-img-proprietario" src="~/images/Proprietarios/profiledefaultimg.png" alt="Alternate Text" />
+                <input type="file" hidden name="Imagem" value="" id="inputImg" />
+            </div>
+            <div class="col-lg-6 container-btn-img-proprietario">
+                <button type="button" id="btnImgUpload" class="form-control-file btn btn-info btn-img-proprietario">Upload</button>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="Nome">Nome</label>
+            <input id="Nome" type="text" name="Nome" value="" class="form-control" required />
+            <label for="tipoDocumento">Tipo Documento</label>
+            <select id="tipoDocumento" class="form-control" required>
+                <option value="none">Selecione</option>
+                <option value="0">CPF</option>
+                <option value="1">CNPJ</option>
+            </select>
+            <label for="documento">Documento</label>
+            <input id="documento" type="text" name="documento" value="" class="form-control" placeholder="Selecione um tipo de documento" readonly required />
+            <label for="Cep">CEP</label>
+            <input id="Cep" type="text" name="Cep" value="" class="form-control" placeholder="00000-000" onkeypress="$(this).mask('00000-000')" required />
+        </div>
+    </div>
+    <hr />
+    <div class="row" style="padding-bottom:20px">
+        <div class="col-3">
+            <label for="Bairro">Bairro</label>
+            <input id="Bairro" type="text" name="Bairro" value="" class="form-control" readonly />
+        </div>
+        <div class="col-3">
+            <label for="Uf">Estado</label>
+            <input id="Uf" type="text" name="Uf" value="" class="form-control" readonly />
+        </div>
+        <div class="col-3">
+            <label for="Cidade">Cidade</label>
+            <input id="Cidade" type="text" name="Cidade" value="" class="form-control" readonly />
+        </div>
+        <div class="col-3">
+            <label for="Numero">Numero</label>
+            <input id="Numero" type="text" name="Numero" value="" class="form-control" required />
+        </div>
+    </div>
+    <div class="row" style="padding-bottom:20px">
+        <div class="col-6">
+            <label for="Logradouro">Logradouro</label>
+            <input id="Logradouro" type="text" name="Logradouro" value="" class="form-control" readonly />
+        </div>
+        <div class="col-6">
+            <label for="pontoReferencia">Ponto de referência</label>
+            <input id="pontoReferencia" type="text" name="PontoReferencia" value="" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <label for="Email">E-mail</label>
+            <input id="Email" type="text" name="Email" value="" class="form-control" required />
+        </div>
+        <div class="col-6">
+            <label for="WhatsApp">WhatsApp</label>
+            <input id="WhatsApp" type="text" name="WhatsApp" value="" class="form-control" placeholder="(00) 0 0000-0000" onkeypress="$(this).mask('(00) 0 0000-0000')" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <input id="caminhoImagem" type="text" name="CaminhoImagem" value="" hidden />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12 div-btn-end" style="padding-top: 15px;">
+            <a class="btn btn-danger" href="@Url.Action("Index","Proprietario")">Cancelar</a>
+            &nbsp;|&nbsp;
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
+    </div>
+</form>
+
+
