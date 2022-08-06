@@ -93,7 +93,7 @@ function triggerForm() {
         if (serverPromise.status == 400) {
             serverPromise.text()
                 .then(function (notificacao) {
-                    let url = `${window.location}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Proprietario")}&titulo=${encodeURI("Sucesso")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(false)}`;
+                    let url = `${window.location}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Proprietario")}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(false)}`;
                     GerarNotificacao(url.replace('/Proprietario/Adicionar',''), 'mdlMensagem');
                 });
         } else {

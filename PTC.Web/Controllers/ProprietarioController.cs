@@ -31,7 +31,6 @@ namespace PTC.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar([FromRoute]int id)
         {
-            //return View(new ProprietarioViewModel { Id = id });
             return View(ProprietarioMapper.ToViewModel(await _proprietarioService.ObterPorId(id)));
         }
 
@@ -101,14 +100,6 @@ namespace PTC.WEB.Controllers
         {
             var proprietarios = await _proprietarioService.ObterPorPeriodo(dataInicio, dataTermino, pagina);
             return Json(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x, pagina)).ToList());
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> ObterFormularioProprietario(int id = 0)
-        {
-            if (id > 0) return PartialView("_Formulario", ProprietarioMapper.ToViewModel(await _proprietarioService.ObterPorId(id)));
-
-            else return PartialView("_Formulario",null);
         }
     }
 }

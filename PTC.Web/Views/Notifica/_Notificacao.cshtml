@@ -1,6 +1,6 @@
 ﻿@model PTC.Application.Dtos.MensagemViewModel
 
-<div class="modal-dialog">
+<div id="mdlNotificaoContent" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             @if (Model.StatusSucesso)
@@ -29,7 +29,7 @@
                 else if (Model.Trava)
                 {
                     <div class="col-12 text-right">
-                        <button id="btnDelete" onclick="DeletarRecurso()" class="btn btn-lg btn-danger" data-id="@Model.ModelId">Continuar</button>
+                        <button id="btnDelete" onclick="DeletarRecurso()" class="btn btn-sm btn-danger" data-id="@Model.ModelId">Continuar</button>
                     </div>
                 }
             </div>
@@ -40,6 +40,14 @@
 @section styles{
     <link rel="stylesheet" href="~/css/site.css" />
 }
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".close").on('click',function(){
+            $(this).closest('.modal').hide();
+        })
+    });    
+</script>
 
 @if (Model.Trava)
 {
