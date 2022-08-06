@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PTC.Domain\PTC.Domain.csproj" />
     <ProjectReference Include="..\PTC.Infrastructure\PTC.Infrastructure.csproj" />
   </ItemGroup>

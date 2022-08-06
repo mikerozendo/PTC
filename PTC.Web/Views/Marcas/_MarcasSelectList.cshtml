@@ -1,0 +1,17 @@
+﻿@model PTC.Application.HtmlSelectLists.MarcasHtmlSelectListViewModel
+
+<div class="row">
+    <div class="col-6 text-left">
+        <label class="lbl-inputs" for="MarcaId">Marcas</label>
+    </div>
+    <div class="col-6 text-right">
+        <button id="btnAbrirModal" type="button" onclick="AbrirModal('mdlAdicionarMarca')" class="btn btn-success btn-sm btnAdicionarMarca">Novo</button>   
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <select id="MarcaId" name="MarcaId" asp-items="Model.Select" class="form-control form-select"></select>
+    </div>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>

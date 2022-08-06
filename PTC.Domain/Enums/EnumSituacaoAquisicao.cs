@@ -4,6 +4,9 @@ namespace PTC.Domain.Enums
 {
     public enum EnumSituacaoAquisicao
     {
+        [Description("Nenhum")]
+        Nenhum = 0,
+
         [Description("Negociação de compra")]
         NegociacaoCompra = 1,
 
