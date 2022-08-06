@@ -29,7 +29,7 @@ namespace PTC.WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Editar(int id)
+        public async Task<IActionResult> Editar([FromRoute]int id)
         {
             return View(ProprietarioMapper.ToViewModel(await _proprietarioService.ObterPorId(id)));
         }
@@ -45,20 +45,26 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> Inserir(ProprietarioViewModel proprietario)
         {
             var mensagem = await _proprietarioService.Inserir(ProprietarioMapper.ToDomain(proprietario));
-            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem, proprietario.CaminhoImagem);
-            return Content(mensagem);
+
+            if (mensagem.ToLower().Contains("sucesso"))
+            {
+                await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, proprietario.Imagem, mensagem, proprietario.CaminhoImagem);
+                return Ok(mensagem);
+            }
+
+            return BadRequest(mensagem);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Deletar([FromRoute]int id)
+        public async Task<IActionResult> Deletar([FromRoute] int id)
         {
             try
             {
-                var proprietario = await  _proprietarioService.ObterPorId(id);
+                var proprietario = await _proprietarioService.ObterPorId(id);
                 if (proprietario is null) return BadRequest("Proprietario inexistente");
 
                 await _proprietarioService
-                    .Deletar(proprietario); 
+                    .Deletar(proprietario);
 
                 return NoContent();
             }
@@ -68,12 +74,18 @@ namespace PTC.WEB.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Alterar(ProprietarioViewModel obj)
         {
             var mensagem = await _proprietarioService.Alterar(ProprietarioMapper.ToDomain(obj));
-            await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, obj.Imagem, obj.CaminhoImagem);
-            return Content(mensagem);
+
+            if (mensagem.ToLower().Contains("sucesso"))
+            {
+                await ImagemService(EnumPastaArquivoIdentificador.Proprietarios, obj.Imagem, obj.CaminhoImagem);
+                return Ok(mensagem);
+            }
+
+            return BadRequest(mensagem);
         }
 
         [HttpGet]
@@ -87,7 +99,7 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino, int pagina = 1)
         {
             var proprietarios = await _proprietarioService.ObterPorPeriodo(dataInicio, dataTermino, pagina);
-            return Json(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x,pagina)).ToList());
+            return Json(nameof(Index), proprietarios.Select(x => ProprietarioMapper.ToViewModel(x, pagina)).ToList());
         }
     }
 }

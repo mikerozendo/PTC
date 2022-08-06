@@ -6,7 +6,7 @@ namespace PTC.WEB.Controllers
     public class NotificaController : Controller
     {
         //Retornando notificacoes de status
-        public IActionResult RenderizarMensagemStatus(string action, string controller, string titulo, string mensagem, bool sucesso)
+        public IActionResult RenderizarMensagemStatus([FromQuery]string action, [FromQuery]string controller, string titulo, string mensagem, bool sucesso)
         {
             MensagemViewModel model = new()
             {
