@@ -43,10 +43,14 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".close").on('click',function(){
-            $(this).closest('.modal').hide();
-        })
+        fecharModal();
     });    
+
+    function fecharModal(){
+        $(".close").on('click', function() {
+            $(this).closest('.modal').hide();
+        });   
+    }
 </script>
 
 @if (Model.Trava)
@@ -55,21 +59,24 @@
 
         function DeletarRecurso() {
             let url = "@Model.Controller" + "/" + "@Model.ControllerAction" + "/" + "@Model.ModelId";
-            console.log(url);
-            fetch("@Model.ControllerAction" + "/" + "@Model.ModelId", {
+
+            $(".close").closest('.modal').hide().html('');
+            
+            fetch(url, {
                 method: 'DELETE',
-            }).then(function(serverPromise) {
-                serverPromise.text()
-                    .then(function(j) {
-                        if (j.toString().toLowerCase().includes("sucesso")) {
-                            return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true, true);
-                        } else {
-                            return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
-                        }
-                    })
-                    .catch(function(e) {
-                        return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
-                    });
+            }).then(function(serverPromise) {                
+                if (serverPromise.status == 400) {
+                    serverPromise.text()
+                        .then(function (notificacao) {            
+                            let urlResponse = `${window.location.hostname}/Notifica/RenderizarMensagemStatus?action=${encodeURI("")}&controller=${encodeURI("")}&sucesso=${encodeURI(false)}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}`;
+                            GerarNotificacao(url.replace('/Proprietario/Adicionar',''), 'mdlMensagem');
+                        });
+                } else {
+                    serverPromise.text()
+                        .then(function (notificacao) {
+                            window.location = window.location;
+                        });
+                }
             });
         }
     </script>

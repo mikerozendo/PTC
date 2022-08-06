@@ -15,7 +15,7 @@ function formEvent() {
 
 function ImagemEvent() {
     $("#inputImg").on('change', function (e) {
-        var value = `/images/${pasta}/${$("#inputImg").val().replace('C:\\fakepath\\', '')}`;
+        var value = `/Images/Proprietarios/${$("#inputImg").val().replace('C:\\fakepath\\', '')}`;
         $("#caminhoImagem").val(value);
     });
 

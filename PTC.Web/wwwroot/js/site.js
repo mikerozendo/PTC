@@ -117,18 +117,18 @@ function Reload() {
     window.location.href = window.location.href;
 }
 
-function ImagemEvent(pasta) {
-    $("#inputImg").on('change', function (e) {
-        var value = "/images/" + pasta + "/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
-        console.log($("#inputImg").length);
-        $("#caminhoImagem").val(value);
-    });
+//function ImagemEvent(pasta) {
+//    $("#inputImg").on('change', function (e) {
+//        var value = "/images/" + pasta + "/" + $("#inputImg").val().replace('C:\\fakepath\\', '');
+//        console.log($("#inputImg").length);
+//        $("#caminhoImagem").val(value);
+//    });
 
-    $("#btnImgUpload").on('click', function (e) {
-        $("#inputImg").click();
-        return false;
-    });
-}
+//    $("#btnImgUpload").on('click', function (e) {
+//        $("#inputImg").click();
+//        return false;
+//    });
+//}
 
 function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget, Label) {
     fetch(window.location.origin + '/' + controller + '/' + action, {
