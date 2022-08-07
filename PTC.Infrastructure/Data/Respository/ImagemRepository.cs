@@ -31,13 +31,22 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<int> Inserir(Imagem obj)
         {
+            try
+            {
+                AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
+                AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
+
+                var tabela = await ExecutarProcedureAsync("P_IMAGEM_INSERIR");
+
+                return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             //Alteando imagens Veiculo
-            AddParametro("CaminhoArquivo", obj.CaminhoInsertHelper);
-            AddParametro("IdenficadorPasta", obj.EnumIdentificadorPastaDeArquivos);
 
-            var tabela = await ExecutarProcedureAsync("P_IMAGEM_INSERIR");
-
-            return int.TryParse(tabela.Rows[0]["IdImagem"].ToString(), out int retorno) ? retorno : 0;
         }
 
         public async Task<List<string>> ObterImagensVeiculosPorIdOperacao(int idOperacao)

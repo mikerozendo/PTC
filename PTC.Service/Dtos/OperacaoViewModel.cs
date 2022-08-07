@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace PTC.Application.Dtos
 {
@@ -29,5 +30,7 @@ namespace PTC.Application.Dtos
         public int VeiculoId { get; set; }
         public List<ImagemViewModel> Imagens { get; set; } = new();
         public List<IFormFile> ArquivosImagens { get; set; } = new();
+        public List<SelectListItem> ProprietariosHtmlSelectList { get; set; } = new();
+        public List<SelectListItem> MarcasHtmlSelectList { get; set; } = new();
     }
 }

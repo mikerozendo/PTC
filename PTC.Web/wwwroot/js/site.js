@@ -117,38 +117,8 @@ function Reload() {
     window.location.href = window.location.href;
 }
 
-function MontarSelect(action, controller, element, binder, btnAdicionar, btnAdicionarClass, dataTarget, Label) {
-    fetch(window.location.origin + '/' + controller + '/' + action, {
-        headers: {
-            'Accept': 'application/json'
-        }
-    }).then(data => {
-        data.json().then(value => {
-            let select =
-                `
-                    <div class="row">
-                        <div class="col-6 text-left">
-                            <label class="lbl-inputs" for="${binder}">${Label}</label>
-                        </div>
-                `;
-            if (btnAdicionar) {
-                select += '<div class="col-6 text-right"><button type="button" onclick="AbrirModalRedirect(' + dataTarget + ')" class="btn btn-success btn-sm ' + btnAdicionarClass + '" data-toggle="modal" data-target="#' + dataTarget + '">Novo</button></div>';
-            }
-
-            select += '</div><select name="' + binder + '" id = "' + binder + '" class="form-control form-select" style="text-align:center">';
-            if (value.length >= 0) {
-                select += '<option value="none">- selecione -</option >';
-                for (var i = 0; i < value.length; i++) {
-                    select += '<option value="' + value[i].id + '">' + value[i].nome + '</option>';
-                }
-                select += '</select>';
-                $("#" + element).html(select);
-            }
-        });
-    });
-}
-
 function AbrirModalRedirect(target) {
+    debugger;
     console.log(target);
     let targetId = $(target).attr("id");
     $("#" + targetId).modal('show');
@@ -158,4 +128,15 @@ function AbrirModalRedirect(target) {
 function GerarNotificacao(url, modalId) {
     $(`#${modalId}`).load(url.replace(/amp%3B/g, ""));
     $(`#${modalId}`).modal({ backdrop: 'static', keyboard: true }).show();
+}
+
+function CarregarPartialView(url, elementHandler) {
+    $(`#${elementHandler}`).html('');
+    $(`#${elementHandler}`).load(url.replace(/amp%3B/g, ""));
+}
+
+function AbrirModal(targetId) {
+    console.log(targetId);
+    $("#" + targetId).modal('show');
+    $(".modal-backdrop").remove();
 }

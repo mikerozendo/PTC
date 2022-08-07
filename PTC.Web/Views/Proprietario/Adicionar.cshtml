@@ -18,8 +18,8 @@
     <script type="text/javascript">
         var imagem = new FormData();
         $(document).ready(function() {
-            $("#formProprietario").attr('action', '@Url.Action("Inserir","Proprietario")').attr('method', 'post');        
-            factory();
+            $("#formProprietario").attr('action', '@Url.Action("Inserir","Proprietario")').attr('method', 'POST');        
+            factory('POST');
         });
     </script>
 

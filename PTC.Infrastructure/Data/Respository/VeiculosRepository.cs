@@ -29,7 +29,6 @@ namespace PTC.Infrastructure.Data.Respository
             AddParametro("Modelo", obj.Modelo);
             AddParametro("Renavam", obj.Renavam);
             AddParametro("Nome", obj.Nome);
-            AddParametro("CaminhoImagem", obj.CaminhoImagem);
             AddParametro("DataFabricacao", obj.DataFabricacao);
             AddParametro("MarcaVeiculoId", obj.MarcaVeiculo.Id);
 

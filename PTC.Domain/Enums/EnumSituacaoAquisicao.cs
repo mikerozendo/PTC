@@ -1,19 +1,23 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PTC.Domain.Enums
 {
     public enum EnumSituacaoAquisicao
     {
-        [Description("Negociação de compra")]
+        [Display(Name="Nenhum")]
+        Nenhum = 0,
+
+        [Display(Name = "Negociação de compra")]
+
         NegociacaoCompra = 1,
 
-        [Description("Estoque")]
+        [Display(Name = "Estoque")]
         Estoque = 2,
 
-        [Description("Negociação de venda")]
+        [Display(Name = "Negociação de venda")]
         NegociacaoVenda = 3,
 
-        [Description("Vendido")]
+        [Display(Name = "Vendido")]
         Vendido = 4
     }
 }

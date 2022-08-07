@@ -24,7 +24,6 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Operacao obj)
         {
-            await _veiculosService.Deletar(obj.Veiculo);
             await _operacaoRepository.Deletar(obj);
         }
 
@@ -107,8 +106,7 @@ namespace PTC.Application.Services
 
         public async Task<Operacao> ObterPorId(int id)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            return await _operacaoRepository.ObterPorId(id);
         }
 
         public Task<IEnumerable<Operacao>> ObterTodos()

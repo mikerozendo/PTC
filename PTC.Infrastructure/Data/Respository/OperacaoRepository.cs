@@ -7,6 +7,7 @@ using PTC.Domain.Enums;
 using PTC.Domain.Entities;
 using PTC.Infrastructure.Data.Base;
 using PTC.Domain.Interfaces.Repository;
+using System.IO;
 
 namespace PTC.Infrastructure.Data.Respository
 {
@@ -19,9 +20,15 @@ namespace PTC.Infrastructure.Data.Respository
             return Task.CompletedTask;
         }
 
-        public Task Deletar(Operacao obj)
+        public async Task Deletar(Operacao obj)
         {
-            return Task.CompletedTask;
+            AddParametro("Id", obj.Id);
+            await ExecutarProcedureAsync("P_OPERACAO_DELETAR");
+        }
+
+        public Task<bool> Existe(Operacao obj)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<int> Inserir(Operacao obj)
@@ -42,6 +49,57 @@ namespace PTC.Infrastructure.Data.Respository
 
             int.TryParse(tabela.Rows[0]["IdOperacao"].ToString(), out int idOperacao);
             return idOperacao;
+        }
+
+        public async Task<Operacao> ObterPorId(int id)
+        {
+            try
+            {
+                AddParametro("Id", id);
+                var tabela = await ExecutarProcedureAsync("P_OPERACAO_OBTER_POR_ID");
+
+                return new Operacao
+                {
+                    Id = (int)tabela.Rows[0]["Id"],
+                    Cadastro = (DateTime)tabela.Rows[0]["DataCadastro"],
+                    DataRevenda = tabela.Rows[0]["DataRevenda"] is DBNull ? new DateTime().Date : (DateTime)tabela.Rows[0]["DataRevenda"],
+                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)(int)tabela.Rows[0]["SituacaoAquisicao"],
+                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoAquisicao"],
+                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoRevenda"],
+                    Proprietario = new()
+                    {
+                        Id = Convert.ToInt32(tabela.Rows[0]["ProprietarioId"].ToString()),
+                        Nome = (string)tabela.Rows[0]["NomeProprietario"],
+                        Documento = new(tabela.Rows[0]["DocumentoProprietario"].ToString())
+                    },
+                    Comprador = new()
+                    {
+                        Id = Convert.ToInt32(tabela.Rows[0]["CompradorId"]),
+                        Nome = (string)tabela.Rows[0]["NomeComprador"],
+                    },
+                    Veiculo = new Veiculo
+                    {
+                        Id = (int)tabela.Rows[0]["VeiculoId"],
+                        Nome = (string)tabela.Rows[0]["NomeVeiculo"],
+                        Modelo = (string)tabela.Rows[0]["ModeloVeiculo"],
+                        Km = (decimal)tabela.Rows[0]["Km"],
+                        CaminhoImagem = (string)tabela.Rows[0]["CaminhoImagem"],
+                        MarcaVeiculo = new Marca
+                        {
+                            Id = Convert.ToInt32(tabela.Rows[0]["MarcaVeiculoId"])
+                        }
+                    },
+                    ValorCompra = (decimal)tabela.Rows[0]["ValorCompra"],
+                    ValorRevenda = (decimal)tabela.Rows[0]["ValorRevenda"],
+                    ValorTabela = (decimal)tabela.Rows[0]["ValorTabela"]
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+ 
         }
 
         public async Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)
@@ -82,7 +140,7 @@ namespace PTC.Infrastructure.Data.Respository
                         Nome = (string)sdr["NomeVeiculo"],
                         Modelo = (string)sdr["ModeloVeiculo"],
                         Km = (decimal)sdr["Km"],
-                        CaminhoImagem = (string)sdr["CaminhoImagem"],
+                        //CaminhoImagem = (string)sdr["CaminhoImagem"],
                         MarcaVeiculo = new Marca
                         {
                             Id = Convert.ToInt32(sdr["MarcaVeiculoId"])
