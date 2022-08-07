@@ -24,7 +24,6 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Operacao obj)
         {
-            await _veiculosService.Deletar(obj.Veiculo);
             await _operacaoRepository.Deletar(obj);
         }
 
@@ -35,17 +34,17 @@ namespace PTC.Application.Services
 
         public async Task<string> Inserir(Operacao obj)
         {
-            List<int> idsImagens = new(); 
+            List<int> idsImagens = new();
 
             try
             {
-               idsImagens.AddRange(
-                    _imagemService.Inserir(obj.Imagem)
-                    .GetAwaiter()
-                    .GetResult()
-                    .Split(',')
-                    .Select(x => int.Parse(x.ToString()))
-                    .ToList());
+                idsImagens.AddRange(
+                     _imagemService.Inserir(obj.Imagem)
+                     .GetAwaiter()
+                     .GetResult()
+                     .Split(',')
+                     .Select(x => int.Parse(x.ToString()))
+                     .ToList());
             }
             catch (ApplicationException ex)
             {
@@ -71,11 +70,9 @@ namespace PTC.Application.Services
                                 await _imagemService.Alterar(new(EnumIdentificadorPastaDeArquivos.Veiculos, operacaoId, idsImagens));
                                 return "sucesso";
                             }
-                            else
-                            {
-                                await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
-                                return "falha";
-                            }
+
+                            await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                            return "Erro ao cadastrar operação";
                         }
                         catch (Exception)
                         {
@@ -83,11 +80,9 @@ namespace PTC.Application.Services
                             return "Erro ocorrido ao cadastro nova operação";
                         }
                     }
-                    else
-                    {
-                        await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
-                        return "Informe um proprietario!";
-                    }
+
+                    await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), obj.Veiculo);
+                    return "Erro, Informe um proprietario!";
                 }
 
                 await RollBackBuilder(new(EnumIdentificadorPastaDeArquivos.Veiculos, idsImagens), null);
@@ -111,8 +106,7 @@ namespace PTC.Application.Services
 
         public async Task<Operacao> ObterPorId(int id)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            return await _operacaoRepository.ObterPorId(id);
         }
 
         public Task<IEnumerable<Operacao>> ObterTodos()

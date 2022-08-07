@@ -1,40 +1,35 @@
 ﻿@model PTC.Application.Dtos.MensagemViewModel
 
-<div class="modal-dialog">
+<div id="mdlNotificaoContent" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
             @if (Model.StatusSucesso)
             {
-                <h5 class="modal-title color-true">@Model.Titulo</h5>
+                <h5 class="modal-title text-green">@Model.Titulo</h5>
             }
             else
             {
-                <h5 class="modal-title color-true">@Model.Titulo</h5>
+                <h5 class="modal-title text-red">@Model.Titulo</h5>
             }
-            <span type="button" class="close span-close-modal" data-bs-dismiss="modal" aria-label="Close">
+            <span type="button" class="close span-close-modal" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </span>
         </div>
         <div class="modal-body">
-            <fieldset>
-                <legend class="font-bold">Resposta da Solicitação</legend>
-                <hr />
-                <br />
-                <span>@Model.Mensagem</span>
-            </fieldset>
+            <p>@Model.Mensagem</p>
         </div>
         <div class="modal-footer">
             <div class="row">
                 @if (Model.StatusSucesso)
                 {
                     <div class="col-12 text-right">
-                        <a class="btn btn-lg btn-success" href="@Url.Action(Model.ControllerAction, Model.Controller)">Ok</a>
+                        <a class="btn btn-sm btn-success" href="@Url.Action(Model.ControllerAction, Model.Controller)">Ok</a>
                     </div>
                 }
                 else if (Model.Trava)
                 {
                     <div class="col-12 text-right">
-                        <button id="btnDelete" onclick="DeletarRecurso()" class="btn btn-lg btn-danger" data-id="@Model.ModelId">Continuar</button>
+                        <button id="btnDelete" onclick="DeletarRecurso()" class="btn btn-sm btn-danger" data-id="@Model.ModelId">Continuar</button>
                     </div>
                 }
             </div>
@@ -42,28 +37,47 @@
     </div>
 </div>
 
+@section styles{
+    <link rel="stylesheet" href="~/css/site.css" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        fecharModal();
+    });    
+
+    function fecharModal(){
+        $(".close").on('click', function() {
+            $(this).closest('.modal').hide();
+        });   
+    }
+</script>
+
 @if (Model.Trava)
 {
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            function DeletarRecurso() {
-                let url = "@Model.Controller" + "/" + "@Model.ControllerAction" + "/" + "@Model.ModelId";
-                console.log(url);
-                fetch( "@Model.ControllerAction" + "/" + "@Model.ModelId", {
-                    method: 'DELETE',
-                }).then(function (serverPromise) {
+        function DeletarRecurso() {
+            let url = "@Model.Controller" + "/" + "@Model.ControllerAction" + "/" + "@Model.ModelId";
+
+            $(".close").closest('.modal').hide().html('');
+            
+            fetch(url, {
+                method: 'DELETE',
+            }).then(function(serverPromise) {                
+                if (serverPromise.status == 400) {
                     serverPromise.text()
-                        .then(function (j) {
-                            if (j.toString().toLowerCase().includes("sucesso")) {
-                                return ModalMensagem('Sucesso', j.toString(), aspController, aspAction, true, true);
-                            } else {
-                                    return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
-                            }
-                        })
-                        .catch(function (e) {
-                            return ModalMensagem('Falha', j.toString(), aspController, aspAction, false, false);
-                         });
-                });
-            }
-        </script>
+                        .then(function (notificacao) {            
+                            let urlResponse = `${window.location.hostname}/Notifica/RenderizarMensagemStatus?action=${encodeURI("")}&controller=${encodeURI("")}&sucesso=${encodeURI(false)}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}`;
+                            GerarNotificacao(url.replace('/Proprietario/Adicionar',''), 'mdlMensagem');
+                        });
+                } else {
+                    serverPromise.text()
+                        .then(function (notificacao) {
+                            Reload();
+                        });
+                }
+            });
+        }
+    </script>
 }

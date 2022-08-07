@@ -13,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.RegisterDependency();
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: "CORS",
+//                      policy =>
+//                      {
+//                          policy.AllowAnyHeader()
+//                          .AllowAnyHeader()
+//                          .AllowAnyMethod()
+//                          .AllowAnyOrigin();
+//                      });
+//});
 
 var app = builder.Build();
 
@@ -29,6 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+//app.UseCors("CORS");
 
 app.UseAuthorization();
 

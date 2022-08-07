@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PTC.Application.Mapper;
 using PTC.Domain.Entities;
 using PTC.Domain.Interfaces.Services;
 
@@ -57,6 +58,13 @@ namespace PTC.WEB.Controllers
         public async Task<IActionResult> ObterTodos()
         {
             return Json(await _marcasService.ObterTodos());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObterSelectList()
+        {
+            var lista = await _marcasService.ObterTodos();
+            return PartialView("_MarcasSelectList", lista.ToViewModel());
         }
     }
 }

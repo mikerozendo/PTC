@@ -1,12 +1,11 @@
-﻿@model PTC.Domain.Entities.Marca
+﻿@model PTC.Application.Dtos.OperacaoViewModel
 
 <div class="modal-content">
     <div class="modal-header">
         <div class="row">
             <div class="col-12" style="text-align:start">
                 <h3>
-                    <img id="imgLogo" src="@Model.UrlImagem" alt="logo" />
-                    @Model.Nome
+                    @Model.NomeVeiculo
                 </h3>
                 <sub>
                     <i class="fa fa-calendar-o" aria-hidden="true"></i> Cadastro: @Model.Cadastro
@@ -15,55 +14,64 @@
         </div>
     </div>
     <div class="modal-body">
-        <form id="AlterarMarca" action="@Url.Action("Alterar","Marcas")" method="post">
-            <div class="form-group">
-                <input type="hidden" name="Id" value="@Model.Id" />
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-4">
-                        <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
-                    </div>
-                    <div class="col-4">
-                        <label for="UrlImagem">Url</label>
-                        <input id="imgUrl" type="url" name="UrlImagem" value="@Model.UrlImagem" class="form-control" />
-                    </div>
-                    @*<div class="col-4">
-                        <label for="Situacao">Situacao</label>
-                        <select name="Situacao" id="Situacao" class="form-control" style="text-align:center">
-                            <option value="none">-- Selecione --</option>
-
-                            @foreach (EnumSituacao obj in Enum.GetValues(typeof(EnumSituacao)))
-                            {
-                                if (!obj.Equals(EnumSituacao.Todos) && !obj.Equals(EnumSituacao.Vendido))
-                                {
-                                    <option value="@obj">@obj.ToString()</option>
-                                }
-                            }
-                        </select>
-                    </div>*@
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-12 div-btn-end" style="padding-top: 15px;">
-                    <a class="btn btn-danger" href="@Url.Action("Index","Marcas")">Cancelar</a>
-                    &nbsp;|&nbsp;
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
-            </div>
-        </form>
+        <partial name="../Operacao/_Formulario.cshtml">
     </div>
+    <div id="mdlMensagem" class="modal" tabindex="-1" role="dialog"></div>
 </div>
 
 
 @section scripts {
+    <script type="text/javascript" src="~/js/Operacao.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $("#imgUrl").on('chamge', function () {
-                $("#imgLogo").attr($(this).val());
-            });
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            //$("#imgUrl").on('change', function () {
+            //    $("#imgLogo").attr($(this).val());
+            //});
+
+            $("#formVeiculo").attr('action', '@Url.Action("Alterar","Operacao")');
+            factory('PUT', '@Url.Action("ObterSelectList","Marcas")');
+            Bind();
         });
+
+        function Bind() {
+            var form = []
+            var form = document.forms[0];
+
+            debugger;
+            $(form.querySelector('input[name="NomeVeiculo"]')).val("@Model.NomeVeiculo");
+            $(form.querySelector('input[name="ModeloVeiculo"]')).val("@Model.ModeloVeiculo");
+            $(form.querySelector('input[name="Km"]')).val("@Model.Km".replace(",", "."));
+            $(form.querySelector('input[name="ValorCompra"]')).val("@Model.ValorCompra".replace(",", "."));
+            $(form.querySelector('input[name="ValorTabela"]')).val("@Model.ValorTabela".replace(",", "."));
+            $(form.querySelector('input[name="ValorRevenda"]')).val("@Model.ValorRevenda".replace(",", "."));
+            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val(@Model.DataFabricacaoVeiculo.Date.Year + "-" + @Model.DataFabricacaoVeiculo.Date.Month +"-"+@Model.DataFabricacaoVeiculo.Date.Day);
+
+            if(@Model.MarcaVeiculoId > 0){
+                $("#MarcaId").val(@Model.MarcaVeiculoId).change();
+            }
+
+            if (@Model.SituacaoAquisicaoId > 0) {
+                $("#SituacaoAquisicaoId").val(@Model.SituacaoAquisicaoId).change();
+            }
+            
+            if (@Model.TipoPagamentoAquisicaoId > 0) {
+                $("#TipoPagamentoAquisicaoId").val(@Model.TipoPagamentoAquisicaoId).change();
+            }
+
+            if (@Model.TipoPagamentoRevendaId > 0) {
+                $("#TipoPagamentoRevendaId").val(@Model.TipoPagamentoRevendaId).change();
+            }
+
+            if (@Model.ProprietarioId > 0) {
+                $("#ProprietarioId").val(@Model.ProprietarioId).change();
+            }
+
+            if (@Model.CompradorId > 0) {
+                $("#CompradorId").val(@Model.CompradorId).change();
+            }
+        }
     </script>
 
 }

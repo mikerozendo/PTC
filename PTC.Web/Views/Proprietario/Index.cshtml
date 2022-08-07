@@ -130,18 +130,17 @@
 
         function travaDelete(id) {
             $('#mdlNotificaDelete').html('');
+            
             let mensagem = "Cuidado você esta prestes à deletar um proprietário! Tem certeza que deseja continuar?";
-            console.log('@Url.Action("RenderizarMensagemTrava","Notifica")');
             let url = '@Url.Action("RenderizarMensagemTrava","Notifica")' + "?action=" + encodeURI("Deletar") + "&controller=" + encodeURI("Proprietario") + "&titulo=" + encodeURI("Cuidado!") + "&mensagem=" + encodeURI(mensagem) + "&trava=" + encodeURI(true) + "&modelId=" + encodeURI(id);
-            $('#mdlNotificaDelete').load(url.replace(/amp%3B/g, ""));
-            $('#mdlNotificaDelete').modal({backdrop:'static',keyboard:true}).show();
+            
+            GerarNotificacao(url, "mdlNotificaDelete");
         }
 
         function AbrirGoogleMaps(obj) {
             let link = $(obj).attr("data-endereco");
             window.open(link, "_blank");
         }
-
     </script>
 
 }

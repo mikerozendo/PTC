@@ -11,11 +11,13 @@ namespace PTC.WEB.Controllers
     {
         private readonly IVeiculosService _veiculosService;
         private readonly IOperacaoService _operacaoService;
+        private readonly IProprietarioService _proprietarioService;
 
         public OperacaoController(IServiceProvider services) : base(services)
         {
             _veiculosService = (IVeiculosService)GetAppService(typeof(IVeiculosService));
             _operacaoService = (IOperacaoService)GetAppService(typeof(IOperacaoService));
+            _proprietarioService = (IProprietarioService)GetAppService(typeof(IProprietarioService));
         }
 
         [HttpGet]
@@ -26,30 +28,51 @@ namespace PTC.WEB.Controllers
         }
 
         [HttpGet]
-        public IActionResult Adicionar()
+        public async Task<IActionResult> Adicionar()
         {
-            return View();
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
+            var selectList = proprietarios.ToViewModel();
+            return View(selectList);
         }
 
         [HttpPost]
         public async Task<IActionResult> Inserir(OperacaoViewModel obj)
         {
             var mensagem = await _operacaoService.Inserir(OperacaoMapper.ToDomain(obj, _webHostEnvironment.WebRootPath));
-            await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem, obj.CaminhoImagem);
-            return Content(mensagem);
+
+            if (mensagem.ToLower().Contains("sucesso"))
+            {
+                await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.ArquivosImagens, mensagem, obj.CaminhoImagem);
+                return Ok(mensagem);
+            }
+
+            return BadRequest(mensagem);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Deletar(OperacaoViewModel obj)
+        [HttpDelete]
+        public async Task<IActionResult> Deletar(int id)
         {
-            await _operacaoService.Deletar(OperacaoMapper.ToDomain(obj));
-            return RedirectToAction(nameof(Index));
+            var operacao = await _operacaoService.ObterPorId(id);
+            if (operacao is null) return BadRequest("Você esta tentando deletar uma operação que não existe");
+
+            try
+            {
+                await _operacaoService.Deletar(operacao); return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Editar(int id)
         {
-            return View(OperacaoMapper.ToViewModel(await _operacaoService.ObterPorId(id)));
+            var operacao = OperacaoMapper.ToViewModel(await _operacaoService.ObterPorId(id));
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
+            operacao.ProprietariosHtmlSelectList.AddRange(proprietarios.ToViewModel().ProprietariosHtmlSelectList);
+
+            return View(operacao);
         }
 
         [HttpPost]
@@ -59,5 +82,7 @@ namespace PTC.WEB.Controllers
             //await ImagemService(EnumPastaArquivoIdentificador.Veiculos, obj.Imagem, mensagem, obj.CaminhoImagem);
             return RedirectToAction(nameof(Index));
         }
+
+
     }
 }

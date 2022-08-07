@@ -96,15 +96,15 @@
             $(".btn-danger").on('click', function(e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
-                travaDelete(objValue);
+                travaDelete(objValue.Id);
             });
         });
 
         function travaDelete(id) {
             $('#mdlNotificaDelete').html('');
-            let mensagem = "Cuidado você esta prestes à deletar um proprietário! Tem certeza que deseja continuar?";
-            console.log('@Url.Action("RenderizarMensagemTrava","Notifica")');
-            let url = '@Url.Action("RenderizarMensagemTrava","Notifica")' + "?action=" + encodeURI("Deletar") + "&controller=" + encodeURI("Proprietario") + "&titulo=" + encodeURI("Cuidado!") + "&mensagem=" + encodeURI(mensagem) + "&trava=" + encodeURI(true) + "&modelId=" + encodeURI(id);
+            let mensagem = "Cuidado você esta prestes à deletar uma operação, tem certeza que deseja continuar?";
+            
+            let url = '@Url.Action("RenderizarMensagemTrava","Notifica")' + "?action=" + encodeURI("Deletar") + "&controller=" + encodeURI("Operacao") + "&titulo=" + encodeURI("Cuidado!") + "&mensagem=" + encodeURI(mensagem) + "&trava=" + encodeURI(true) + "&modelId=" + encodeURI(id);
             $('#mdlNotificaDelete').load(url.replace(/amp%3B/g, ""));
             $('#mdlNotificaDelete').modal({ backdrop: 'static', keyboard: true }).show();
         }
