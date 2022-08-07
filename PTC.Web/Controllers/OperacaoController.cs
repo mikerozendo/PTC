@@ -49,11 +49,20 @@ namespace PTC.WEB.Controllers
             return BadRequest(mensagem);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Deletar(OperacaoViewModel obj)
+        [HttpDelete]
+        public async Task<IActionResult> Deletar(int id)
         {
-            await _operacaoService.Deletar(OperacaoMapper.ToDomain(obj));
-            return RedirectToAction(nameof(Index));
+            var operacao = await _operacaoService.ObterPorId(id);
+            if (operacao is null) return BadRequest("Você esta tentando deletar uma operação que não existe");
+
+            try
+            {
+                await _operacaoService.Deletar(operacao); return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
