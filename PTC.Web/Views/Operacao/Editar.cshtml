@@ -20,17 +20,18 @@
 
 
 @section scripts {
+    <script type="text/javascript" src="~/js/Operacao.js"></script>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
 
-            $("#imgUrl").on('change', function () {
-                $("#imgLogo").attr($(this).val());
-            });
+            //$("#imgUrl").on('change', function () {
+            //    $("#imgLogo").attr($(this).val());
+            //});
 
             $("#formVeiculo").attr('action', '@Url.Action("Alterar","Operacao")');
-
             Bind();
+            factory('PUT', '@Url.Action("ObterSelectList","Marcas")');
         });
 
         function Bind() {
