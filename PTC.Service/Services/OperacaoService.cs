@@ -107,8 +107,7 @@ namespace PTC.Application.Services
 
         public async Task<Operacao> ObterPorId(int id)
         {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            return await _operacaoRepository.ObterPorId(id);
         }
 
         public Task<IEnumerable<Operacao>> ObterTodos()

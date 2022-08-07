@@ -35,22 +35,21 @@
         });
 
         function Bind() {
-            var form = [];
-            var object = JSON.parse("@System.Text.Json.JsonSerializer.Serialize(Model)".replace(/&quot;/g, '"'));
+            var form = []
             var form = document.forms[0];
 
-            $(form.querySelector('input[name="NomeVeiculo"]')).val(object.NomeVeiculo);
-            $(form.querySelector('input[name="ModeloVeiculo"]')).val(object.ModeloVeiculo);
-            $(form.querySelector('input[name="km"]')).val(object.km);
-            $(form.querySelector('input[name="ValorCompra"]')).val(object.ValorCompra);
-            $(form.querySelector('input[name="ValorTabela"]')).val(object.ValorTabela);
-            $(form.querySelector('input[name="ValorRevenda"]')).val(object.ValorRevenda);
-            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val(object.DataFabricacaoVeiculo);
-            $(form.querySelector('input[name="Logradouro"]')).val(object.Logradouro);
-            $(form.querySelector('input[name="TipoPagamentoAquisicaoId"]')).val(object.TipoPagamentoAquisicaoId);
-            $(form.querySelector('input[name="TipoPagamentoRevendaId"]')).val(object.TipoPagamentoRevendaId);
-            $(form.querySelector('input[name="ProprietarioId"]')).val(object.ProprietarioId);
-            $(form.querySelector('input[name="CompradorId"]')).val(object.CompradorId);
+            debugger;
+            $(form.querySelector('input[name="NomeVeiculo"]')).val("@Model.NomeVeiculo");
+            $(form.querySelector('input[name="ModeloVeiculo"]')).val("@Model.ModeloVeiculo");
+            $(form.querySelector('input[name="Km"]')).val("@Model.Km".replace(",","."));
+            $(form.querySelector('input[name="ValorCompra"]')).val("@Model.ValorCompra".replace(",","."));
+            $(form.querySelector('input[name="ValorTabela"]')).val("@Model.ValorTabela".replace(",","."));
+            $(form.querySelector('input[name="ValorRevenda"]')).val("@Model.ValorRevenda".replace(",","."));
+            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val("@Model.DataFabricacaoVeiculo");
+            $(form.querySelector('input[name="TipoPagamentoAquisicaoId"]')).val("@Model.TipoPagamentoAquisicaoId");
+            $(form.querySelector('input[name="TipoPagamentoRevendaId"]')).val("@Model.TipoPagamentoRevendaId");
+            $(form.querySelector('input[name="ProprietarioId"]')).val("@Model.ProprietarioId");
+            $(form.querySelector('input[name="CompradorId"]')).val("@Model.CompradorId");
         }
 
     </script>

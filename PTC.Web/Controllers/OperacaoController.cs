@@ -59,7 +59,11 @@ namespace PTC.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(int id)
         {
-            return View(OperacaoMapper.ToViewModel(await _operacaoService.ObterPorId(id)));
+            var operacao = OperacaoMapper.ToViewModel(await _operacaoService.ObterPorId(id));
+            var proprietarios = await _proprietarioService.ObterPorPeriodo(DateTime.Now.AddDays(-90).Date, DateTime.Now.AddDays(1).Date);
+            operacao.ProprietariosHtmlSelectList.AddRange(proprietarios.ToViewModel().ProprietariosHtmlSelectList);
+
+            return View(operacao);
         }
 
         [HttpPost]
