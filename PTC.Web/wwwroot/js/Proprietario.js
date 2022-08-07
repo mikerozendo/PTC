@@ -9,10 +9,8 @@ function formEvent(formMethod) {
     document.forms['formProprietario']
         .addEventListener('submit', (event) => {
             event.preventDefault();
-
             triggerForm(formMethod);
-        });    
-
+        });   
 }
 
 function ImagemEvent() {

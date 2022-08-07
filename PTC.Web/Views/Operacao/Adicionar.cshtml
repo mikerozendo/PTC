@@ -45,52 +45,14 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#mdlAdicionarMarca").hide();
-            ObterMarcasSelectList();
-
             $("#formVeiculo").attr("action", '@Url.Action("Inserir","Operacao")');
+            $("#mdlAdicionarMarca").hide();
 
-            //FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
-
-            document.forms['formVeiculo'].addEventListener('submit', (event) => {
-                event.preventDefault();
-                ColetarRespostaServidor();
-            });
-
-            $('select').select2({
-                placeholder: "Selecione"            
-            });
-
-            $("#btnImgUpload").on('click', function(e) {
-                $("#inputImg").click();
-                return false;
-            });
+            factory('POST','@Url.Action("ObterSelectList","Marcas")');
         });
-
-        function ColetarRespostaServidor() {
-            fetch(event.target.action, {
-                method: 'POST',
-                body: new FormData(event.target)
-            }).then(function (serverPromise) {
-                serverPromise.text()
-                    .then(function (j) {
-
-                    })
-                    .catch(function (e) {
-
-                    });
-            });
-
-            return false;
-        }
 
         function RedirecionarFormProprietario() {
             window.location = "@Url.Action("Adicionar","Proprietario")";
-        }
-
-        function ObterMarcasSelectList() {
-            let url = '@Url.Action("ObterSelectList","Marcas")';
-            CarregarPartialView(url, 'selectMarca');
         }
     </script>
 } 
