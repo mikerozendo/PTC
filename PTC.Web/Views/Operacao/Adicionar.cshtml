@@ -106,7 +106,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <select id="CompradorId" asp-for="CompradorId" asp-items="Model.ProprietariosHtmlSelectList" class="form-control form-select"></select>
+                            <select id="CompradorId" asp-for="CompradorId" asp-items="Model.ProprietariosHtmlSelectList" class="form-control form-select col-md-3"></select>
                         </div>
                     </div>
                 </div>
@@ -157,6 +157,10 @@
             $("#mdlAdicionarMarca").hide();
             ObterMarcasSelectList();
             FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
+
+            $('select').select2({
+                placeholder: "Selecione"            
+            });
 
             $("#btnImgUpload").on('click', function(e) {
                 $("#inputImg").click();
