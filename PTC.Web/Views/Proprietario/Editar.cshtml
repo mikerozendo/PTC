@@ -30,9 +30,10 @@
     <script type="text/javascript">
         var idProprietario = 0;
         $(document).ready(function() {
-            $("#formProprietario").attr('action', '@Url.Action("Alterar","Proprietario")').attr('method', 'post');
+            $("#formProprietario").attr('action', '@Url.Action("Alterar","Proprietario")').attr('method', 'PUT');
+            console.log(`'${$("#formProprietario").attr('method')}'`);
             Bind();
-            factory();
+            factory('PUT');
         });
 
         function Bind() {

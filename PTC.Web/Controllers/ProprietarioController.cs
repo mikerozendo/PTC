@@ -75,7 +75,7 @@ namespace PTC.WEB.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Alterar(ProprietarioViewModel obj)
+        public async Task<IActionResult> Alterar([FromForm]ProprietarioViewModel obj)
         {
             var mensagem = await _proprietarioService.Alterar(ProprietarioMapper.ToDomain(obj));
 

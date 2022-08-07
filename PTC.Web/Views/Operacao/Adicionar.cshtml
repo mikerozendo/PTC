@@ -43,11 +43,19 @@
 
 
 @section scripts {
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $("#mdlAdicionarMarca").hide();
             ObterMarcasSelectList();
-            FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
+
+            $("#formVeiculo").attr("action", '@Url.Action("Inserir","Operacao")');
+
+            //FormEventHandler('InserirVeiculo', 'Index', 'Operacao');
+
+            document.forms['formVeiculo'].addEventListener('submit', (event) => {
+                event.preventDefault();
+                ColetarRespostaServidor();
+            });
 
             $('select').select2({
                 placeholder: "Selecione"            
@@ -58,6 +66,23 @@
                 return false;
             });
         });
+
+        function ColetarRespostaServidor() {
+            fetch(event.target.action, {
+                method: 'POST',
+                body: new FormData(event.target)
+            }).then(function (serverPromise) {
+                serverPromise.text()
+                    .then(function (j) {
+
+                    })
+                    .catch(function (e) {
+
+                    });
+            });
+
+            return false;
+        }
 
         function RedirecionarFormProprietario() {
             window.location = "@Url.Action("Adicionar","Proprietario")";

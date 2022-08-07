@@ -1,12 +1,11 @@
-﻿@model PTC.Domain.Entities.Marca
+﻿@model PTC.Application.Dtos.OperacaoViewModel
 
 <div class="modal-content">
     <div class="modal-header">
         <div class="row">
             <div class="col-12" style="text-align:start">
                 <h3>
-                    <img id="imgLogo" src="@Model.UrlImagem" alt="logo" />
-                    @Model.Nome
+                    @Model.NomeVeiculo
                 </h3>
                 <sub>
                     <i class="fa fa-calendar-o" aria-hidden="true"></i> Cadastro: @Model.Cadastro
@@ -15,43 +14,7 @@
         </div>
     </div>
     <div class="modal-body">
-        <form id="AlterarMarca" action="@Url.Action("Alterar","Marcas")" method="post">
-            <div class="form-group">
-                <input type="hidden" name="Id" value="@Model.Id" />
-                <div class="row" style="padding-bottom:20px">
-                    <div class="col-4">
-                        <label for="Nome">Nome</label>
-                        <input id="Nome" type="text" name="Nome" value="@Model.Nome" class="form-control" required />
-                    </div>
-                    <div class="col-4">
-                        <label for="UrlImagem">Url</label>
-                        <input id="imgUrl" type="url" name="UrlImagem" value="@Model.UrlImagem" class="form-control" />
-                    </div>
-                    @*<div class="col-4">
-                        <label for="Situacao">Situacao</label>
-                        <select name="Situacao" id="Situacao" class="form-control" style="text-align:center">
-                            <option value="none">-- Selecione --</option>
-
-                            @foreach (EnumSituacao obj in Enum.GetValues(typeof(EnumSituacao)))
-                            {
-                                if (!obj.Equals(EnumSituacao.Todos) && !obj.Equals(EnumSituacao.Vendido))
-                                {
-                                    <option value="@obj">@obj.ToString()</option>
-                                }
-                            }
-                        </select>
-                    </div>*@
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-12 div-btn-end" style="padding-top: 15px;">
-                    <a class="btn btn-danger" href="@Url.Action("Index","Marcas")">Cancelar</a>
-                    &nbsp;|&nbsp;
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                </div>
-            </div>
-        </form>
+        <partial name="../Operacao/_Formulario.cshtml">
     </div>
 </div>
 
@@ -60,10 +23,35 @@
 
     <script>
         $(document).ready(function () {
-            $("#imgUrl").on('chamge', function () {
+
+            $("#imgUrl").on('change', function () {
                 $("#imgLogo").attr($(this).val());
             });
+
+            $("#formVeiculo").attr('action', '@Url.Action("Alterar","Operacao")');
+
+            Bind();
         });
+
+        function Bind() {
+            var form = [];
+            var object = JSON.parse("@System.Text.Json.JsonSerializer.Serialize(Model)".replace(/&quot;/g, '"'));
+            var form = document.forms[0];
+
+            $(form.querySelector('input[name="NomeVeiculo"]')).val(object.NomeVeiculo);
+            $(form.querySelector('input[name="ModeloVeiculo"]')).val(object.ModeloVeiculo);
+            $(form.querySelector('input[name="km"]')).val(object.km);
+            $(form.querySelector('input[name="ValorCompra"]')).val(object.ValorCompra);
+            $(form.querySelector('input[name="ValorTabela"]')).val(object.ValorTabela);
+            $(form.querySelector('input[name="ValorRevenda"]')).val(object.ValorRevenda);
+            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val(object.DataFabricacaoVeiculo);
+            $(form.querySelector('input[name="Logradouro"]')).val(object.Logradouro);
+            $(form.querySelector('input[name="TipoPagamentoAquisicaoId"]')).val(object.TipoPagamentoAquisicaoId);
+            $(form.querySelector('input[name="TipoPagamentoRevendaId"]')).val(object.TipoPagamentoRevendaId);
+            $(form.querySelector('input[name="ProprietarioId"]')).val(object.ProprietarioId);
+            $(form.querySelector('input[name="CompradorId"]')).val(object.CompradorId);
+        }
+
     </script>
 
 }

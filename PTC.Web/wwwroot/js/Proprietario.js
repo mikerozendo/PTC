@@ -1,16 +1,18 @@
-﻿function factory() {
+﻿function factory(formMethod) {
     ImagemEvent();
     ValidarCep();
     ValidarDocumento();
-    formEvent();
+    formEvent(formMethod);
 }
 
-function formEvent() {
+function formEvent(formMethod) {
     document.forms['formProprietario']
         .addEventListener('submit', (event) => {
-        event.preventDefault();
-        triggerForm();
-    });    
+            event.preventDefault();
+
+            triggerForm(formMethod);
+        });    
+
 }
 
 function ImagemEvent() {
@@ -85,22 +87,28 @@ function ValidarDocumento() {
     });
 }
 
-function triggerForm() {
+function triggerForm(formMethod) {
+    console.log(formMethod);
+
+    let baseUrl = `${window.location.origin}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Proprietario")}`;
+
     fetch(event.target.action, {
-        method: 'POST',
+        method: formMethod,
         body: new FormData(event.target)
     }).then(function (serverPromise) {
         if (serverPromise.status == 400) {
             serverPromise.text()
                 .then(function (notificacao) {
-                    let url = `${window.location}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Proprietario")}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(false)}`;
-                    GerarNotificacao(url.replace('/Proprietario/Adicionar',''), 'mdlMensagem');
+                    debugger;
+                    let url = `${baseUrl}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(false)}`;
+                    GerarNotificacao(url, 'mdlMensagem');
                 });
         } else {
             serverPromise.text()
                 .then(function (notificacao) {
-                    let url = `${window.location}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Proprietario")}&titulo=${encodeURI("Sucesso")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(true)}`;
-                    GerarNotificacao(url.replace('/Proprietario/Adicionar', ''), 'mdlMensagem');
+                    debugger;
+                    let url = `${baseUrl}&titulo=${encodeURI("Sucesso")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(true)}`;
+                    GerarNotificacao(url, 'mdlMensagem');
                 });
         }
     });

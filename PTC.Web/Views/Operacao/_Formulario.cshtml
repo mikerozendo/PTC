@@ -1,6 +1,6 @@
 ﻿@using PTC.Domain.Enums
 
-<form id="InserirVeiculo" action="@Url.Action("Inserir","Operacao")" method="post">
+<form id="formVeiculo" method="post">
     <div class="form-group" style="text-align:center">
         <div class="row" style="padding-bottom:2%">
             <div class="col-6">
@@ -30,8 +30,8 @@
                 </div>
                 <div class="row" style="padding-bottom:1%">
                     <div class="col-12">
-                        <label class="lbl-inputs" for="km">Km</label>
-                        <input type="number" class="form-control" name="km" value="" />
+                        <label class="lbl-inputs" for="Km">Km</label>
+                        <input type="number" class="form-control" name="Km" value="" />
                     </div>
                 </div>
             </div>
@@ -104,7 +104,7 @@
     <hr />
     <div class="row">
         <div class="col-12 div-btn-end" style="padding-top: 15px;">
-            <a class="btn btn-danger" href="@Url.Action("Index","Veiculos")">Cancelar</a>
+            <a class="btn btn-danger" href="@Url.Action("Index","Operacao")">Cancelar</a>
             &nbsp;|&nbsp;
             <button type="submit" class="btn btn-success">Salvar</button>
         </div>
