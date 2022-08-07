@@ -1,10 +1,10 @@
 ﻿const baseUrlNotifica = `${window.location.origin}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Operacao")}`;
 
 function factory(formMethod, urlSelectList) {
+    Select2Init();
     FormEventHandler(formMethod);
     ObterMarcasSelectList(urlSelectList);
     TriggerImgImput();
-    Select2Init();
 }
 
 function FormEventHandler(formMethod) {

@@ -23,15 +23,16 @@
     <script type="text/javascript" src="~/js/Operacao.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             //$("#imgUrl").on('change', function () {
             //    $("#imgLogo").attr($(this).val());
             //});
 
             $("#formVeiculo").attr('action', '@Url.Action("Alterar","Operacao")');
-            Bind();
             factory('PUT', '@Url.Action("ObterSelectList","Marcas")');
+            Bind();
+
         });
 
         function Bind() {
@@ -41,17 +42,36 @@
             debugger;
             $(form.querySelector('input[name="NomeVeiculo"]')).val("@Model.NomeVeiculo");
             $(form.querySelector('input[name="ModeloVeiculo"]')).val("@Model.ModeloVeiculo");
-            $(form.querySelector('input[name="Km"]')).val("@Model.Km".replace(",","."));
-            $(form.querySelector('input[name="ValorCompra"]')).val("@Model.ValorCompra".replace(",","."));
-            $(form.querySelector('input[name="ValorTabela"]')).val("@Model.ValorTabela".replace(",","."));
-            $(form.querySelector('input[name="ValorRevenda"]')).val("@Model.ValorRevenda".replace(",","."));
+            $(form.querySelector('input[name="Km"]')).val("@Model.Km".replace(",", "."));
+            $(form.querySelector('input[name="ValorCompra"]')).val("@Model.ValorCompra".replace(",", "."));
+            $(form.querySelector('input[name="ValorTabela"]')).val("@Model.ValorTabela".replace(",", "."));
+            $(form.querySelector('input[name="ValorRevenda"]')).val("@Model.ValorRevenda".replace(",", "."));
             $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val("@Model.DataFabricacaoVeiculo");
-            $(form.querySelector('input[name="TipoPagamentoAquisicaoId"]')).val("@Model.TipoPagamentoAquisicaoId");
-            $(form.querySelector('input[name="TipoPagamentoRevendaId"]')).val("@Model.TipoPagamentoRevendaId");
-            $(form.querySelector('input[name="ProprietarioId"]')).val("@Model.ProprietarioId");
-            $(form.querySelector('input[name="CompradorId"]')).val("@Model.CompradorId");
-        }
 
+            if(@Model.MarcaVeiculoId > 0){
+                $("#MarcaId").val(@Model.MarcaVeiculoId).change();
+            }
+
+            if (@Model.SituacaoAquisicaoId > 0) {
+                $("#SituacaoAquisicaoId").val(@Model.SituacaoAquisicaoId).change();
+            }
+            
+            if (@Model.TipoPagamentoAquisicaoId > 0) {
+                $("#TipoPagamentoAquisicaoId").val(@Model.TipoPagamentoAquisicaoId).change();
+            }
+
+            if (@Model.TipoPagamentoRevendaId > 0) {
+                $("#TipoPagamentoRevendaId").val(@Model.TipoPagamentoRevendaId).change();
+            }
+
+            if (@Model.ProprietarioId > 0) {
+                $("#ProprietarioId").val(@Model.ProprietarioId).change();
+            }
+
+            if (@Model.CompradorId > 0) {
+                $("#CompradorId").val(@Model.CompradorId).change();
+            }
+        }
     </script>
 
 }
