@@ -1,9 +1,9 @@
 ﻿const baseUrlNotifica = `${window.location.origin}/Notifica/RenderizarMensagemStatus?action=${encodeURI("Index")}&controller=${encodeURI("Operacao")}`;
 
 function factory(formMethod, urlSelectList) {
+    ObterMarcasSelectList(urlSelectList);
     Select2Init();
     FormEventHandler(formMethod);
-    ObterMarcasSelectList(urlSelectList);
     TriggerImgImput();
 }
 
@@ -33,7 +33,7 @@ function triggerForm(formMethod) {
 
                     let url = "";
 
-                    if (notificacao.toLowerCase.includes("sucesso")) {
+                    if (notificacao.toLowerCase().includes("sucesso")) {
                         url = `${baseUrlNotifica}&titulo=${encodeURI("Sucesso")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(true)}`;
                     } else {
                         url = `${baseUrlNotifica}&titulo=${encodeURI("Falha")}&mensagem=${encodeURI(notificacao)}&sucesso=${encodeURI(false)}`;

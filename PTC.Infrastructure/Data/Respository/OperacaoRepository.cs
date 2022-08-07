@@ -130,7 +130,7 @@ namespace PTC.Infrastructure.Data.Respository
                         Nome = (string)sdr["NomeVeiculo"],
                         Modelo = (string)sdr["ModeloVeiculo"],
                         Km = (decimal)sdr["Km"],
-                        CaminhoImagem = (string)sdr["CaminhoImagem"],
+                        //CaminhoImagem = (string)sdr["CaminhoImagem"],
                         MarcaVeiculo = new Marca
                         {
                             Id = Convert.ToInt32(sdr["MarcaVeiculoId"])

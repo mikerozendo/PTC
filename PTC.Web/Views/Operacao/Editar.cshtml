@@ -16,6 +16,7 @@
     <div class="modal-body">
         <partial name="../Operacao/_Formulario.cshtml">
     </div>
+    <div id="mdlMensagem" class="modal" tabindex="-1" role="dialog"></div>
 </div>
 
 
@@ -32,7 +33,6 @@
             $("#formVeiculo").attr('action', '@Url.Action("Alterar","Operacao")');
             factory('PUT', '@Url.Action("ObterSelectList","Marcas")');
             Bind();
-
         });
 
         function Bind() {
@@ -46,7 +46,7 @@
             $(form.querySelector('input[name="ValorCompra"]')).val("@Model.ValorCompra".replace(",", "."));
             $(form.querySelector('input[name="ValorTabela"]')).val("@Model.ValorTabela".replace(",", "."));
             $(form.querySelector('input[name="ValorRevenda"]')).val("@Model.ValorRevenda".replace(",", "."));
-            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val("@Model.DataFabricacaoVeiculo");
+            $(form.querySelector('input[name="DataFabricacaoVeiculo"]')).val(@Model.DataFabricacaoVeiculo.Date.Year + "-" + @Model.DataFabricacaoVeiculo.Date.Month +"-"+@Model.DataFabricacaoVeiculo.Date.Day);
 
             if(@Model.MarcaVeiculoId > 0){
                 $("#MarcaId").val(@Model.MarcaVeiculoId).change();
