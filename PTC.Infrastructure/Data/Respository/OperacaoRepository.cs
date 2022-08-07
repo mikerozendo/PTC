@@ -53,44 +53,53 @@ namespace PTC.Infrastructure.Data.Respository
 
         public async Task<Operacao> ObterPorId(int id)
         {
-            AddParametro("Id", id);
-            var tabela = await ExecutarProcedureAsync("P_OPERACAO_OBTER_POR_ID");
-
-            return new Operacao
+            try
             {
-                Id = (int)tabela.Rows[0]["Id"],
-                Cadastro = (DateTime)tabela.Rows[0]["DataCadastro"],
-                DataRevenda = tabela.Rows[0]["DataRevenda"] is DBNull ? new DateTime().Date : (DateTime)tabela.Rows[0]["DataRevenda"],
-                EnumSituacaoAquisicao = (EnumSituacaoAquisicao)(int)tabela.Rows[0]["SituacaoAquisicao"],
-                EnumTipoPagamentoAquisicao = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoAquisicao"],
-                EnumTipoPagamentoRevenda = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoRevenda"],
-                Proprietario = new()
+                AddParametro("Id", id);
+                var tabela = await ExecutarProcedureAsync("P_OPERACAO_OBTER_POR_ID");
+
+                return new Operacao
                 {
-                    Id = Convert.ToInt32(tabela.Rows[0]["ProprietarioId"].ToString()),
-                    Nome = (string)tabela.Rows[0]["NomeProprietario"],
-                    Documento = new(tabela.Rows[0]["DocumentoProprietario"].ToString())
-                },
-                Comprador = new()
-                {
-                    Id = Convert.ToInt32(tabela.Rows[0]["CompradorId"]),
-                    Nome = (string)tabela.Rows[0]["NomeComprador"],
-                },
-                Veiculo = new Veiculo
-                {
-                    Id = (int)tabela.Rows[0]["VeiculoId"],
-                    Nome = (string)tabela.Rows[0]["NomeVeiculo"],
-                    Modelo = (string)tabela.Rows[0]["ModeloVeiculo"],
-                    Km = (decimal)tabela.Rows[0]["Km"],
-                    CaminhoImagem = (string)tabela.Rows[0]["CaminhoImagem"],
-                    MarcaVeiculo = new Marca
+                    Id = (int)tabela.Rows[0]["Id"],
+                    Cadastro = (DateTime)tabela.Rows[0]["DataCadastro"],
+                    DataRevenda = tabela.Rows[0]["DataRevenda"] is DBNull ? new DateTime().Date : (DateTime)tabela.Rows[0]["DataRevenda"],
+                    EnumSituacaoAquisicao = (EnumSituacaoAquisicao)(int)tabela.Rows[0]["SituacaoAquisicao"],
+                    EnumTipoPagamentoAquisicao = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoAquisicao"],
+                    EnumTipoPagamentoRevenda = (EnumFormaPagamento)(int)tabela.Rows[0]["TipoPagamentoRevenda"],
+                    Proprietario = new()
                     {
-                        Id = Convert.ToInt32(tabela.Rows[0]["MarcaVeiculoId"])
-                    }
-                },
-                ValorCompra = (decimal)tabela.Rows[0]["ValorCompra"],
-                ValorRevenda = (decimal)tabela.Rows[0]["ValorRevenda"],
-                ValorTabela = (decimal)tabela.Rows[0]["ValorTabela"]
-            };
+                        Id = Convert.ToInt32(tabela.Rows[0]["ProprietarioId"].ToString()),
+                        Nome = (string)tabela.Rows[0]["NomeProprietario"],
+                        Documento = new(tabela.Rows[0]["DocumentoProprietario"].ToString())
+                    },
+                    Comprador = new()
+                    {
+                        Id = Convert.ToInt32(tabela.Rows[0]["CompradorId"]),
+                        Nome = (string)tabela.Rows[0]["NomeComprador"],
+                    },
+                    Veiculo = new Veiculo
+                    {
+                        Id = (int)tabela.Rows[0]["VeiculoId"],
+                        Nome = (string)tabela.Rows[0]["NomeVeiculo"],
+                        Modelo = (string)tabela.Rows[0]["ModeloVeiculo"],
+                        Km = (decimal)tabela.Rows[0]["Km"],
+                        CaminhoImagem = (string)tabela.Rows[0]["CaminhoImagem"],
+                        MarcaVeiculo = new Marca
+                        {
+                            Id = Convert.ToInt32(tabela.Rows[0]["MarcaVeiculoId"])
+                        }
+                    },
+                    ValorCompra = (decimal)tabela.Rows[0]["ValorCompra"],
+                    ValorRevenda = (decimal)tabela.Rows[0]["ValorRevenda"],
+                    ValorTabela = (decimal)tabela.Rows[0]["ValorTabela"]
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+ 
         }
 
         public async Task<IEnumerable<Operacao>> ObterPorPeriodo(DateTime dataInicio, DateTime dataTermino)

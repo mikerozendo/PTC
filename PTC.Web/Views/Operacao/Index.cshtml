@@ -96,7 +96,7 @@
             $(".btn-danger").on('click', function(e) {
                 e.stopImmediatePropagation();
                 objValue = JSON.parse($(this).attr('data-id'));
-                travaDelete(objValue);
+                travaDelete(objValue.Id);
             });
         });
 
