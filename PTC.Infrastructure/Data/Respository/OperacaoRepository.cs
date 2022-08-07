@@ -20,9 +20,10 @@ namespace PTC.Infrastructure.Data.Respository
             return Task.CompletedTask;
         }
 
-        public Task Deletar(Operacao obj)
+        public async Task Deletar(Operacao obj)
         {
-            return Task.CompletedTask;
+            AddParametro("Id", obj.Id);
+            await ExecutarProcedureAsync("P_OPERACAO_DELETAR");
         }
 
         public Task<bool> Existe(Operacao obj)

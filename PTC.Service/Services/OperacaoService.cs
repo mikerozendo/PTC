@@ -24,7 +24,6 @@ namespace PTC.Application.Services
 
         public async Task Deletar(Operacao obj)
         {
-            await _veiculosService.Deletar(obj.Veiculo);
             await _operacaoRepository.Deletar(obj);
         }
 
